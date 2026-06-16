@@ -2,6 +2,7 @@
 
 .app-window {
   position: absolute;
+  pointer-events: auto; /* .window-layer is click-through; windows opt back in */
   display: flex;
   flex-direction: column;
   background: #f2ede3;

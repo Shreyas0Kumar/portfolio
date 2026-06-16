@@ -18,6 +18,7 @@ import MusicApp      from './apps/MusicApp.jsx'
 import GamesApp      from './apps/GamesApp.jsx'
 import AboutMe       from './apps/AboutMe.jsx'
 import { projects }  from '../../../data/projects.js'
+import { resolveResume } from './apps/drive.js'
 import { setMuted, chime, sOpen, sClose, sMinimize, sShutdown } from './sound.js'
 
 /**
@@ -81,6 +82,7 @@ export default function Desktop({ onExit }) {
   const [shuttingDown, setShuttingDown] = useState(false)
   const [spotlightOpen, setSpotlightOpen] = useState(false)
   const [ctxMenu, setCtxMenu]           = useState(null)
+  const [quickLook, setQuickLook]       = useState(null) // { name, src } shown in-desktop
   const [wallpaper, setWallpaper]       = useState(() => Number(readLS('shreyas-wallpaper', '0')) || 0)
   const [soundOn, setSoundOn]           = useState(() => readLS('shreyas-sound', '1') === '1')
 
@@ -153,6 +155,7 @@ export default function Desktop({ onExit }) {
         setSpotlightOpen(o => !o)
       } else if (e.key === 'Escape') {
         if (spotlightOpen) setSpotlightOpen(false)
+        else if (quickLook) setQuickLook(null)
         else if (ctxMenu) setCtxMenu(null)
         else if (aboutOpen) setAboutOpen(false)
         else if (focusedId) closeWindow(focusedId)
@@ -160,10 +163,10 @@ export default function Desktop({ onExit }) {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [loggedIn, spotlightOpen, ctxMenu, aboutOpen, focusedId])
+  }, [loggedIn, spotlightOpen, quickLook, ctxMenu, aboutOpen, focusedId])
 
-  // Spotlight + Terminal share this app API.
-  const api = { openApp, openAbout: handleAbout }
+  // Spotlight + Terminal + Finder share this app API.
+  const api = { openApp, openAbout: handleAbout, quickLook: setQuickLook }
 
   const spotlightItems = [
     ...DOCK.filter(id => id !== 'divider').map(id => ({
@@ -204,6 +207,13 @@ export default function Desktop({ onExit }) {
       {appleOpen && <div className="desktop-clickaway" onClick={() => setAppleOpen(false)} />}
 
       {loggedIn && <Stickies />}
+
+      {loggedIn && (
+        <DesktopIcons
+          onOpenResume={async () => setQuickLook(await resolveResume())}
+          onOpenCertificates={() => openApp('finder')}
+        />
+      )}
 
       <div className="window-layer">
         {visible.length === 0 && (
@@ -259,7 +269,59 @@ export default function Desktop({ onExit }) {
 
       {!loggedIn && <LockScreen onLogin={handleLogin} />}
 
+      {quickLook && (
+        <div className="quicklook" onMouseDown={() => setQuickLook(null)}>
+          <div className="quicklook-panel" onMouseDown={e => e.stopPropagation()}>
+            <div className="quicklook-bar">
+              <span className="quicklook-title">{quickLook.name}</span>
+              <a className="quicklook-open" href={quickLook.openHref || quickLook.src} target="_blank" rel="noreferrer">
+                Open in new tab ↗
+              </a>
+              <button
+                type="button"
+                className="quicklook-close"
+                aria-label="Close"
+                onClick={() => setQuickLook(null)}
+              >
+                ✕
+              </button>
+            </div>
+            <iframe className="quicklook-frame" src={quickLook.src} title={quickLook.name} />
+          </div>
+        </div>
+      )}
+
       <div className={`shutdown-overlay${shuttingDown ? ' on' : ''}`} />
+    </div>
+  )
+}
+
+/**
+ * DesktopIcons
+ * Resume + Certificates icons on the desktop. Single click selects; double-click
+ * opens (Resume → the PDF; Certificates → Finder, which lands on the Drive folder).
+ */
+function DesktopIcons({ onOpenResume, onOpenCertificates }) {
+  const [selected, setSelected] = useState(null)
+  const icons = [
+    { id: 'resume', label: 'Resume',       glyph: '📄', onOpen: onOpenResume },
+    { id: 'certs',  label: 'Certificates', glyph: '📜', onOpen: onOpenCertificates },
+  ]
+  return (
+    <div className="desktop-icons">
+      {icons.map(ic => (
+        <button
+          key={ic.id}
+          type="button"
+          className={`desktop-icon${selected === ic.id ? ' selected' : ''}`}
+          onClick={() => setSelected(ic.id)}
+          onDoubleClick={ic.onOpen}
+          title={`Double-click to open ${ic.label}`}
+        >
+          <span className="desktop-icon-glyph">{ic.glyph}</span>
+          <span className="desktop-icon-label">{ic.label}</span>
+        </button>
+      ))}
     </div>
   )
 }

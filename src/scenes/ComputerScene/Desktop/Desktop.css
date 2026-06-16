@@ -17,6 +17,55 @@
   position: absolute;
   inset: 0;
   z-index: 10;
+  /* Click-through so desktop icons beneath stay clickable in empty areas;
+     each .app-window opts back into pointer events. */
+  pointer-events: none;
+}
+
+/* ── Desktop icons (top-right, behind windows) ── */
+.desktop-icons {
+  position: absolute;
+  top: 40px;
+  right: 16px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  user-select: none;
+}
+
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  width: 92px;
+  padding: 8px 6px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.desktop-icon:hover { background: rgba(242, 237, 227, 0.1); }
+
+.desktop-icon.selected {
+  background: rgba(200, 120, 42, 0.28);
+  border-color: rgba(242, 237, 227, 0.25);
+}
+
+.desktop-icon-glyph {
+  font-size: 38px;
+  line-height: 1;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.45));
+}
+
+.desktop-icon-label {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.82rem;
+  color: #f2ede3;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  text-align: center;
 }
 
 .desktop-hint {
@@ -52,6 +101,67 @@
   position: absolute;
   inset: 0;
   background: rgba(13, 10, 5, 0.4);
+}
+
+/* ── In-desktop Quick Look (PDFs preview here, never a new tab) ── */
+.quicklook {
+  position: absolute;
+  inset: 0;
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13, 10, 5, 0.55);
+}
+
+.quicklook-panel {
+  width: min(900px, 86%);
+  height: 88%;
+  display: flex;
+  flex-direction: column;
+  background: #f2ede3;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+}
+
+.quicklook-bar {
+  flex: 0 0 42px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  background: #ede8de;
+  border-bottom: 1px solid rgba(26, 18, 8, 0.1);
+}
+
+.quicklook-title {
+  flex: 1 1 auto;
+  font-family: 'Special Elite', serif;
+  font-size: 0.82rem;
+  color: #1a1208;
+}
+
+.quicklook-open {
+  font-family: 'Special Elite', serif;
+  font-size: 0.74rem;
+  text-decoration: none;
+  color: #c8782a;
+}
+
+.quicklook-close {
+  border: none;
+  background: transparent;
+  font-size: 0.9rem;
+  color: #7a6f5a;
+  cursor: pointer;
+}
+
+.quicklook-frame {
+  flex: 1 1 auto;
+  width: 100%;
+  border: none;
+  background: #fff;
 }
 
 /* ── Shutdown fade ── */

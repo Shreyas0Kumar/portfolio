@@ -20,5 +20,9 @@ Thumbs.db
 .env.local
 .env.*.local
 
+# Cloudflare / Wrangler local (holds the Drive API key for `wrangler pages dev`)
+.dev.vars
+.wrangler/
+
 # Claude local settings (keep private)
 .claude/settings.local.json
