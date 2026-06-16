@@ -32,7 +32,7 @@ triggers a build automatically.
 | Framework preset     | Vite            |
 | Build command        | `npm run build` |
 | Build output dir     | `dist`          |
-| Node version         | `20` (`.nvmrc`) |
+| Node version         | `22` (`.nvmrc`) |
 
 ## Structure
 
