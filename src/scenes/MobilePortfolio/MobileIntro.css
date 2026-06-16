@@ -1,0 +1,110 @@
+/* MobileIntro.css — phone/tablet handoff screen (matches the dark room theme) */
+
+.mintro {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 26px;
+  overflow-y: auto;
+  background:
+    radial-gradient(circle at 30% 18%, #46402f 0%, transparent 55%),
+    linear-gradient(160deg, #3a3530 0%, #1a1208 100%);
+}
+
+.mintro-inner {
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  color: #f2ede3;
+  user-select: none;
+}
+
+.mintro-glyph {
+  font-size: 56px;
+  line-height: 1;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45));
+}
+
+.mintro-lead {
+  font-family: 'Special Elite', serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(242, 237, 227, 0.55);
+}
+
+.mintro-title {
+  font-family: 'Caveat', cursive;
+  font-size: 2.7rem;
+  font-weight: 700;
+  line-height: 1.02;
+  margin: -6px 0 2px;
+}
+
+.mintro-body {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  color: rgba(242, 237, 227, 0.85);
+}
+
+.mintro-url {
+  margin-top: 6px;
+  font-family: 'Special Elite', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: rgba(242, 237, 227, 0.7);
+  padding: 7px 14px;
+  border: 1px dashed rgba(242, 237, 227, 0.3);
+  border-radius: 8px;
+}
+
+.mintro-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.mintro-copy,
+.mintro-continue {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 11px;
+  font-family: 'Special Elite', serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.mintro-copy {
+  background: transparent;
+  color: #f2ede3;
+  border: 1.5px solid rgba(242, 237, 227, 0.4);
+}
+
+.mintro-copy:active { transform: scale(0.98); }
+
+.mintro-continue {
+  background: #c8782a;
+  color: #f2ede3;
+  border: none;
+}
+
+.mintro-continue:active { transform: scale(0.98); }
+
+.mintro-note {
+  margin-top: 10px;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: rgba(242, 237, 227, 0.5);
+}

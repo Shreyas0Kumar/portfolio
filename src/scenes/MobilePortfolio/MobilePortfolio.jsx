@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { projects } from '../../data/projects.js'
+import MobileIntro from './MobileIntro.jsx'
 import './MobilePortfolio.css'
 
 /**
@@ -14,8 +15,22 @@ const CONTACTS = [
   { label: 'Resume',   href: '/resume.pdf' },
 ]
 
+// Shown once per browser session so a refresh doesn't re-nag, but a fresh visit
+// still gets the "open on desktop" pitch.
+const INTRO_KEY = 'shreyas-mobile-intro-seen'
+
 export default function MobilePortfolio() {
   const shown = projects.filter(p => p.category !== 'hackathon')
+
+  const [showIntro, setShowIntro] = useState(() => {
+    try { return sessionStorage.getItem(INTRO_KEY) !== '1' } catch { return true }
+  })
+  const dismissIntro = () => {
+    try { sessionStorage.setItem(INTRO_KEY, '1') } catch { /* ignore */ }
+    setShowIntro(false)
+  }
+
+  if (showIntro) return <MobileIntro onContinue={dismissIntro} />
 
   return (
     <div className="mobile">
