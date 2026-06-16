@@ -1,0 +1,34 @@
+/* Stickies.css */
+
+.sticky {
+  position: absolute;
+  top: 56px;
+  right: 32px;
+  width: 220px;
+  height: 200px;
+  z-index: 5;            /* above wallpaper, below windows */
+  display: flex;
+  flex-direction: column;
+  background: #f7e879;
+  border-radius: 2px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  transform: rotate(2deg);
+}
+
+.sticky-bar {
+  height: 18px;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.sticky-text {
+  flex: 1 1 auto;
+  resize: none;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 12px 14px;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: #4a3f1a;
+}

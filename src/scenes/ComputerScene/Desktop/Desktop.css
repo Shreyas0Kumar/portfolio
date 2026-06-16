@@ -1,0 +1,71 @@
+/* Desktop.css — macOS-style desktop environment */
+
+.macos-desktop {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 28% 18%, #46402f 0%, transparent 55%),
+    linear-gradient(160deg, #3a3530 0%, #1a1208 100%);
+  font-family: 'Special Elite', serif;
+}
+
+/* Layer that holds the draggable windows. Establishes its own stacking context
+   (z-index: 10) so windows always sit below the menu bar, dock, and dialogs no
+   matter how high their internal z climbs. */
+.window-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+}
+
+.desktop-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Special Elite', serif;
+  font-size: 0.85rem;
+  color: rgba(242, 237, 227, 0.45);
+  letter-spacing: 0.05em;
+  user-select: none;
+}
+
+/* Transparent catcher that closes the Apple menu on outside click */
+.desktop-clickaway {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+}
+
+/* ── About Me dialog ── */
+.about-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 10, 5, 0.4);
+}
+
+/* ── Shutdown fade ── */
+.shutdown-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  background: #000000;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.shutdown-overlay.on {
+  opacity: 1;
+  pointer-events: all;
+  transition: opacity 0.7s ease-in;
+}

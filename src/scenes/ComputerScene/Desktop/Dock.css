@@ -1,0 +1,139 @@
+/* Dock.css */
+
+.dock {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 35;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(242, 237, 227, 0.16);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(242, 237, 227, 0.22);
+  border-radius: 18px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+}
+
+.dock-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.dock-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 13px;
+  background: linear-gradient(160deg, #f7f3ea, #e3dccb);
+  border: 1px solid rgba(26, 18, 8, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 27px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+  transition: transform 0.08s ease-out;
+  transform-origin: bottom center;
+}
+
+/* Custom developer badge for the Portfolio app */
+.dock-icon.icon-dev {
+  background: linear-gradient(155deg, #46402f 0%, #1a1208 100%);
+  color: #e8a55a;
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -1px;
+  border-color: rgba(232, 165, 90, 0.35);
+}
+
+/* Terminal badge — green prompt on near-black */
+.dock-icon.icon-term {
+  background: linear-gradient(155deg, #2a2a2a 0%, #0d0d0d 100%);
+  color: #6fd66f;
+  font-family: 'Courier New', monospace;
+  font-weight: 700;
+  font-size: 19px;
+  letter-spacing: -1px;
+  border-color: rgba(111, 214, 111, 0.3);
+}
+
+/* Music badge — note on a purple→blue gradient */
+.dock-icon.icon-music {
+  background: linear-gradient(155deg, #b06ab3 0%, #4568dc 100%);
+  color: #ffffff;
+  font-size: 26px;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Games badge — chess knight on a slate tile */
+.dock-icon.icon-games {
+  background: linear-gradient(155deg, #3a3530 0%, #1a1208 100%);
+  color: #e8a55a;
+  font-size: 26px;
+  border-color: rgba(232, 165, 90, 0.32);
+}
+
+/* Glassdoor badge — white door on Glassdoor green */
+.dock-icon.icon-glassdoor {
+  background: linear-gradient(155deg, #16b34a 0%, #0c8f37 100%);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Divider between system + personal apps */
+.dock-divider {
+  width: 1px;
+  height: 44px;
+  margin: 0 2px;
+  align-self: center;
+  background: rgba(242, 237, 227, 0.25);
+}
+
+/* Open-app indicator dot */
+.dock-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.dock-dot.on {
+  background: rgba(242, 237, 227, 0.55);
+}
+
+.dock-dot.on.focused {
+  background: rgba(242, 237, 227, 0.95);
+}
+
+/* Hover tooltip — sits above the magnified icon and always paints on top */
+.dock-tooltip {
+  position: absolute;
+  bottom: 96px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  white-space: nowrap;
+  font-family: 'Special Elite', serif;
+  font-size: 0.72rem;
+  color: #1a1208;
+  background: rgba(242, 237, 227, 0.96);
+  border: 1px solid rgba(26, 18, 8, 0.15);
+  border-radius: 5px;
+  padding: 3px 9px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+}
+
+.dock-item:hover .dock-tooltip {
+  opacity: 1;
+}

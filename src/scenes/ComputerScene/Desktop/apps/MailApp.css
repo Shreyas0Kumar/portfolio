@@ -1,0 +1,101 @@
+/* MailApp.css */
+
+.mail {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: #f2ede3;
+}
+
+.mail-toolbar {
+  flex: 0 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  background: #ede8de;
+  border-bottom: 1px solid rgba(26, 18, 8, 0.1);
+}
+
+.mail-toolbar-title {
+  font-family: 'Special Elite', serif;
+  font-size: 0.82rem;
+  color: #1a1208;
+}
+
+.mail-send {
+  border: none;
+  background: #c8782a;
+  color: #f2ede3;
+  font-family: 'Special Elite', serif;
+  font-size: 0.78rem;
+  padding: 7px 18px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.mail-send:hover { background: #7a4a1a; }
+.mail-send:disabled { opacity: 0.6; cursor: default; }
+
+.mail-form {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 18px 22px;
+}
+
+.mail-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 2px;
+  border-bottom: 1px solid rgba(26, 18, 8, 0.1);
+}
+
+.mail-label {
+  flex: 0 0 64px;
+  font-family: 'Special Elite', serif;
+  font-size: 0.74rem;
+  color: #7a6f5a;
+}
+
+.mail-static {
+  font-family: 'Special Elite', serif;
+  font-size: 0.8rem;
+  color: #1a1208;
+}
+
+.mail-input {
+  flex: 1 1 auto;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1rem;
+  color: #1a1208;
+}
+
+.mail-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  margin-top: 16px;
+  resize: none;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #3a3530;
+}
+
+.mail-status {
+  font-family: 'Special Elite', serif;
+  font-size: 0.78rem;
+  padding-top: 10px;
+}
+
+.mail-status.ok  { color: #2e7d32; }
+.mail-status.err { color: #b3261e; }

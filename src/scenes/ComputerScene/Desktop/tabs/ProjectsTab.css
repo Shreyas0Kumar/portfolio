@@ -1,0 +1,194 @@
+/* ProjectsTab.css */
+
+.projects-tab {
+  max-width: 1100px;
+}
+
+.projects-heading {
+  font-family: 'Caveat', cursive;
+  font-size: 2.4rem;
+  color: #1a1208;
+  line-height: 1;
+}
+
+.projects-sub {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1rem;
+  color: #3a3530;
+  margin-top: 4px;
+  margin-bottom: 28px;
+}
+
+/* ── Grid ── */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+/* ── Card ── */
+.project-card {
+  position: relative;
+  background: #f2ede3;
+  border: 1.5px solid #1a1208;
+  border-radius: 4px;
+  padding: 18px 20px 16px;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 3px 3px 0 rgba(26, 18, 8, 0.12);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 5px 0 rgba(26, 18, 8, 0.18);
+}
+
+/* Expanded card spans the full grid width and stays put */
+.project-card.open {
+  grid-column: 1 / -1;
+  cursor: default;
+  transform: none;
+  box-shadow: 4px 5px 0 rgba(26, 18, 8, 0.18);
+}
+
+/* Color accent strip down the left edge (uses project.color) */
+.project-accent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: var(--card-color, #c8782a);
+}
+
+.project-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.project-title {
+  font-family: 'Caveat', cursive;
+  font-size: 1.6rem;
+  color: #1a1208;
+  line-height: 1.1;
+}
+
+.project-toggle {
+  font-family: 'Special Elite', serif;
+  font-size: 1.1rem;
+  color: #c8782a;
+  line-height: 1;
+  flex: 0 0 auto;
+}
+
+.project-hook {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.98rem;
+  color: #3a3530;
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+/* ── Stack chips ── */
+.project-stack {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 14px;
+}
+
+.project-chip {
+  font-family: 'Special Elite', serif;
+  font-size: 0.68rem;
+  color: #3a3530;
+  background: #ede8de;
+  border: 1px solid rgba(26, 18, 8, 0.18);
+  border-radius: 3px;
+  padding: 3px 8px;
+  letter-spacing: 0.02em;
+}
+
+.project-chip.more {
+  color: #7a6f5a;
+  border-style: dashed;
+}
+
+/* ── Expanded detail ── */
+.project-detail {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(26, 18, 8, 0.12);
+  max-width: 720px;
+}
+
+.project-what {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.02rem;
+  color: #1a1208;
+  line-height: 1.5;
+}
+
+.project-why {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1rem;
+  color: #3a3530;
+  line-height: 1.5;
+  margin-top: 12px;
+}
+
+.project-label {
+  display: inline-block;
+  font-family: 'Special Elite', serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c8782a;
+  margin-right: 8px;
+}
+
+/* ── Links ── */
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.project-link {
+  font-family: 'Special Elite', serif;
+  font-size: 0.78rem;
+  text-decoration: none;
+  color: #1a1208;
+  border: 1.5px solid #1a1208;
+  border-radius: 3px;
+  padding: 7px 14px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.project-link:hover {
+  background: #1a1208;
+  color: #f2ede3;
+}
+
+.project-link.primary {
+  background: #c8782a;
+  border-color: #c8782a;
+  color: #f2ede3;
+}
+
+.project-link.primary:hover {
+  background: #7a4a1a;
+  border-color: #7a4a1a;
+}
+
+.project-cta-static {
+  font-family: 'Special Elite', serif;
+  font-size: 0.78rem;
+  color: #7a6f5a;
+}

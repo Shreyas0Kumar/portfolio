@@ -1,0 +1,46 @@
+/* XPLoader.css — minimal dark boot screen */
+
+.xp-loader {
+  position: fixed;
+  inset: 0;
+  background: #0d0d0d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+.xp-title {
+  font-family: 'Caveat', cursive;
+  font-size: 2.8rem;
+  color: #f2ede3;
+  line-height: 1;
+}
+
+/* Thin progress track */
+.xp-bar {
+  width: 280px;
+  height: 2px;
+  border: 1px solid rgba(242, 237, 227, 0.2);
+}
+
+/* Single smooth fill, 0 → 100% over 2.6s */
+.xp-bar-fill {
+  height: 100%;
+  width: 0;
+  background: #f2ede3;
+  animation: xpFill 2.6s ease-out forwards;
+}
+
+@keyframes xpFill {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+
+.xp-status {
+  font-family: 'Special Elite', serif;
+  font-size: 0.75rem;
+  color: rgba(242, 237, 227, 0.5);
+  letter-spacing: 0.04em;
+}

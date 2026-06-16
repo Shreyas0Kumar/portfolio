@@ -1,0 +1,72 @@
+/* sketchbook.css — reusable ink-line, hand-drawn button, tag styles */
+
+/* Ink border — slightly irregular, hand-drawn feel */
+.ink-border {
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sketch);
+  box-shadow:
+    2px 2px 0 var(--ink),
+    inset 0 0 0 1px rgba(26,18,8,0.06);
+}
+
+/* Hand-drawn button */
+.btn-sketch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  font-family: var(--font-hand);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-sketch);
+  box-shadow: 2px 2px 0 var(--ink);
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  text-decoration: none;
+}
+
+.btn-sketch:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.btn-sketch:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+/* Stack / tech tag pill */
+.tag-sketch {
+  display: inline-block;
+  padding: 2px 8px;
+  font-family: var(--font-typewriter);
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  background: var(--paper-dark);
+  border: 1.5px solid var(--ink-faint);
+  border-radius: 2px;
+  letter-spacing: 0.03em;
+}
+
+/* Section divider — hand-drawn rule */
+.rule-sketch {
+  border: none;
+  border-top: 2px solid var(--ink);
+  opacity: 0.15;
+  margin: 12px 0;
+  /* Slight waviness via clip-path would need SVG — keeping simple for now */
+}
+
+/* Typewriter text */
+.text-typewriter {
+  font-family: var(--font-typewriter);
+  letter-spacing: 0.04em;
+}
+
+/* Handwritten heading */
+.text-hand {
+  font-family: var(--font-hand);
+}

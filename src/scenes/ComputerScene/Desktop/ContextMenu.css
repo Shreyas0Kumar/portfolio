@@ -1,0 +1,35 @@
+/* ContextMenu.css */
+
+.context-menu {
+  position: absolute;
+  z-index: 58;
+  min-width: 190px;
+  list-style: none;
+  padding: 5px;
+  background: rgba(242, 237, 227, 0.97);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(26, 18, 8, 0.15);
+  border-radius: 8px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+}
+
+.context-item {
+  font-family: 'Special Elite', serif;
+  font-size: 0.78rem;
+  color: #1a1208;
+  padding: 7px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.context-item:hover {
+  background: #c8782a;
+  color: #f2ede3;
+}
+
+.context-divider {
+  height: 1px;
+  margin: 5px 8px;
+  background: rgba(26, 18, 8, 0.15);
+}

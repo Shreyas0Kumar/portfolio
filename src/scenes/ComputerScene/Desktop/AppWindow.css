@@ -1,0 +1,108 @@
+/* AppWindow.css — reusable macOS window chrome */
+
+.app-window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  background: #f2ede3;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4);
+  transition: box-shadow 0.18s ease, transform 0.28s ease, opacity 0.28s ease;
+}
+
+/* Frontmost window casts a stronger shadow */
+.app-window.focused {
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.55);
+}
+
+/* Maximized fills the workspace — square off the corners */
+.app-window.maximized {
+  border-radius: 0;
+}
+
+/* Minimize: scale + fade down toward the dock (kept mounted to preserve state) */
+.app-window.minimized {
+  transform: translateY(72vh) scale(0.1);
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: bottom center;
+}
+
+/* ── Title bar ── */
+.app-titlebar {
+  position: relative;
+  flex: 0 0 36px;
+  height: 36px;
+  background: #1a1208;
+  display: flex;
+  align-items: center;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+
+.app-titlebar:active {
+  cursor: grabbing;
+}
+
+.app-lights {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 14px;
+}
+
+.app-light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.55);
+}
+
+.app-light.close    { background: #ff5f57; }
+.app-light.minimize { background: #febc2e; }
+.app-light.maximize { background: #28c840; }
+
+/* Reveal the macOS glyphs when hovering the lights cluster */
+.app-light::after { content: ''; opacity: 0; }
+.app-lights:hover .app-light.close::after    { content: '×'; opacity: 1; }
+.app-lights:hover .app-light.minimize::after { content: '–'; opacity: 1; }
+.app-lights:hover .app-light.maximize::after { content: '+'; opacity: 1; }
+
+.app-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Special Elite', serif;
+  font-size: 0.8rem;
+  color: #f2ede3;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+}
+
+/* ── Body ── */
+.app-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: #f2ede3;
+  overflow: hidden; /* each app manages its own internal scroll */
+}
+
+/* Shared helper for simple, single-scroll apps */
+.simple-app {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 32px 40px;
+}

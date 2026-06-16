@@ -1,0 +1,136 @@
+/* MobilePortfolio.css */
+
+.mobile {
+  position: fixed;
+  inset: 0;
+  overflow-y: auto;
+  background: #f2ede3;
+  color: #1a1208;
+}
+
+.mobile-header {
+  padding: 40px 24px 28px;
+  background:
+    radial-gradient(circle at 70% 10%, rgba(200, 120, 42, 0.18), transparent 60%),
+    #ede8de;
+  border-bottom: 1px solid rgba(26, 18, 8, 0.1);
+}
+
+.mobile-name {
+  font-family: 'Caveat', cursive;
+  font-size: 2.6rem;
+  line-height: 1;
+}
+
+.mobile-tagline {
+  font-family: 'Special Elite', serif;
+  font-size: 0.85rem;
+  color: #c8782a;
+  margin-top: 6px;
+}
+
+.mobile-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.mobile-link {
+  font-family: 'Special Elite', serif;
+  font-size: 0.78rem;
+  text-decoration: none;
+  color: #1a1208;
+  border: 1.5px solid #1a1208;
+  border-radius: 6px;
+  padding: 7px 14px;
+}
+
+.mobile-main {
+  padding: 24px 20px 8px;
+}
+
+.mobile-section {
+  font-family: 'Caveat', cursive;
+  font-size: 1.8rem;
+  margin-bottom: 14px;
+}
+
+.mobile-card {
+  position: relative;
+  background: #f2ede3;
+  border: 1.5px solid #1a1208;
+  border-radius: 8px;
+  padding: 18px 18px 16px;
+  margin-bottom: 18px;
+  overflow: hidden;
+  box-shadow: 3px 3px 0 rgba(26, 18, 8, 0.12);
+}
+
+.mobile-card-accent {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 6px;
+  background: var(--c, #c8782a);
+}
+
+.mobile-card-title {
+  font-family: 'Caveat', cursive;
+  font-size: 1.7rem;
+}
+
+.mobile-card-what {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1rem;
+  color: #3a3530;
+  line-height: 1.5;
+  margin-top: 6px;
+}
+
+.mobile-stack {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.mobile-chip {
+  font-family: 'Special Elite', serif;
+  font-size: 0.66rem;
+  color: #3a3530;
+  background: #ede8de;
+  border: 1px solid rgba(26, 18, 8, 0.18);
+  border-radius: 3px;
+  padding: 3px 8px;
+}
+
+.mobile-card-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.mobile-cta {
+  font-family: 'Special Elite', serif;
+  font-size: 0.76rem;
+  text-decoration: none;
+  color: #1a1208;
+  border: 1.5px solid #1a1208;
+  border-radius: 6px;
+  padding: 7px 14px;
+}
+
+.mobile-cta.primary {
+  background: #c8782a;
+  border-color: #c8782a;
+  color: #f2ede3;
+}
+
+.mobile-footer {
+  padding: 24px;
+  text-align: center;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.85rem;
+  color: #7a6f5a;
+}

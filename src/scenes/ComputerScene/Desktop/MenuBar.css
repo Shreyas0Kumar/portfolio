@@ -1,0 +1,116 @@
+/* MenuBar.css */
+
+.menu-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  background: rgba(26, 18, 8, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(242, 237, 227, 0.08);
+  color: #f2ede3;
+  user-select: none;
+}
+
+.menu-left {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.menu-apple {
+  display: flex;
+  align-items: center;
+  border: none;
+  background: transparent;
+  color: #f2ede3;
+  padding: 4px 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  line-height: 0;
+}
+
+.menu-apple:hover,
+.menu-apple.active {
+  background: rgba(242, 237, 227, 0.18);
+}
+
+.menu-appname {
+  font-family: 'Special Elite', serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.menu-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-extra {
+  border: none;
+  background: transparent;
+  font-size: 0.8rem;
+  line-height: 1;
+  padding: 0;
+  color: #f2ede3;
+  cursor: default;
+}
+
+button.menu-extra { cursor: pointer; }
+
+.menu-clock {
+  font-family: 'Special Elite', serif;
+  font-size: 0.74rem;
+  letter-spacing: 0.03em;
+  opacity: 0.9;
+}
+
+/* ── Apple dropdown ── */
+.apple-menu {
+  position: absolute;
+  top: 26px;
+  left: 0;
+  min-width: 180px;
+  padding: 5px;
+  background: rgba(242, 237, 227, 0.96);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(26, 18, 8, 0.15);
+  border-radius: 8px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35);
+}
+
+.apple-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  font-family: 'Special Elite', serif;
+  font-size: 0.78rem;
+  color: #1a1208;
+  padding: 7px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.apple-item:hover {
+  background: #c8782a;
+  color: #f2ede3;
+}
+
+.apple-divider {
+  height: 1px;
+  margin: 5px 8px;
+  background: rgba(26, 18, 8, 0.15);
+}

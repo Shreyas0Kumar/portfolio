@@ -1,0 +1,24 @@
+# dependencies
+node_modules/
+
+# build output (Cloudflare Pages builds this itself)
+dist/
+
+# logs / debug
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# editor / OS junk
+.DS_Store
+Thumbs.db
+*.stackdump
+
+# local env
+.env
+.env.local
+.env.*.local
+
+# Claude local settings (keep private)
+.claude/settings.local.json

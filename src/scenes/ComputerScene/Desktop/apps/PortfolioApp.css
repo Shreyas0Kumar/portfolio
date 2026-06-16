@@ -1,0 +1,583 @@
+/* PortfolioApp.css — two-tone pro app: dark rail + paper content */
+
+.pf {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  background: #f2ede3;
+}
+
+/* ───────────── Sidebar rail ───────────── */
+.pf-rail {
+  flex: 0 0 196px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px;
+  background: linear-gradient(165deg, #241b10 0%, #15100a 100%);
+  border-right: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.pf-id {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 0 6px 18px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(242, 237, 227, 0.1);
+}
+
+.pf-monogram {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Caveat', cursive;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1208;
+  background: linear-gradient(150deg, #e8a55a, #c8782a);
+  box-shadow: 0 4px 12px rgba(200, 120, 42, 0.4);
+}
+
+.pf-id-text { display: flex; flex-direction: column; line-height: 1.25; }
+
+.pf-id-name {
+  font-family: 'Special Elite', serif;
+  font-size: 0.82rem;
+  color: #f2ede3;
+}
+
+.pf-id-role {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.78rem;
+  color: #c8782a;
+}
+
+.pf-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1 1 auto;
+}
+
+.pf-navitem {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  border: none;
+  background: transparent;
+  text-align: left;
+  padding: 9px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Special Elite', serif;
+  font-size: 0.8rem;
+  color: rgba(242, 237, 227, 0.62);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.pf-navitem:hover {
+  background: rgba(242, 237, 227, 0.07);
+  color: #f2ede3;
+}
+
+.pf-navitem.active {
+  background: linear-gradient(90deg, rgba(200, 120, 42, 0.28), rgba(200, 120, 42, 0.08));
+  color: #f6e9d6;
+  box-shadow: inset 2px 0 0 #c8782a;
+}
+
+.pf-navglyph {
+  font-size: 0.85rem;
+  width: 16px;
+  text-align: center;
+  color: #c8782a;
+}
+
+.pf-rail-foot {
+  padding: 14px 8px 2px;
+  border-top: 1px solid rgba(242, 237, 227, 0.1);
+}
+
+.pf-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.82rem;
+  color: rgba(242, 237, 227, 0.7);
+}
+
+.pf-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #5ad672;
+  box-shadow: 0 0 0 3px rgba(90, 214, 114, 0.2);
+  animation: pfPulse 2s ease-in-out infinite;
+}
+
+@keyframes pfPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(90, 214, 114, 0.2); }
+  50%      { box-shadow: 0 0 0 5px rgba(90, 214, 114, 0.08); }
+}
+
+/* ───────────── Content area ───────────── */
+.pf-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-y: auto;
+  position: relative;
+}
+
+.pf-page { padding: 36px 44px 48px; max-width: 880px; }
+
+.pf-fade  { animation: pfFade 0.32s ease both; }
+.pf-slide { animation: pfSlide 0.34s cubic-bezier(0.22, 0.8, 0.3, 1) both; }
+
+@keyframes pfFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pfSlide {
+  from { opacity: 0; transform: translateX(26px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.pf-eyebrow {
+  font-family: 'Special Elite', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #c8782a;
+  margin-bottom: 12px;
+}
+
+/* ── Overview hero ── */
+.pf-hero {
+  font-family: 'Caveat', cursive;
+  font-size: 2.9rem;
+  line-height: 1.12;
+  color: #1a1208;
+  max-width: 640px;
+}
+
+.pf-hl {
+  background: linear-gradient(transparent 62%, rgba(200, 120, 42, 0.35) 62%);
+  padding: 0 2px;
+}
+
+.pf-lede {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.08rem;
+  line-height: 1.55;
+  color: #3a3530;
+  margin-top: 16px;
+  max-width: 560px;
+}
+
+.pf-title {
+  font-family: 'Caveat', cursive;
+  font-size: 2.4rem;
+  line-height: 1.1;
+  color: #1a1208;
+  max-width: 600px;
+}
+
+/* ── Stat row ── */
+.pf-stats {
+  display: flex;
+  gap: 14px;
+  margin: 30px 0 8px;
+  flex-wrap: wrap;
+}
+
+.pf-stat {
+  flex: 1 1 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 16px 18px;
+  background: #ede8de;
+  border: 1px solid rgba(26, 18, 8, 0.1);
+  border-radius: 12px;
+}
+
+.pf-stat-num {
+  font-family: 'Caveat', cursive;
+  font-size: 2.3rem;
+  line-height: 1;
+  color: #c8782a;
+}
+
+.pf-stat-label {
+  font-family: 'Special Elite', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: #3a3530;
+}
+
+/* ── Section heads ── */
+.pf-sectionhead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin: 34px 0 16px;
+}
+
+.pf-h2 {
+  font-family: 'Caveat', cursive;
+  font-size: 1.7rem;
+  color: #1a1208;
+}
+
+.pf-h2-spaced { margin: 38px 0 16px; }
+
+.pf-seeall {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: 'Special Elite', serif;
+  font-size: 0.76rem;
+  color: #c8782a;
+  padding: 4px 6px;
+  border-radius: 5px;
+}
+
+.pf-seeall:hover { color: #7a4a1a; }
+
+/* ───────────── Project cards ───────────── */
+.pf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(252px, 1fr));
+  gap: 16px;
+}
+
+.pf-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  text-align: left;
+  gap: 9px;
+  padding: 18px 18px 16px;
+  background: #fbf8f1;
+  border: 1px solid rgba(26, 18, 8, 0.12);
+  border-radius: 14px;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(26, 18, 8, 0.05);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+.pf-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent, #c8782a);
+  box-shadow: 0 14px 30px rgba(26, 18, 8, 0.16);
+}
+
+.pf-card-bar {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--accent, #c8782a);
+}
+
+.pf-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.pf-card-title {
+  font-family: 'Caveat', cursive;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #1a1208;
+}
+
+.pf-card-badge {
+  font-family: 'Special Elite', serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.04em;
+  color: #7a4a1a;
+  background: rgba(200, 120, 42, 0.16);
+  border: 1px solid rgba(200, 120, 42, 0.35);
+  border-radius: 20px;
+  padding: 3px 9px;
+  white-space: nowrap;
+}
+
+.pf-card-hook {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: #3a3530;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.pf-card-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.pf-card-open {
+  font-family: 'Special Elite', serif;
+  font-size: 0.72rem;
+  color: #c8782a;
+  margin-top: 8px;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.pf-card:hover .pf-card-open {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ───────────── Chips ───────────── */
+.pf-chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.pf-chip {
+  font-family: 'Special Elite', serif;
+  font-size: 0.72rem;
+  color: #3a3530;
+  background: #ede8de;
+  border: 1px solid rgba(26, 18, 8, 0.14);
+  border-radius: 6px;
+  padding: 5px 10px;
+}
+
+.pf-chip.sm { font-size: 0.64rem; padding: 3px 7px; }
+.pf-chip.more { color: #7a6f5a; border-style: dashed; }
+
+/* ───────────── Stack section ───────────── */
+.pf-stackgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 18px;
+  margin-top: 26px;
+}
+
+.pf-stackgroup {
+  padding: 18px 20px;
+  background: #fbf8f1;
+  border: 1px solid rgba(26, 18, 8, 0.1);
+  border-radius: 14px;
+}
+
+.pf-stackname {
+  font-family: 'Special Elite', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #c8782a;
+  margin-bottom: 12px;
+}
+
+/* ───────────── Contact ───────────── */
+.pf-cta {
+  margin-top: 24px;
+  border: none;
+  cursor: pointer;
+  font-family: 'Special Elite', serif;
+  font-size: 0.88rem;
+  color: #f2ede3;
+  background: #c8782a;
+  padding: 13px 26px;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(200, 120, 42, 0.35);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.pf-cta:hover { background: #7a4a1a; transform: translateY(-2px); }
+
+.pf-contacts {
+  list-style: none;
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 460px;
+}
+
+.pf-contact {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  padding: 14px 18px;
+  background: #fbf8f1;
+  border: 1px solid rgba(26, 18, 8, 0.1);
+  border-radius: 12px;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pf-contact:hover {
+  transform: translateX(3px);
+  border-color: #c8782a;
+  box-shadow: 0 8px 20px rgba(26, 18, 8, 0.1);
+}
+
+.pf-contact-glyph {
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: #1a1208;
+  color: #e8a55a;
+  font-size: 0.95rem;
+}
+
+.pf-contact-meta { display: flex; flex-direction: column; flex: 1 1 auto; }
+
+.pf-contact-label {
+  font-family: 'Special Elite', serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #7a6f5a;
+}
+
+.pf-contact-value {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1rem;
+  color: #1a1208;
+}
+
+.pf-contact-arrow { color: #c8782a; font-size: 1rem; }
+
+/* ───────────── Detail / case study ───────────── */
+.pf-detail {
+  padding: 0 0 48px;
+  max-width: 760px;
+}
+
+.pf-back {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  margin: 18px 0 0 24px;
+  border: 1px solid rgba(26, 18, 8, 0.15);
+  background: rgba(251, 248, 241, 0.9);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  font-family: 'Special Elite', serif;
+  font-size: 0.76rem;
+  color: #1a1208;
+  padding: 7px 14px;
+  border-radius: 8px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.pf-back:hover { background: #1a1208; color: #f2ede3; }
+
+.pf-detail-hero {
+  margin: 16px 24px 0;
+  padding: 34px 30px;
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, var(--accent, #c8782a) 0%, rgba(26, 18, 8, 0.92) 130%);
+  position: relative;
+  overflow: hidden;
+}
+
+.pf-detail-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 85% -10%, rgba(255, 255, 255, 0.35), transparent 45%);
+  pointer-events: none;
+}
+
+.pf-detail-herotext { position: relative; z-index: 1; }
+
+.pf-detail-title {
+  font-family: 'Caveat', cursive;
+  font-size: 2.8rem;
+  line-height: 1;
+  color: #1a1208;
+}
+
+.pf-detail-hook {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.12rem;
+  line-height: 1.45;
+  color: #2a2014;
+  margin-top: 12px;
+  max-width: 560px;
+}
+
+.pf-detail-body { padding: 0 30px; }
+
+.pf-block { margin-top: 26px; }
+
+.pf-block-label {
+  font-family: 'Special Elite', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c8782a;
+  margin-bottom: 8px;
+}
+
+.pf-block-text {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.08rem;
+  line-height: 1.6;
+  color: #1a1208;
+}
+
+.pf-detail-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.pf-link {
+  font-family: 'Special Elite', serif;
+  font-size: 0.8rem;
+  text-decoration: none;
+  color: #1a1208;
+  border: 1.5px solid #1a1208;
+  border-radius: 8px;
+  padding: 10px 18px;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.pf-link:hover { background: #1a1208; color: #f2ede3; }
+
+.pf-link.primary {
+  background: #c8782a;
+  border-color: #c8782a;
+  color: #f2ede3;
+}
+
+.pf-link.primary:hover { background: #7a4a1a; border-color: #7a4a1a; }
+
+.pf-link-static {
+  font-family: 'Special Elite', serif;
+  font-size: 0.8rem;
+  color: #7a6f5a;
+}

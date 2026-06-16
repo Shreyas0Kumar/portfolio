@@ -1,0 +1,360 @@
+/* SafariApp.css */
+
+.safari {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Tab strip ── */
+.safari-tabstrip {
+  flex: 0 0 38px;
+  display: flex;
+  align-items: stretch;
+  gap: 2px;
+  padding: 6px 8px 0;
+  background: #e4ddcb;
+  overflow-x: auto;
+}
+
+.safari-tab {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 110px;
+  max-width: 190px;
+  padding: 0 6px 0 12px;
+  background: #ded6c2;
+  border-radius: 8px 8px 0 0;
+  font-family: 'Special Elite', serif;
+  font-size: 0.72rem;
+  color: #3a3530;
+  cursor: pointer;
+}
+
+.safari-tab.active {
+  background: #f2ede3;
+  color: #1a1208;
+}
+
+.safari-tab-title {
+  flex: 1 1 auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.safari-tab-close {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1;
+  color: #7a6f5a;
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+.safari-tab-close:hover {
+  background: rgba(0, 0, 0, 0.12);
+  color: #1a1208;
+}
+
+.safari-newtab {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #3a3530;
+  cursor: pointer;
+  padding: 0 10px;
+  align-self: center;
+}
+
+.safari-newtab:hover { color: #1a1208; }
+
+/* ── Toolbar ── */
+.safari-chrome {
+  flex: 0 0 46px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  background: #f2ede3;
+  border-bottom: 1px solid rgba(26, 18, 8, 0.1);
+}
+
+.safari-nav {
+  display: flex;
+  gap: 2px;
+}
+
+.safari-nav button {
+  border: none;
+  background: transparent;
+  font-size: 1.15rem;
+  color: #3a3530;
+  cursor: pointer;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  line-height: 1;
+}
+
+.safari-nav button:disabled {
+  color: rgba(58, 53, 48, 0.3);
+  cursor: default;
+}
+
+.safari-nav button:not(:disabled):hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.safari-addressform {
+  flex: 1 1 auto;
+  display: flex;
+}
+
+.safari-address {
+  width: 100%;
+  font-family: 'Special Elite', serif;
+  font-size: 0.78rem;
+  color: #1a1208;
+  text-align: center;
+  background: #ede8de;
+  border: 1px solid rgba(26, 18, 8, 0.15);
+  border-radius: 8px;
+  padding: 7px 14px;
+  outline: none;
+}
+
+.safari-address:focus {
+  border-color: #c8782a;
+  background: #ffffff;
+}
+
+.safari-external {
+  text-decoration: none;
+  color: #3a3530;
+  font-size: 1.05rem;
+  padding: 3px 8px;
+  border-radius: 6px;
+  line-height: 1;
+}
+
+.safari-external:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #1a1208;
+}
+
+/* ── Content ── */
+.safari-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  position: relative;
+  background: #ffffff;
+}
+
+.safari-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: #ffffff;
+}
+
+/* Floating escape hatch — opens the current page in the real browser */
+.safari-openreal {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  z-index: 2;
+  font-family: 'Special Elite', serif;
+  font-size: 0.74rem;
+  text-decoration: none;
+  color: #f2ede3;
+  background: rgba(26, 18, 8, 0.92);
+  padding: 8px 14px;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.safari-openreal:hover {
+  background: #c8782a;
+}
+
+/* Live screenshot preview for non-embeddable sites */
+.safari-preview {
+  position: relative;
+  height: 100%;
+  overflow: auto;
+  background: #ffffff;
+}
+
+.safari-preview-shot {
+  display: block;
+}
+
+.safari-preview-shot img {
+  width: 100%;
+  display: block;
+  transition: opacity 0.35s ease;
+}
+
+.safari-preview-load {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-family: 'Special Elite', serif;
+  font-size: 0.82rem;
+  color: #7a6f5a;
+  background: #f2ede3;
+}
+
+.safari-spinner {
+  width: 26px;
+  height: 26px;
+  border: 3px solid rgba(26, 18, 8, 0.15);
+  border-top-color: #c8782a;
+  border-radius: 50%;
+  animation: safariSpin 0.8s linear infinite;
+}
+
+@keyframes safariSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Landing card fallback for non-embeddable sites */
+.safari-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px;
+  background: #f2ede3;
+}
+
+.safari-card-glyph { font-size: 46px; line-height: 1; }
+
+.safari-card-host {
+  font-family: 'Caveat', cursive;
+  font-size: 2rem;
+  color: #1a1208;
+  margin-top: 12px;
+}
+
+.safari-card-note {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1rem;
+  color: #3a3530;
+  max-width: 360px;
+  line-height: 1.5;
+  margin-top: 8px;
+}
+
+.safari-card-btn {
+  margin-top: 20px;
+  font-family: 'Special Elite', serif;
+  font-size: 0.82rem;
+  text-decoration: none;
+  color: #f2ede3;
+  background: #c8782a;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+.safari-card-btn:hover { background: #7a4a1a; }
+
+.safari-card-url {
+  margin-top: 16px;
+  font-family: 'Special Elite', serif;
+  font-size: 0.68rem;
+  color: #7a6f5a;
+  word-break: break-all;
+  max-width: 420px;
+}
+
+/* ── Start page ── */
+.safari-page {
+  height: 100%;
+  overflow-y: auto;
+  padding: 28px 32px;
+  background: #f2ede3;
+}
+
+.safari-title {
+  font-family: 'Caveat', cursive;
+  font-size: 2rem;
+  color: #1a1208;
+  margin-bottom: 18px;
+}
+
+.safari-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 16px;
+}
+
+.safari-fav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 18px 10px;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  background: #ede8de;
+  border: 1px solid rgba(26, 18, 8, 0.1);
+  border-radius: 12px;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+.safari-fav:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(26, 18, 8, 0.18);
+}
+
+.safari-fav-glyph { font-size: 30px; line-height: 1; }
+
+.safari-fav-label {
+  font-family: 'Special Elite', serif;
+  font-size: 0.74rem;
+  color: #1a1208;
+  text-align: center;
+}
+
+.safari-note {
+  margin-top: 22px;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.9rem;
+  color: #7a6f5a;
+  line-height: 1.4;
+}
+
+/* Search-opened-in-new-tab confirmation */
+.safari-toast {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(26, 18, 8, 0.92);
+  color: #f2ede3;
+  font-family: 'Special Elite', serif;
+  font-size: 0.76rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  animation: safariToast 0.2s ease;
+}
+
+@keyframes safariToast {
+  from { opacity: 0; transform: translate(-50%, 6px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}

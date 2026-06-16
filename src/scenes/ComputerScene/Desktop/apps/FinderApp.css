@@ -1,0 +1,176 @@
+/* FinderApp.css */
+
+.finder {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+}
+
+/* ── Sidebar ── */
+.finder-sidebar {
+  flex: 0 0 168px;
+  background: #ede8de;
+  border-right: 1px solid rgba(26, 18, 8, 0.1);
+  padding: 16px 10px;
+  overflow-y: auto;
+}
+
+.finder-sidebar-head {
+  font-family: 'Special Elite', serif;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #7a6f5a;
+  padding: 0 8px 8px;
+}
+
+.finder-loc {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  background: transparent;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.95rem;
+  color: #3a3530;
+  padding: 7px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.finder-loc:hover { background: rgba(26, 18, 8, 0.06); }
+
+.finder-loc.active {
+  background: #c8782a;
+  color: #f2ede3;
+}
+
+.finder-loc-icon { font-size: 0.95rem; }
+
+/* ── Main file area ── */
+.finder-main {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 18px 22px;
+}
+
+.finder-path {
+  font-family: 'Special Elite', serif;
+  font-size: 0.78rem;
+  color: #1a1208;
+  margin-bottom: 16px;
+}
+
+.finder-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 14px;
+}
+
+.finder-file {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 14px 8px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.finder-file:hover { background: rgba(26, 18, 8, 0.05); }
+.finder-file.selected { background: rgba(200, 120, 42, 0.22); }
+
+.finder-tip {
+  margin-top: 20px;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.85rem;
+  color: #7a6f5a;
+}
+
+/* ── Quick Look ── */
+.finder-quicklook {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13, 10, 5, 0.55);
+}
+
+.finder-ql-panel {
+  width: 80%;
+  height: 86%;
+  display: flex;
+  flex-direction: column;
+  background: #f2ede3;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+}
+
+.finder-ql-bar {
+  flex: 0 0 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  background: #ede8de;
+  border-bottom: 1px solid rgba(26, 18, 8, 0.1);
+}
+
+.finder-ql-title {
+  flex: 1 1 auto;
+  font-family: 'Special Elite', serif;
+  font-size: 0.8rem;
+  color: #1a1208;
+}
+
+.finder-ql-open {
+  font-family: 'Special Elite', serif;
+  font-size: 0.74rem;
+  text-decoration: none;
+  color: #c8782a;
+}
+
+.finder-ql-close {
+  border: none;
+  background: transparent;
+  font-size: 0.85rem;
+  color: #7a6f5a;
+  cursor: pointer;
+}
+
+.finder-ql-frame {
+  flex: 1 1 auto;
+  width: 100%;
+  border: none;
+  background: #fff;
+}
+
+/* Finder needs focus for the Space-to-Quick-Look shortcut */
+.finder:focus { outline: none; }
+
+.finder-file-icon { font-size: 38px; line-height: 1; }
+
+.finder-file-name {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.9rem;
+  color: #1a1208;
+  text-align: center;
+}
+
+.finder-file-kind {
+  font-family: 'Special Elite', serif;
+  font-size: 0.6rem;
+  color: #7a6f5a;
+  letter-spacing: 0.04em;
+}

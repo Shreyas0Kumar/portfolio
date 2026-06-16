@@ -1,0 +1,127 @@
+/* AboutMe.css — compact "About This Mac"-style dialog */
+
+.about-window {
+  position: relative;
+  z-index: 1;
+  width: 340px;
+  background: #f2ede3;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+}
+
+/* Title bar */
+.about-titlebar {
+  position: relative;
+  height: 32px;
+  background: #1a1208;
+  display: flex;
+  align-items: center;
+}
+
+.about-lights {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 12px;
+}
+
+.about-light {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+}
+
+.about-light.close    { background: #ff5f57; cursor: pointer; }
+.about-light.minimize { background: #febc2e; }
+.about-light.maximize { background: #28c840; }
+
+.about-titletext {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Special Elite', serif;
+  font-size: 0.76rem;
+  color: #f2ede3;
+  pointer-events: none;
+}
+
+/* Body */
+.about-body {
+  padding: 28px 28px 26px;
+  text-align: center;
+}
+
+.about-avatar {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: linear-gradient(150deg, #c8782a, #7a4a1a);
+  color: #f2ede3;
+  font-family: 'Caveat', cursive;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.about-name {
+  font-family: 'Caveat', cursive;
+  font-size: 1.9rem;
+  color: #1a1208;
+  line-height: 1;
+}
+
+.about-role {
+  font-family: 'Special Elite', serif;
+  font-size: 0.74rem;
+  color: #c8782a;
+  margin-top: 4px;
+  letter-spacing: 0.02em;
+}
+
+.about-bio {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.95rem;
+  color: #3a3530;
+  line-height: 1.45;
+  margin-top: 16px;
+}
+
+/* Contact rows */
+.about-contacts {
+  list-style: none;
+  margin-top: 20px;
+  border-top: 1px solid rgba(26, 18, 8, 0.12);
+}
+
+.about-contact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 9px 2px;
+  border-bottom: 1px solid rgba(26, 18, 8, 0.08);
+}
+
+.about-contact-label {
+  font-family: 'Special Elite', serif;
+  font-size: 0.7rem;
+  color: #7a6f5a;
+  letter-spacing: 0.04em;
+}
+
+.about-contact-value {
+  font-family: 'Special Elite', serif;
+  font-size: 0.74rem;
+  color: #1a1208;
+  text-decoration: none;
+}
+
+.about-contact-value:hover {
+  color: #c8782a;
+  text-decoration: underline;
+}
