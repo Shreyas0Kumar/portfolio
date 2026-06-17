@@ -202,8 +202,13 @@ function Overview({ intro, stats, cover, teasers, onOpen, onSeeAll }) {
             onClick={() => onOpen(cover.id)}
           >
             <div className="pf-cover-img">
+              {cover.images?.[0] && (
+                <img className="pf-img-fill" src={cover.images[0]} alt={cover.name} loading="lazy" />
+              )}
               <span className="pf-cover-idx">01</span>
-              <span className="pf-cover-cap">[ {(cover.assetPlaceholders || [])[0] || 'cover image'} ]</span>
+              {!cover.images?.[0] && (
+                <span className="pf-cover-cap">[ {(cover.assetPlaceholders || [])[0] || 'cover image'} ]</span>
+              )}
             </div>
             <div className="pf-cover-body">
               <span className="pf-art-kicker">{projectKicker(cover)}</span>
@@ -247,8 +252,13 @@ function Work({ items, onOpen }) {
       {items.map((p, i) => (
         <article key={p.id} className={`pf-article${i % 2 ? ' reverse' : ''}`} style={{ '--accent': accentFor(p.id) }}>
           <div className="pf-art-img" onClick={() => onOpen(p.id)}>
+            {p.images?.[0] && (
+              <img className="pf-img-fill" src={p.images[0]} alt={p.name} loading="lazy" />
+            )}
             <span className="pf-art-idx">{String(i + 1).padStart(2, '0')}</span>
-            <span className="pf-art-cap">[ {(p.assetPlaceholders || [])[0] || 'project image'} ]</span>
+            {!p.images?.[0] && (
+              <span className="pf-art-cap">[ {(p.assetPlaceholders || [])[0] || 'project image'} ]</span>
+            )}
             {awardStamp(p) && <span className="pf-stamp">{awardStamp(p)}</span>}
           </div>
           <div className="pf-art-body">

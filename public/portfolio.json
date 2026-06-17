@@ -14,11 +14,7 @@
       "linkedin": "https://www.linkedin.com/in/shreyas0kumar/"
     },
     "phone": "+91 9473052048",
-    "altTitles": [
-      "AI Engineer",
-      "LLM Engineer",
-      "Applied ML Engineer"
-    ],
+    "altTitles": ["AI Engineer", "LLM Engineer", "Applied ML Engineer"],
     "openToRelocate": true
   },
   "intro": {
@@ -108,7 +104,7 @@
       ],
       "awards": [],
       "links": {
-        "product": "https://lumo-product-page.pages.dev/",
+        "product": "https://lumo.shreyas.space/",
         "repo": "https://github.com/Shreyas0Kumar/lumo-demo"
       },
       "assetPlaceholders": [
@@ -163,17 +159,16 @@
           "github": null
         }
       ],
-      "tags": [
-        "Voice AI",
-        "Child Safety",
-        "Real-time",
-        "Product"
-      ],
+      "tags": ["Voice AI", "Child Safety", "Real-time", "Product"],
       "linkedinPosts": [
         "https://www.linkedin.com/feed/update/urn:li:activity:7470157780293951488/",
         "https://www.linkedin.com/feed/update/urn:li:activity:7451147372275068928/"
       ],
-      "images": [],
+      "images": [
+        "/images/lumo/hero.webp",
+        "/images/lumo/parent-controls.webp",
+        "/images/lumo/pipeline.webp"
+      ],
       "featured": true,
       "order": 1,
       "event": null
@@ -232,9 +227,7 @@
         "Async pipeline cut runtime by ~50%",
         "Embedding-based judge-poster matching using professor expertise vectors and abstracts"
       ],
-      "awards": [
-        "First prize, graduate (MS) track"
-      ],
+      "awards": ["First prize, graduate (MS) track"],
       "links": {
         "repo": "https://github.com/melvin1117/ecs-reseach-day-poster-evaluation",
         "product": null
@@ -299,16 +292,11 @@
           "github": "https://github.com/abhishekug99"
         }
       ],
-      "tags": [
-        "Optimization",
-        "Backend",
-        "ML",
-        "Decision System"
-      ],
+      "tags": ["Optimization", "Backend", "ML", "Decision System"],
       "linkedinPosts": [
         "https://www.linkedin.com/feed/update/urn:li:activity:7309291364645548033/"
       ],
-      "images": [],
+      "images": ["/images/cuse-rank/award.webp"],
       "featured": true,
       "order": 2,
       "event": "Syracuse University ECS Challenge (48-hour coding competition)"
@@ -394,12 +382,7 @@
       "status": "Course project (completed)",
       "role": "Led a team of 3, building an iOS music client in SwiftUI with ML-driven recommendations from listening history and Spotify/YouTube API integration for streaming and authentication.",
       "collaborators": [],
-      "tags": [
-        "iOS",
-        "SwiftUI",
-        "ML",
-        "Music"
-      ],
+      "tags": ["iOS", "SwiftUI", "ML", "Music"],
       "linkedinPosts": [],
       "images": [],
       "featured": false,
@@ -450,12 +433,8 @@
         "Docker / Docker Compose",
         "Celery"
       ],
-      "metrics": [
-        "Reduced manual scouting by ~50%"
-      ],
-      "awards": [
-        "Runner-up (2nd place), Ag-Tech category"
-      ],
+      "metrics": ["Reduced manual scouting by ~50%"],
+      "awards": ["Runner-up (2nd place), Ag-Tech category"],
       "links": {
         "repo": "https://github.com/melvin1117/ag-tech-hack-merced",
         "product": null
@@ -517,16 +496,14 @@
           "github": "https://github.com/Aatisha"
         }
       ],
-      "tags": [
-        "IoT",
-        "Multi-modal",
-        "AgTech",
-        "Dashboard"
-      ],
+      "tags": ["IoT", "Multi-modal", "AgTech", "Dashboard"],
       "linkedinPosts": [
         "https://www.linkedin.com/feed/update/urn:li:activity:7305783400798273536/"
       ],
-      "images": [],
+      "images": [
+        "/images/agrovision/demo.webp",
+        "/images/agrovision/working.webp"
+      ],
       "featured": false,
       "order": 1,
       "event": "HackMerced",
@@ -570,9 +547,7 @@
         "Docker / Docker Compose",
         "Gemini-powered extraction"
       ],
-      "metrics": [
-        "~10 seconds per report"
-      ],
+      "metrics": ["~10 seconds per report"],
       "awards": [],
       "links": {
         "repo": "https://github.com/melvin1117/report-xplain",
@@ -638,15 +613,15 @@
           "github": "https://github.com/Amar240"
         }
       ],
-      "tags": [
-        "Healthcare",
-        "Document Intelligence",
-        "Accessibility"
-      ],
+      "tags": ["Healthcare", "Document Intelligence", "Accessibility"],
       "linkedinPosts": [
         "https://www.linkedin.com/feed/update/urn:li:activity:7302588458772910080/"
       ],
-      "images": [],
+      "images": [
+        "/images/report-xplain/demo.webp",
+        "/images/report-xplain/team.webp",
+        "/images/report-xplain/environment.webp"
+      ],
       "featured": false,
       "order": 2,
       "event": "HenHacks '25",
@@ -743,15 +718,11 @@
       "status": "Hackathon",
       "role": "Built the net-banking backend solo during the 4-hour individual phase: a layered Java / Spring Boot service with APIs that authenticated whether a transaction was legitimate, recorded the authorization in the database, then allowed the transfer. Used AI only for a static HTML frontend (as permitted) and wrote all backend logic by hand; attempted Kafka but dropped it under the time limit.",
       "collaborators": [],
-      "tags": [
-        "Java",
-        "Backend",
-        "Fintech"
-      ],
+      "tags": ["Java", "Backend", "Fintech"],
       "linkedinPosts": [
         "https://www.linkedin.com/feed/update/urn:li:activity:7451341745176399872/"
       ],
-      "images": [],
+      "images": ["/images/hcltech/logo.webp"],
       "featured": false,
       "order": 3,
       "event": "4-hour hackathon",
@@ -850,14 +821,9 @@
       "status": "Case competition",
       "role": "Sole technical member on a team of 4: built and iteratively improved the predictive models (Random Forest, XGBoost ensembles) on large-scale healthcare data via a live scoreboard, using cross-validation and hyperparameter tuning, and translated business teammates' analysis needs into model features.",
       "collaborators": [],
-      "tags": [
-        "Healthcare",
-        "Machine Learning",
-        "XGBoost",
-        "Data at Scale"
-      ],
+      "tags": ["Healthcare", "Machine Learning", "XGBoost", "Data at Scale"],
       "linkedinPosts": [],
-      "images": [],
+      "images": ["/images/humana-mays-case-competition/logo.webp"],
       "featured": false,
       "order": 4,
       "event": "Humana-Mays Healthcare Analytics Case Competition 2024",
@@ -1194,9 +1160,7 @@
           "date": "optional date"
         }
       ],
-      "questionsAsked": [
-        "A few questions they actually asked"
-      ],
+      "questionsAsked": ["A few questions they actually asked"],
       "takeaway": "One honest takeaway",
       "order": "display order, editable"
     },

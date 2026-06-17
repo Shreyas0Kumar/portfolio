@@ -44,7 +44,7 @@ const newTabAt = entry => ({ id: TAB_SEQ++, history: [entry], idx: 0 })
 
 // Hosts known to refuse iframe embedding (X-Frame-Options / CSP). These get a
 // landing card rather than a broken "refused to connect" frame.
-const NO_EMBED = ['linkedin.com', 'github.com', 'google.com', 'x.com', 'twitter.com', 'facebook.com', 'instagram.com', 'youtube.com']
+const NO_EMBED = ['linkedin.com', 'github.com', 'google.com', 'x.com', 'twitter.com', 'facebook.com', 'instagram.com', 'youtube.com', 'lumo.shreyas.space']
 
 // Hosts that show a login wall to logged-out visitors — a screenshot would just
 // capture their sign-in page, so these get a plain card instead of a preview.

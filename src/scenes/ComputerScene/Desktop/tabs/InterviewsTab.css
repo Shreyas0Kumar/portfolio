@@ -1,82 +1,198 @@
-/* InterviewsTab.css — Glassdoor-style interview reviews */
+/* ===========================================================================
+   InterviewsTab — editorial "newspaper" rendition of interview reviews.
+   Mirrors PortfolioApp's warm paper-and-typewriter system: Caveat headlines,
+   Special Elite labels, Patrick Hand body, espresso ink on cream with a
+   #c8782a orange. All content comes from public/portfolio.json.
+   =========================================================================== */
 
 .iv {
-  max-width: 760px;
-  color: #1a1208;
+  --paper: #f2ede3;
+  --raised: #fbf8f1;
+  --ink: #1a1208;
+  --ink-2: #2a241c;
+  --ink-3: #3a3530;
+  --ink-4: #4a443b;
+  --muted: #6b5d48;
+  --faint: #8a7f6a;
+  --line: rgba(26, 18, 8, 0.14);
+  --line-2: rgba(26, 18, 8, 0.3);
+  --orange: #c8782a;
+
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  container-type: inline-size;
+  -webkit-font-smoothing: antialiased;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
-.iv-head { margin-bottom: 4px; }
+.iv ::selection { background: rgba(200, 120, 42, 0.22); }
 
-.iv-title {
-  font-family: 'Special Elite', serif;
-  font-size: 1.6rem;
-  margin: 0 0 6px;
+.iv::-webkit-scrollbar { width: 11px; }
+.iv::-webkit-scrollbar-thumb {
+  background: rgba(26, 18, 8, 0.22);
+  border-radius: 6px;
+  border: 3px solid var(--paper);
 }
 
-.iv-sub {
-  font-size: 0.92rem;
-  line-height: 1.5;
-  color: #6b6051;
-  max-width: 560px;
-  margin: 0;
+@keyframes ivFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes ivPulse {
+  0%, 100% { box-shadow: 0 0 0 3px rgba(90, 214, 114, 0.25); }
+  50%      { box-shadow: 0 0 0 6px rgba(90, 214, 114, 0.06); }
 }
+@keyframes ivExpand { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
-.iv-summary {
+/* ===================== MASTHEAD ===================== */
+
+.iv-mast {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: var(--paper);
+  padding: 14px clamp(20px, 4cqi, 52px) 0;
+  border-bottom: 2.5px solid var(--ink);
+  box-shadow: 0 8px 18px -12px rgba(26, 18, 8, 0.5);
+}
+.iv-mast-top {
   display: flex;
-  gap: 28px;
-  margin-top: 18px;
-  padding: 14px 20px;
-  background: #ede8de;
-  border: 1px solid rgba(26, 18, 8, 0.1);
-  border-radius: 10px;
-}
-
-.iv-stat { display: flex; flex-direction: column; gap: 2px; }
-
-.iv-stat-num {
-  font-family: 'Special Elite', serif;
-  font-size: 1.3rem;
-  color: #1a1208;
-}
-
-.iv-stat-label {
-  font-size: 0.7rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: #7a6f5a;
-}
-
-/* ── Cards ── */
-.iv-list {
-  list-style: none;
-  margin: 22px 0 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   gap: 12px;
+  flex-wrap: wrap;
+  font-family: 'Special Elite', serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(26, 18, 8, 0.2);
 }
+.iv-mast-status { display: flex; align-items: center; gap: 7px; color: var(--orange); }
+.iv-status-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #5ad672;
+  display: inline-block;
+  flex-shrink: 0;
+  animation: ivPulse 2s ease-in-out infinite;
+}
+.iv-mast-main {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 10px 0 8px;
+  flex-wrap: wrap;
+}
+.iv-mast-name {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: clamp(32px, 6cqi, 54px);
+  line-height: 0.82;
+  margin: 0;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  color: var(--ink);
+}
+.iv-mast-roleblock { text-align: right; max-width: 380px; flex: 0 1 auto; }
+.iv-mast-role {
+  font-family: 'Special Elite', serif;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+.iv-mast-tag {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 13px;
+  line-height: 1.42;
+  color: var(--ink-4);
+  margin: 4px 0 0;
+}
+
+/* ===================== CONTENT SHELL ===================== */
+
+.iv-content {
+  padding: 0 clamp(20px, 4cqi, 52px) 64px;
+  animation: ivFade 0.35s ease both;
+}
+
+.iv-eyebrow {
+  font-family: 'Special Elite', serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin: 26px 0 2px;
+}
+
+/* Stats strip */
+.iv-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  margin-bottom: 4px;
+}
+.iv-stat { padding: 20px; border-right: 1px solid rgba(26, 18, 8, 0.12); }
+.iv-stat:last-child { border-right: none; }
+.iv-stat-n {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: clamp(38px, 5cqi, 52px);
+  line-height: 0.8;
+  color: var(--orange);
+}
+.iv-stat-l {
+  font-family: 'Special Elite', serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+.iv-sectitle {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: clamp(30px, 5cqi, 46px);
+  line-height: 0.95;
+  color: var(--ink);
+  margin: 0 0 16px;
+  border-bottom: 2.5px solid var(--ink);
+  padding-bottom: 12px;
+}
+
+.iv-empty { color: var(--muted); font-size: 0.95rem; padding: 40px; }
+
+/* ===================== CARDS ===================== */
+
+.iv-list { display: flex; flex-direction: column; }
 
 .iv-card {
-  background: #f7f3ea;
-  border: 1px solid rgba(26, 18, 8, 0.12);
-  border-radius: 12px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(26, 18, 8, 0.15);
+  border-radius: 4px;
   overflow: hidden;
-  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+  background: var(--raised);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-
 .iv-card.open {
-  border-color: rgba(200, 120, 42, 0.5);
+  border: 1.5px solid rgba(200, 120, 42, 0.55);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .iv-cardhead {
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
-  padding: 16px 18px;
+  padding: 22px 26px 18px;
   border: none;
   background: transparent;
   text-align: left;
@@ -84,178 +200,237 @@
   font: inherit;
 }
 
-.iv-cardhead:hover { background: rgba(26, 18, 8, 0.03); }
-
-.iv-cardmain { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-
-.iv-company {
+.iv-cardmain { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; }
+.iv-kicker {
   font-family: 'Special Elite', serif;
-  font-size: 1.05rem;
-  color: #1a1208;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--orange);
+  line-height: 1.5;
 }
-
-.iv-role { font-size: 0.9rem; color: #3a3530; }
-.iv-meta { font-size: 0.78rem; color: #8a7f6a; margin-top: 2px; }
+.iv-company {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: clamp(34px, 5cqi, 48px);
+  line-height: 0.85;
+  color: var(--ink);
+  display: block;
+}
+.iv-role {
+  font-family: 'Special Elite', serif;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--orange);
+  margin-top: 2px;
+}
 
 .iv-cardside {
   display: flex;
-  align-items: center;
-  gap: 14px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
   flex-shrink: 0;
+  padding-top: 2px;
 }
-
-.iv-stars { font-size: 0.95rem; letter-spacing: 1px; white-space: nowrap; }
-.iv-star { color: rgba(26, 18, 8, 0.18); }
+.iv-stars { display: flex; gap: 2px; white-space: nowrap; }
+.iv-star { color: rgba(26, 18, 8, 0.18); font-size: 16px; line-height: 1; }
 .iv-star.on { color: #0caa41; } /* Glassdoor-green nod */
 
-.iv-badges { display: flex; gap: 6px; }
-
+.iv-badges { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
 .iv-badge {
-  font-size: 0.68rem;
+  font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.03em;
-  padding: 3px 9px;
+  padding: 3px 10px;
   border-radius: 999px;
   white-space: nowrap;
+  display: inline-block;
 }
-
 .iv-badge.diff.easy { background: #d8f0d4; color: #2f7d33; }
 .iv-badge.diff.med  { background: #fbecc8; color: #9a6a16; }
 .iv-badge.diff.hard { background: #f4d4d0; color: #a8362b; }
-
-.iv-badge.outcome { background: rgba(26, 18, 8, 0.08); color: #6b6051; }
-.iv-badge.outcome.good { background: #d8f0d4; color: #1f7a3a; }
+.iv-badge.outcome.offer   { background: #d8f0d4; color: #1f7a3a; }
 .iv-badge.outcome.process { background: #dfe7f2; color: #3a5a86; }
+.iv-badge.outcome.wait    { background: #f3e8d0; color: #8a5a2a; }
+.iv-badge.outcome.neutral { background: rgba(26, 18, 8, 0.08); color: #6b6051; }
 
-.iv-chevron { font-size: 0.8rem; color: #8a7f6a; }
+.iv-chevron { font-family: 'Special Elite', serif; font-size: 13px; color: var(--faint); margin-top: 2px; }
 
-/* ── Expanded detail ── */
+/* ===================== EXPANDED DETAIL ===================== */
+
 .iv-detail {
-  padding: 4px 18px 20px;
-  border-top: 1px solid rgba(26, 18, 8, 0.08);
-  animation: iv-expand 0.18s ease;
+  padding: 0 26px 28px;
+  border-top: 1px solid rgba(26, 18, 8, 0.1);
+  animation: ivExpand 0.2s ease;
+}
+.iv-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 256px;
+  gap: 32px;
+  padding-top: 20px;
+  align-items: start;
 }
 
-@keyframes iv-expand { from { opacity: 0; } to { opacity: 1; } }
-
-.iv-block { margin-top: 16px; }
-
+.iv-block { margin-bottom: 24px; }
+.iv-block:last-child { margin-bottom: 0; }
 .iv-block-label {
   font-family: 'Special Elite', serif;
-  font-size: 0.74rem;
-  letter-spacing: 0.06em;
+  font-size: 11px;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #c8782a;
-  margin: 0 0 8px;
+  color: var(--orange);
+  margin: 0 0 12px;
 }
 
+/* rounds timeline */
 .iv-rounds {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
-
-.iv-round {
-  position: relative;
-  padding-left: 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
+.iv-round { padding-left: 22px; position: relative; display: flex; flex-direction: column; gap: 3px; }
 .iv-round::before {
   content: '';
   position: absolute;
-  left: 3px;
-  top: 6px;
-  width: 7px;
-  height: 7px;
+  left: 2px; top: 6px;
+  width: 8px; height: 8px;
   border-radius: 50%;
-  background: #c8782a;
+  background: var(--orange);
+  display: block;
 }
+.iv-round-name { font-family: 'Special Elite', serif; font-size: 13px; color: var(--ink); line-height: 1.4; }
+.iv-round-detail { font-family: 'Patrick Hand', cursive; font-size: 15px; line-height: 1.45; color: var(--ink-4); }
 
-.iv-round-name { font-weight: 600; font-size: 0.9rem; color: #1a1208; }
-.iv-round-detail { font-size: 0.88rem; line-height: 1.45; color: #4a443b; }
-
-.iv-questions {
-  margin: 0;
+/* questions */
+.iv-questions { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.iv-question {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 16px;
+  line-height: 1.42;
+  color: var(--ink-3);
   padding-left: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+  position: relative;
+}
+.iv-question::before {
+  content: '▸';
+  position: absolute;
+  left: 0; top: 2px;
+  color: var(--orange);
+  font-size: 12px;
+  font-family: 'Special Elite', serif;
 }
 
-.iv-question { font-size: 0.9rem; line-height: 1.4; color: #3a3530; }
-
+/* takeaway blockquote */
 .iv-takeaway {
   font-family: 'Caveat', cursive;
-  font-size: 1.2rem;
-  line-height: 1.4;
-  color: #2a241c;
+  font-size: 21px;
+  line-height: 1.42;
+  color: var(--ink-2);
   margin: 0;
-  padding: 10px 14px;
+  padding: 14px 18px 14px 52px;
   background: #fff8e8;
-  border-left: 3px solid #c8782a;
-  border-radius: 0 8px 8px 0;
-}
-
-.iv-empty { color: #7a6f5a; font-size: 0.95rem; }
-
-/* ── Full story (from detailContent) ── */
-.iv-story + .iv-story { margin-top: 12px; }
-
-.iv-story-head {
-  font-family: 'Special Elite', serif;
-  font-size: 0.82rem;
-  color: #1a1208;
-  margin: 0 0 4px;
-}
-
-.iv-story-text {
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: #4a443b;
-  margin: 0;
-}
-
-.iv-story-text + .iv-story-text { margin-top: 8px; }
-
-/* ── Locked / ongoing card ── */
-.iv-card.locked {
+  border-left: 4px solid var(--orange);
+  border-radius: 0 10px 10px 0;
   position: relative;
-  background: #f1ece2;
+}
+.iv-quote {
+  position: absolute;
+  left: 13px; top: 6px;
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: 50px;
+  line-height: 1;
+  color: var(--orange);
+  opacity: 0.4;
 }
 
-.iv-card.locked .iv-cardhead { cursor: default; }
-.iv-card.locked .iv-cardhead:hover { background: transparent; }
+/* full story (from detailContent) */
+.iv-storysec + .iv-storysec { margin-top: 14px; }
+.iv-story-head { font-family: 'Special Elite', serif; font-size: 12px; color: var(--ink); margin: 0 0 6px; letter-spacing: 0.02em; }
+.iv-story-text { font-family: 'Patrick Hand', cursive; font-size: 16px; line-height: 1.55; color: var(--ink-3); margin: 0 0 8px; }
 
+/* facts sidebar */
+.iv-aside {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+  position: sticky;
+  top: 120px;
+}
+.iv-aside-label {
+  font-family: 'Special Elite', serif;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 3px;
+}
+.iv-fact { margin-bottom: 13px; padding-bottom: 13px; border-bottom: 1px solid rgba(26, 18, 8, 0.1); }
+.iv-fact-val { font-family: 'Patrick Hand', cursive; font-size: 16px; color: var(--ink); }
+.iv-fact--rating { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+.iv-rating-big {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 1;
+  color: var(--orange);
+  margin-top: 2px;
+}
+
+/* ===================== LOCKED / ONGOING CARD ===================== */
+
+.iv-card.locked { background: #f1ece2; }
+.iv-locked-inner { position: relative; min-height: 92px; overflow: hidden; }
 .iv-blur {
-  filter: blur(4px);
-  user-select: none;
+  filter: blur(5px);
+  opacity: 0.25;
   pointer-events: none;
+  user-select: none;
+  padding: 20px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
-
 .iv-lockoverlay {
   position: absolute;
   inset: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  text-align: center;
-  padding: 12px 24px;
-  background: rgba(241, 236, 226, 0.55);
+  gap: 12px;
+  padding: 16px 32px;
+  background: rgba(241, 236, 226, 0.65);
+}
+.iv-lock { font-size: 20px; flex-shrink: 0; }
+.iv-locktext { font-family: 'Patrick Hand', cursive; font-size: 15px; color: var(--ink-4); max-width: 440px; }
+.iv-locked-badge { position: absolute; top: 14px; right: 18px; }
+
+/* ===================== RESPONSIVE (narrow window) ===================== */
+
+@container (max-width: 720px) {
+  .iv-detail-grid { grid-template-columns: 1fr; }
+  .iv-aside { position: static; }
+  .iv-stats { grid-template-columns: repeat(2, 1fr); }
+  .iv-stat:nth-child(2) { border-right: none; }
+  .iv-stat:nth-child(1), .iv-stat:nth-child(2) { border-bottom: 1px solid rgba(26, 18, 8, 0.12); }
 }
 
-.iv-lock { font-size: 1.3rem; }
+@container (max-width: 560px) {
+  .iv-mast-main { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .iv-mast-roleblock { text-align: left; }
+  .iv-mast-name { white-space: normal; }
+  .iv-cardhead { flex-direction: column; gap: 12px; }
+  .iv-cardside { flex-direction: row; align-items: center; flex-wrap: wrap; }
+}
 
-.iv-locktext {
-  font-family: 'Patrick Hand', cursive;
-  font-size: 0.92rem;
-  color: #4a443b;
-  max-width: 360px;
+/* ===================== REDUCED MOTION ===================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .iv-content, .iv-detail { animation: none; }
+  .iv-status-dot { animation: none; }
 }

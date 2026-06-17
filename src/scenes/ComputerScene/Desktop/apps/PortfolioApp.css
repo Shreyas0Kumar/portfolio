@@ -273,6 +273,24 @@
   background-image: repeating-linear-gradient(135deg, var(--stripe-a), var(--stripe-a) 11px, var(--stripe-b) 11px, var(--stripe-b) 22px);
 }
 .pf-cover-img { min-height: 300px; }
+
+/* Real cover/article image fills the placeholder box when present. */
+.pf-img-fill {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+/* Over a photo, softly blur just the area behind the corner index so it stays
+   legible — no visible box (only applies when an image precedes it). */
+.pf-img-fill ~ .pf-cover-idx,
+.pf-img-fill ~ .pf-art-idx {
+  padding: 0 8px 4px;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+}
 .pf-cover-idx,
 .pf-art-idx {
   position: absolute;
@@ -558,7 +576,7 @@
   font-size: clamp(36px, 4.5cqi, 46px);
   line-height: 0.82;
   color: var(--ink);
-  margin: 0 0 2px;
+  margin: 0 0 7px;
 }
 .pf-job-role { font-family: 'Special Elite', serif; font-size: 13px; letter-spacing: 0.04em; color: var(--orange); margin-bottom: 12px; }
 .pf-job-summary { font-family: 'Patrick Hand', cursive; font-size: 17px; line-height: 1.46; color: var(--ink-2); margin: 0 0 14px; }

@@ -3,13 +3,10 @@ import InterviewsTab from '../tabs/InterviewsTab.jsx'
 
 /**
  * InterviewsApp
- * Standalone Interviews application. Wraps the existing InterviewsTab content
- * in the shared single-scroll app container.
+ * Standalone Interviews application. The editorial InterviewsTab is full-bleed
+ * (its own sticky masthead + internal scroll, like PortfolioApp), so it renders
+ * directly into the app body without the padded `.simple-app` wrapper.
  */
 export default function InterviewsApp() {
-  return (
-    <div className="simple-app">
-      <InterviewsTab />
-    </div>
-  )
+  return <InterviewsTab />
 }
