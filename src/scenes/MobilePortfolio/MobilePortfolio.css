@@ -74,10 +74,92 @@
   background: var(--c, #c8782a);
 }
 
+.mobile-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
 .mobile-card-title {
   font-family: 'Caveat', cursive;
   font-size: 1.7rem;
 }
+
+.mobile-card-badge {
+  font-family: 'Special Elite', serif;
+  font-size: 0.58rem;
+  letter-spacing: 0.04em;
+  color: #7a4a1a;
+  background: rgba(200, 120, 42, 0.16);
+  border: 1px solid rgba(200, 120, 42, 0.4);
+  border-radius: 20px;
+  padding: 3px 9px;
+  white-space: nowrap;
+}
+
+/* ── Intro / contact prose ── */
+.mobile-intro { margin-bottom: 28px; }
+
+.mobile-intro-head {
+  font-family: 'Caveat', cursive;
+  font-size: 1.9rem;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+
+.mobile-intro-line {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #3a3530;
+}
+
+.mobile-intro-line + .mobile-intro-line { margin-top: 8px; }
+
+/* ── Experience ── */
+.mobile-exp {
+  background: #f2ede3;
+  border: 1.5px solid #1a1208;
+  border-radius: 8px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  box-shadow: 3px 3px 0 rgba(26, 18, 8, 0.12);
+}
+
+.mobile-exp-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mobile-exp-role { font-family: 'Caveat', cursive; font-size: 1.5rem; }
+.mobile-exp-dates { font-family: 'Special Elite', serif; font-size: 0.62rem; color: #7a6f5a; white-space: nowrap; }
+.mobile-exp-company { font-family: 'Special Elite', serif; font-size: 0.78rem; color: #c8782a; }
+
+.mobile-exp-summary {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 0.96rem;
+  line-height: 1.45;
+  color: #3a3530;
+  margin-top: 8px;
+}
+
+/* ── Skills ── */
+.mobile-skills { display: flex; flex-direction: column; gap: 16px; }
+
+.mobile-skillname {
+  font-family: 'Special Elite', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #c8782a;
+  margin-bottom: 8px;
+}
+
+/* ── Contact ── */
+.mobile-contact .mobile-cta { display: inline-block; margin-top: 16px; }
 
 .mobile-card-what {
   font-family: 'Patrick Hand', cursive;

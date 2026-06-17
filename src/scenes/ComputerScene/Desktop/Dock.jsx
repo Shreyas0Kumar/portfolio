@@ -1,19 +1,24 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import './Dock.css'
 
 /**
  * Dock
  * macOS-style dock with cursor magnification. Click an icon to open that app
- * (or focus it if already open). Open apps show an indicator dot.
+ * (or focus it if already open). Open apps show an indicator dot. When a
+ * window is fullscreen the dock auto-hides off the bottom edge and re-appears
+ * when the cursor reaches the hot zone there (just like real macOS).
  *
  * Props:
  *   apps      {Array}    — [{ id, name, icon, iconClass } | { divider: true }]
  *   openIds   {string[]} — ids of currently-open apps
  *   focusedId {string}   — id of the frontmost app
  *   onOpen    {function} — (id) => void
+ *   collapsed {boolean}  — hide the dock until the bottom edge is hovered
  */
-export default function Dock({ apps, openIds, focusedId, onOpen }) {
+export default function Dock({ apps, openIds, focusedId, onOpen, collapsed }) {
   const iconRefs = useRef([])
+  const [peek, setPeek] = useState(false)
+  const hidden = collapsed && !peek
 
   // Magnify icons based on horizontal distance from the cursor. Done with
   // direct style writes (not React state) so it's smooth.
@@ -33,7 +38,16 @@ export default function Dock({ apps, openIds, focusedId, onOpen }) {
   }
 
   return (
-    <div className="dock" onMouseMove={onMove} onMouseLeave={reset}>
+    <>
+      {collapsed && (
+        <div className="dock-hot" onMouseEnter={() => setPeek(true)} />
+      )}
+      <div
+        className={`dock${hidden ? ' hidden' : ''}`}
+        onMouseMove={onMove}
+        onMouseEnter={() => setPeek(true)}
+        onMouseLeave={() => { reset(); setPeek(false) }}
+      >
       {apps.map((app, i) => {
         if (app.divider) return <span key={`div-${i}`} className="dock-divider" />
 
@@ -59,6 +73,7 @@ export default function Dock({ apps, openIds, focusedId, onOpen }) {
           </button>
         )
       })}
-    </div>
+      </div>
+    </>
   )
 }

@@ -1,17 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { projects } from '../../../../data/projects.js'
+import { usePortfolio } from '../../../../data/portfolio.jsx'
+import { driveFolderUrl } from './drive.js'
 import './TerminalApp.css'
 
 /**
  * TerminalApp
- * A playful fake shell that prints real info about Shreyas. Type `help`.
+ * A playful fake shell that prints real info about Shreyas, sourced from
+ * public/portfolio.json. Type `help`.
  *
  * Props:
  *   api {object} — { openApp(id), openAbout() } for the `open` command
  */
 const BANNER = `shreyas@portfolio ~ %  type "help" to get started`
 
-function runCommand(raw, api) {
+const short = url => (url || '').replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
+
+function runCommand(raw, api, data) {
+  const { profile, projects, hackathons } = data
   const [cmd, ...args] = raw.trim().split(/\s+/)
   switch (cmd) {
     case '': return ''
@@ -29,11 +34,13 @@ function runCommand(raw, api) {
         '  clear         clear the screen',
       ].join('\n')
     case 'whoami':
-      return 'Shreyas Kumar — AI Engineer. I build AI systems end-to-end, from data + retrieval pipelines to the interfaces people use.'
+      return `${profile.name} — ${profile.role}. ${profile.tagline}`
     case 'ls':
-      return 'projects   work   glassdoor   resume.pdf   contact'
+      return 'projects   hackathons   experience   glassdoor   resume   contact'
     case 'projects':
-      return projects.map(p => `  ${p.title.padEnd(16)} ${p.hook.slice(0, 48)}…`).join('\n')
+      return [...projects, ...hackathons]
+        .map(p => `  ${p.name.padEnd(16)} ${(p.homepage?.tagline || '').slice(0, 48)}`)
+        .join('\n')
     case 'open': {
       const target = (args[0] || '').toLowerCase()
       const known = ['portfolio', 'glassdoor', 'finder', 'safari', 'notes', 'mail']
@@ -44,10 +51,10 @@ function runCommand(raw, api) {
       api?.openAbout?.()
       return 'Opening About Me…'
     case 'resume':
-      window.open('/resume.pdf', '_blank', 'noopener')
-      return 'Opening resume.pdf…'
+      window.open(driveFolderUrl(), '_blank', 'noopener')
+      return 'Opening résumé in Google Drive…'
     case 'contact':
-      return 'Email: you@example.com   GitHub: github.com/Shreyas0Kumar   (or open the Mail app)'
+      return `Email: ${profile.email}   GitHub: ${short(profile.links.github)}   (or open the Mail app)`
     case 'date':
       return new Date().toString()
     case 'echo':
@@ -60,6 +67,7 @@ function runCommand(raw, api) {
 }
 
 export default function TerminalApp({ api }) {
+  const data = usePortfolio()
   const [lines, setLines] = useState([BANNER])
   const [input, setInput] = useState('')
   const [history, setHistory] = useState([])
@@ -71,7 +79,7 @@ export default function TerminalApp({ api }) {
 
   const submit = e => {
     e.preventDefault()
-    const out = runCommand(input, api)
+    const out = runCommand(input, api, data)
     if (out === '__CLEAR__') {
       setLines([])
     } else {

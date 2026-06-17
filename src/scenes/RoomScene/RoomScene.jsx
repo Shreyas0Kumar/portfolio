@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
 import Spline from '@splinetool/react-spline'
+import { usePortfolio } from '../../data/portfolio.jsx'
 import './RoomScene.css'
 
 /**
@@ -19,6 +20,7 @@ const MAC_OBJECT   = 'MAC'
 const RETURN_EVENT = '2368049b-f194-404b-b619-dd4b5056a128'
 
 export default function RoomScene({ visible, onEnterComputer }) {
+  const { profile } = usePortfolio()
   const splineRef = useRef(null)
   const wasVisible = useRef(visible)
   const [loading, setLoading] = useState(true)
@@ -69,8 +71,8 @@ export default function RoomScene({ visible, onEnterComputer }) {
 
       {/* Name + tagline — floats over the scene, bottom-left */}
       <div className="room-nameplate">
-        <span className="room-name">Shreyas Kumar</span>
-        <span className="room-tagline">AI Engineer · builder of real systems</span>
+        <span className="room-name">{profile.name}</span>
+        <span className="room-tagline">{profile.role} · {profile.location}</span>
       </div>
     </div>
   )

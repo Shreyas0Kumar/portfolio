@@ -17,8 +17,8 @@ import MailApp       from './apps/MailApp.jsx'
 import MusicApp      from './apps/MusicApp.jsx'
 import GamesApp      from './apps/GamesApp.jsx'
 import AboutMe       from './apps/AboutMe.jsx'
-import { projects }  from '../../../data/projects.js'
-import { resolveResume } from './apps/drive.js'
+import { usePortfolio } from '../../../data/portfolio.jsx'
+import { resolveResume, driveFolderUrl } from './apps/drive.js'
 import { setMuted, chime, sOpen, sClose, sMinimize, sShutdown } from './sound.js'
 
 /**
@@ -65,13 +65,14 @@ const maxZ = ws => ws.reduce((m, w) => Math.max(m, w.z), 0)
 const bringToFront = (ws, id) =>
   ws.map(w => (w.id === id ? { ...w, z: maxZ(ws) + 1, minimized: false } : w))
 const defaultSize = () => ({
-  w: Math.min(960, window.innerWidth - 80),
-  h: Math.min(620, window.innerHeight - 160),
+  w: Math.min(1180, window.innerWidth - 64),
+  h: Math.min(760, window.innerHeight - 120),
 })
 
 const readLS = (k, fallback) => { try { return localStorage.getItem(k) ?? fallback } catch { return fallback } }
 
 export default function Desktop({ onExit }) {
+  const { projects, hackathons } = usePortfolio()
   const [loggedIn, setLoggedIn] = useState(false)
   const [windows, setWindows] = useState(() => {
     const { w, h } = defaultSize()
@@ -125,7 +126,7 @@ export default function Desktop({ onExit }) {
         return { ...w, x: p.x, y: p.y, w: p.w, h: p.h, maximized: false, prev: null, z: top }
       }
       const prev = { x: w.x, y: w.y, w: w.w, h: w.h }
-      return { ...w, x: 8, y: 34, w: window.innerWidth - 16, h: window.innerHeight - 34 - 96, maximized: true, prev, z: top }
+      return { ...w, x: 8, y: 34, w: window.innerWidth - 16, h: window.innerHeight - 34 - 12, maximized: true, prev, z: top }
     })
   })
 
@@ -173,8 +174,8 @@ export default function Desktop({ onExit }) {
       label: APPS[id].name, hint: 'App', run: () => openApp(id),
     })),
     { label: 'About Me', hint: 'Profile', run: handleAbout },
-    ...projects.map(p => ({
-      label: p.title, hint: 'Project', run: () => openApp('portfolio'),
+    ...[...projects, ...hackathons].map(p => ({
+      label: p.name, hint: 'Project', run: () => openApp('portfolio'),
     })),
   ]
 
@@ -210,7 +211,11 @@ export default function Desktop({ onExit }) {
 
       {loggedIn && (
         <DesktopIcons
-          onOpenResume={async () => setQuickLook(await resolveResume())}
+          onOpenResume={async () => {
+            const r = await resolveResume()
+            if (r) setQuickLook(r)
+            else window.open(driveFolderUrl(), '_blank', 'noopener')
+          }}
           onOpenCertificates={() => openApp('finder')}
         />
       )}
@@ -249,6 +254,7 @@ export default function Desktop({ onExit }) {
           openIds={openIds}
           focusedId={focusedId}
           onOpen={openApp}
+          collapsed={!!focused?.maximized}
         />
       )}
 

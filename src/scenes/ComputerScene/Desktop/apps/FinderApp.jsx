@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import './FinderApp.css'
 import {
   driveConfigured, driveEmbedUrl, driveFolderUrl,
-  drivePreviewUrl, driveFileViewUrl, listDriveFiles, RESUME_URL,
+  drivePreviewUrl, driveFileViewUrl, listDriveFiles,
 } from './drive.js'
 
 /**
@@ -159,8 +159,8 @@ function DriveView({ api }) {
           Add your public folder link in <code>drive.js</code> and your resume,
           cover letter, and certificates will show up here automatically.
         </p>
-        <a className="finder-drive-empty-link" href={RESUME_URL} target="_blank" rel="noreferrer">
-          Open résumé ↗
+        <a className="finder-drive-empty-link" href={driveFolderUrl()} target="_blank" rel="noreferrer">
+          Open in Google Drive ↗
         </a>
       </div>
     )

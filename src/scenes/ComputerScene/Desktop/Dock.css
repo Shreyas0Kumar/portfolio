@@ -16,6 +16,24 @@
   border: 1px solid rgba(242, 237, 227, 0.22);
   border-radius: 18px;
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.32s ease;
+}
+
+/* Fullscreen auto-hide: slide the dock off the bottom edge until peeked */
+.dock.hidden {
+  transform: translate(-50%, calc(100% + 24px));
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Invisible hover strip along the bottom that re-reveals a hidden dock */
+.dock-hot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 10px;
+  z-index: 34;
 }
 
 .dock-item {

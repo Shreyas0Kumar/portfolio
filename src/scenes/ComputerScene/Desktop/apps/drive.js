@@ -23,10 +23,6 @@
 
 export const DRIVE_FOLDER = 'https://drive.google.com/drive/folders/1pyezInf40KQ-gukzlIMMTyvARPkKBKUa?usp=sharing'
 
-// Bundled fallback used when the live list is unavailable (e.g. local vite dev,
-// or before the Cloudflare env vars are set).
-export const RESUME_URL = '/resume.pdf'
-
 // Accept a full share URL (…/folders/<id>?usp=…) or a bare ID, and reduce to ID.
 function extractFolderId(value) {
   const v = (value || '').trim()
@@ -72,16 +68,17 @@ export async function listDriveFiles() {
 }
 
 // Resolve the resume for the desktop "Resume" icon by name (so it tracks
-// re-uploads with no code change), falling back to the bundled PDF when the list
-// is unavailable. Cached after the first lookup so repeat clicks open instantly.
+// re-uploads with no code change). The résumé lives only in the Drive folder —
+// there is no bundled PDF — so this returns null when the live list is
+// unavailable or has no résumé, and callers fall back to opening the folder.
+// Cached after the first successful lookup so repeat clicks open instantly.
 let _resume = null
 export async function resolveResume() {
   if (_resume) return _resume
-  const fallback = { name: 'Shreyas Kumar — Résumé', src: RESUME_URL }
   try {
     const files = await listDriveFiles()
     const match = files.find(f => /r[ée]sum[eé]/i.test(f.name))
-    if (!match) return fallback
+    if (!match) return null
     _resume = {
       name: 'Shreyas Kumar — Résumé',
       src: drivePreviewUrl(match.id),
@@ -89,6 +86,6 @@ export async function resolveResume() {
     }
     return _resume
   } catch {
-    return fallback
+    return null
   }
 }

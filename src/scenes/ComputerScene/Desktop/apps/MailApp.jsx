@@ -1,18 +1,20 @@
 import React, { useState } from 'react'
+import { usePortfolio } from '../../../../data/portfolio.jsx'
 import './MailApp.css'
 
 /**
  * MailApp
- * A Mail-style contact form. If FORMSPREE_ENDPOINT is set it POSTs there;
- * otherwise it falls back to a mailto: compose link (always works).
+ * A Mail-style contact form. The recipient comes from public/portfolio.json
+ * (profile.email). If FORMSPREE_ENDPOINT is set it POSTs there; otherwise it
+ * falls back to a mailto: compose link (always works).
  *
- * TODO: set MAIL_TO to your real address, and optionally create a Formspree
- * form and paste its endpoint into FORMSPREE_ENDPOINT for in-app sending.
+ * To enable in-app sending, create a Formspree form and paste its endpoint
+ * into FORMSPREE_ENDPOINT.
  */
-const MAIL_TO = 'shreyaskr2000@gmail.com'
 const FORMSPREE_ENDPOINT = '' // e.g. 'https://formspree.io/f/xxxxxxx'
 
 export default function MailApp() {
+  const MAIL_TO = usePortfolio().profile.email
   const [from, setFrom]       = useState('')
   const [subject, setSubject] = useState('')
   const [body, setBody]       = useState('')

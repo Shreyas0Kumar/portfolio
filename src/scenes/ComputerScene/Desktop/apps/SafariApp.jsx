@@ -1,33 +1,40 @@
-import React, { useState, useEffect } from 'react'
-import { projects } from '../../../../data/projects.js'
+import React, { useState, useEffect, useMemo } from 'react'
+import { usePortfolio } from '../../../../data/portfolio.jsx'
 import './SafariApp.css'
 
 /**
  * SafariApp
  * A small but real tabbed browser: new/close/switch tabs, an address bar that
  * navigates to URLs or searches Google, back/forward history, and a Favorites
- * start page.
+ * start page. Favorites are built from public/portfolio.json (profile links +
+ * any project / hackathon product or repo links).
  *
  * Note: many sites send X-Frame-Options and refuse to load in an <iframe>, so
  * the in-app view may be blank for them — the ↗ button opens the page in a real
  * browser tab as a fallback.
- *
- * TODO: set the real LinkedIn URL in PROFILES.
  */
-const PROFILES = [
-  { label: 'GitHub',   url: 'https://github.com/Shreyas0Kumar', glyph: '🐙' },
-  { label: 'LinkedIn', url: 'https://www.linkedin.com/in/shreyas0kumar/', glyph: '💼' },
-]
 
-const projectLinks = projects
-  .filter(p => p.links.live || p.links.repo)
-  .map(p => ({
-    label: p.title,
-    url: p.links.live || p.links.repo,
-    glyph: p.links.live ? '🌐' : '📦',
-  }))
+// Build the Favorites list from the portfolio data: profile links first, then
+// every project / hackathon that exposes a product or repo URL.
+function useFavorites() {
+  const { profile, projects, hackathons } = usePortfolio()
+  return useMemo(() => {
+    const profiles = [
+      profile.links.github   && { label: 'GitHub',   url: profile.links.github,   glyph: '🐙' },
+      profile.links.linkedin && { label: 'LinkedIn', url: profile.links.linkedin, glyph: '💼' },
+    ].filter(Boolean)
 
-const FAVORITES = [...PROFILES, ...projectLinks]
+    const links = [...projects, ...hackathons]
+      .map(p => {
+        const url = p.links?.product || p.links?.repo
+        if (!url) return null
+        return { label: p.name, url, glyph: p.links?.product ? '🌐' : '📦' }
+      })
+      .filter(Boolean)
+
+    return [...profiles, ...links]
+  }, [profile, projects, hackathons])
+}
 
 // The string 'start' is a sentinel for the Favorites start page. A 'card:' prefix
 // means "show a landing card instead of an iframe" (for sites that block embedding).
@@ -37,7 +44,7 @@ const newTabAt = entry => ({ id: TAB_SEQ++, history: [entry], idx: 0 })
 
 // Hosts known to refuse iframe embedding (X-Frame-Options / CSP). These get a
 // landing card rather than a broken "refused to connect" frame.
-const NO_EMBED = ['linkedin.com', 'github.com', 'google.com', 'x.com', 'twitter.com', 'facebook.com', 'instagram.com', 'youtube.com', 'lumo.shreyas.space']
+const NO_EMBED = ['linkedin.com', 'github.com', 'google.com', 'x.com', 'twitter.com', 'facebook.com', 'instagram.com', 'youtube.com']
 
 // Hosts that show a login wall to logged-out visitors — a screenshot would just
 // capture their sign-in page, so these get a plain card instead of a preview.
@@ -82,6 +89,7 @@ function tabTitle(entry) {
 }
 
 export default function SafariApp() {
+  const FAVORITES = useFavorites()
   const [tabs, setTabs]         = useState(() => [newTab()])
   const [activeId, setActiveId] = useState(() => tabs[0].id)
   const [address, setAddress]   = useState('')

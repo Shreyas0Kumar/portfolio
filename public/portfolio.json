@@ -1,0 +1,1492 @@
+{
+  "meta": {
+    "version": "1.0",
+    "owner": "Shreyas Kumar"
+  },
+  "profile": {
+    "name": "Shreyas Kumar",
+    "role": "AI Engineer",
+    "tagline": "AI Engineer building AI products, retrieval systems, and backend infrastructure that are meant to be used in the real world.",
+    "location": "New York",
+    "email": "shreyaskr2000@gmail.com",
+    "links": {
+      "github": "https://github.com/Shreyas0Kumar",
+      "linkedin": "https://www.linkedin.com/in/shreyas0kumar/"
+    },
+    "phone": "+91 9473052048",
+    "altTitles": [
+      "AI Engineer",
+      "LLM Engineer",
+      "Applied ML Engineer"
+    ],
+    "openToRelocate": true
+  },
+  "intro": {
+    "heading": "I like building systems that sit between people and complexity.",
+    "body": [
+      "Sometimes that means helping a child talk to AI safely.",
+      "Sometimes it means helping patients understand a lab report.",
+      "Sometimes it means turning a messy evaluation process into a fairer system.",
+      "Most of my work lives at the intersection of product thinking, machine learning, and backend engineering, especially where trust, constraints, and real usage matter more than demos."
+    ]
+  },
+  "projects": [
+    {
+      "id": "lumo",
+      "name": "Lumo",
+      "category": "featured",
+      "slug": "/projects/lumo",
+      "type": "Real-time voice AI product for children with parent controls and explicit privacy/safety design.",
+      "homepage": {
+        "tagline": "A voice app for kids that parents can actually trust.",
+        "body": [
+          "Kids have questions all day, but parents cannot always pause everything for every thought, every \"why,\" and every new curiosity. At the same time, most voice AI products were never designed around the level of trust, visibility, and restraint that a child-facing product should require.",
+          "I built Lumo as a parent-controlled voice experience for children, one that stays age-appropriate, avoids habit-forming design, stores no audio, and gives parents clear visibility into what happened after a session ends.",
+          "Instead of trying to be more engaging, it was designed to be more honest: useful when it's being used, and out of the way when it's not."
+        ],
+        "cta": {
+          "label": "See how I solved this",
+          "href": "/projects/lumo"
+        }
+      },
+      "grounded": {
+        "productFacts": [
+          "A voice app for kids that parents can actually trust.",
+          "Lets children ask questions and talk through ideas using voice.",
+          "Designed for age-appropriate responses, strict content guardrails, and full parent visibility.",
+          "Voice-only for the child.",
+          "Stores no audio.",
+          "Time-limited by design.",
+          "Avoids engagement traps, streaks, and habit-forming mechanics.",
+          "PIN-protected parent controls.",
+          "Gives parents a plain-language session summary after each session.",
+          "Flags sensitive topics for parents instead of silently handling them.",
+          "Designed for ages 4-12.",
+          "Built for COPPA compliance / parental consent.",
+          "Not positioned as a therapist, emotional support app, parent replacement, or an engagement-maximizing product.",
+          "Most voice products weren't designed with children as the primary user.",
+          "Product philosophy is explicitly honest and bounded."
+        ],
+        "technicalFacts": [
+          "Every turn runs a deterministic pipeline; no response is generated until checks pass.",
+          "Pipeline stages: audio in / PCM stream / WebSocket, semantic VAD, realtime transcription, deterministic policy engine, at-most-once response claim, LLM generation, post-generation safety filter, TTS, playback.",
+          "300ms stability window on speech detection.",
+          "Duplicates dropped; sanitized transcript to prompt; telemetry emitted; post-gen retention / engagement-bait check.",
+          "Low-latency real-time voice system over FastAPI WebSockets.",
+          "Deterministic single-writer kernel (event queue + state machine) reducing race conditions and duplicate emissions (~90%).",
+          "Transcript-only classification with explainable decision codes and structured parent escalation.",
+          "No raw audio storage; child data minimization.",
+          "Dockerized backend (Docker Compose), Vite client, end-to-end latency instrumentation.",
+          "<150ms interruption (barge-in) response time, correlation IDs for turn tracking."
+        ],
+        "problem": "Kids are curious and conversational, but most AI products were not built with children as the primary user. Parents want something useful and voice-first without addictive design, invisible behavior, vague safety promises, stored voice recordings, or a product pretending to replace a real adult relationship.",
+        "positioning": "Not just a voice bot, but a rethink of what a child-facing AI product should optimize for: useful within clear limits, parent-visible, safety-first by system design, and honest about what it should not do.",
+        "storyHooks": [
+          "No screens. No surprises. No habits to form.",
+          "Built with limits, not as an afterthought.",
+          "We would rather launch something honest than launch fast.",
+          "Useful when it's being used, gone when it's not."
+        ],
+        "avoidOnHomepage": [
+          "Too much pipeline detail.",
+          "Sounding like a therapy app.",
+          "Sounding like a generic talking toy."
+        ]
+      },
+      "techStack": [
+        "OpenAI realtime APIs (semantic VAD, streaming STT/TTS)",
+        "FastAPI WebSockets",
+        "PCM16 streaming",
+        "Deterministic single-writer kernel (event queue + state machine)",
+        "Docker Compose",
+        "Vite client"
+      ],
+      "metrics": [
+        "<300ms target latency",
+        "~90% reduction in race conditions / duplicate emissions",
+        "<150ms barge-in response time"
+      ],
+      "awards": [],
+      "links": {
+        "product": "https://lumo-product-page.pages.dev/",
+        "repo": "https://github.com/Shreyas0Kumar/lumo-demo"
+      },
+      "assetPlaceholders": [
+        "product hero screenshot",
+        "parent controls screenshot",
+        "under-the-hood animated pipeline",
+        "safety / privacy illustration",
+        "waitlist / product page link button"
+      ],
+      "detailContent": {
+        "sections": [
+          {
+            "heading": "The gap I wanted to fill",
+            "body": [
+              "Not every child has someone who can stop and listen the moment a question or a thought shows up. In some households a parent isn't always free to hear every \"why\" and every small idea, and I wanted to build something that could sit in that gap.",
+              "Lumo started as a way to help children feel heard, and to help them learn, without ever pretending to replace the adults in their life."
+            ]
+          },
+          {
+            "heading": "Designed around restraint",
+            "body": [
+              "The hardest design choice was deciding what Lumo should not do. It doesn't try to hold a child's attention with strange questions or an endless stream of follow-ups.",
+              "It listens, responds simply, and lets the conversation end. The point was for a child to feel heard, not to feel pulled back in."
+            ]
+          },
+          {
+            "heading": "Parents stay in control",
+            "body": [
+              "Parents keep full control. They can set how long a session lasts, and afterward they can see exactly what happened: what was asked, and how Lumo responded.",
+              "If a child brings up something sensitive, Lumo doesn't try to handle it quietly on its own. It sends an escalation notification to the parent and gently ends the session, telling the child that this is something to talk about with their parent, and that Lumo is only there to help."
+            ]
+          },
+          {
+            "heading": "Where it stands now",
+            "body": [
+              "Right now there is a working demo published at the product link. The full app isn't out yet. I'm building the Android version first and iOS after, and I've been running into real difficulties around authentication and the security side of things.",
+              "I don't have a firm date for when it will be on the Play Store, and I've shifted my focus to another project for the moment. I'd rather be honest about that than give anyone reading this false hope. Lumo is something I still believe in and intend to finish, just not on a timeline I'm willing to promise yet."
+            ]
+          }
+        ]
+      },
+      "timeframe": "Jan 2025 - Present",
+      "status": "Demo live / In development",
+      "role": "Architected the low-latency (<300ms) parent-controlled voice pipeline over FastAPI WebSockets, designed the deterministic single-writer kernel for strict turn-taking, built the transcript-only privacy/safety system, and containerized the backend with a Vite client.",
+      "collaborators": [
+        {
+          "name": "Shreyas Kumar",
+          "github": "https://github.com/Shreyas0Kumar"
+        },
+        {
+          "name": "Claude",
+          "github": null
+        }
+      ],
+      "tags": [
+        "Voice AI",
+        "Child Safety",
+        "Real-time",
+        "Product"
+      ],
+      "linkedinPosts": [
+        "https://www.linkedin.com/feed/update/urn:li:activity:7470157780293951488/",
+        "https://www.linkedin.com/feed/update/urn:li:activity:7451147372275068928/"
+      ],
+      "images": [],
+      "featured": true,
+      "order": 1,
+      "event": null
+    },
+    {
+      "id": "cuse-rank",
+      "name": "Cuse-Rank",
+      "category": "featured",
+      "slug": "/projects/cuse-rank",
+      "type": "Web-based research poster evaluation and judge assignment system. Award-winning competition project.",
+      "homepage": {
+        "tagline": "A fairer way to run research poster evaluations.",
+        "body": [
+          "From the outside, judging a research event looks straightforward. Behind the scenes, it quickly turns into a coordination problem: judges need to be matched to the right work, workloads need to stay balanced, criteria need to be tracked, and rankings need to keep updating without turning into manual chaos.",
+          "With Cuse-Rank, I worked on a system that treated the problem for what it really was: part product, part optimization, part infrastructure. We combined expertise matching, constraint-based allocation, and backend automation to make the whole process more reliable and more fair.",
+          "It ended up winning first place, but the more interesting part was learning how to turn a messy operational process into a system people could actually use."
+        ],
+        "cta": {
+          "label": "See how I solved this",
+          "href": "/projects/cuse-rank"
+        }
+      },
+      "grounded": {
+        "productFacts": [
+          "Full name: Cuse-Rank: Research Day Evaluation System.",
+          "Purpose: streamline the evaluation process for research day events.",
+          "Admins create and manage events.",
+          "Organizers upload posters and assign criteria.",
+          "Judges evaluate assigned posters.",
+          "ML processing intelligently assigns judges to posters based on expertise.",
+          "Rankings update as evaluations are submitted."
+        ],
+        "architecture": [
+          "frontend",
+          "backend",
+          "database",
+          "ML processing",
+          "faculty scraper",
+          "judge allocation algorithm",
+          "scoring/ranking algorithm"
+        ],
+        "problem": "Poster evaluation sounds simple until it becomes operationally unfair and chaotic: organizers need criteria and event control, judges need good assignments, posters need evaluators who match the subject area, and rankings need to update without manual friction.",
+        "positioning": "A decision system, not just a dashboard. It blends product flow, scraping, async processing, constraint optimization, and semantic matching, and is one of the strongest proof points that Shreyas can build cross-functional systems.",
+        "storyHooks": [
+          "Judging a research event sounds easy until fairness, expertise, and scheduling collide."
+        ]
+      },
+      "techStack": [
+        "Angular frontend",
+        "NestJS backend with TypeORM and PostgreSQL",
+        "FastAPI + Celery + Redis for ML processing",
+        "Selenium + Pandas + PostgreSQL / Psycopg2 for scraping and data processing",
+        "OR-Tools + Sentence Transformers + SQLAlchemy + Celery for judge allocation"
+      ],
+      "metrics": [
+        "Async pipeline cut runtime by ~50%",
+        "Embedding-based judge-poster matching using professor expertise vectors and abstracts"
+      ],
+      "awards": [
+        "First prize, graduate (MS) track"
+      ],
+      "links": {
+        "repo": "https://github.com/melvin1117/ecs-reseach-day-poster-evaluation",
+        "product": null
+      },
+      "assetPlaceholders": [
+        "system architecture diagram",
+        "assignment flow illustration",
+        "admin/judge UI screenshots",
+        "award / winning snapshot",
+        "GitHub link"
+      ],
+      "detailContent": {
+        "sections": [
+          {
+            "heading": "The challenge",
+            "body": [
+              "This came out of a 48-hour coding competition, the ECS Challenge at Syracuse University, where four of us set out to build a working web app for a very specific problem: helping organizers map judges to the research posters they were meant to evaluate.",
+              "It sounds simple until you look at the constraints. A judge has to match the subject area of a poster, workloads have to stay balanced, and no assignment can ignore the rules the organizers care about. That collision of constraints is what made it interesting."
+            ]
+          },
+          {
+            "heading": "My part: the ML and the glue",
+            "body": [
+              "My job was the machine learning side and stitching it into the backend, with a hand in the frontend integration too.",
+              "I started with the data. I scraped professor information from the university pages and their LinkedIn profiles, while the posters came to us as JSON. From there I computed a similarity score between judges and posters so that expertise actually lined up with the work being judged.",
+              "Matching wasn't just about the best score though. There were real constraints to satisfy, so I used Google's OR-Tools for constraint programming, then took the best feasible assignment it produced and pushed it into the database through the backend."
+            ]
+          },
+          {
+            "heading": "The 48-hour crunch",
+            "body": [
+              "Forty-eight hours goes fast. We were still wiring the project together with barely any time left on the clock, running on no sleep across both nights, and we still had our regular classes to show up for in between."
+            ]
+          },
+          {
+            "heading": "Why it mattered",
+            "body": [
+              "It won first prize in the graduate (MS) track. What stuck with me more than the prize was the professor's reaction: he found the OR-Tools approach genuinely interesting and felt it produced the most appropriate assignments, and he actually used it for a real research day at the university.",
+              "That was the part I cared about. It wasn't just another repository sitting on GitHub. It had real-world implications and got used for the thing it was built for."
+            ]
+          }
+        ]
+      },
+      "timeframe": "Feb 2025",
+      "status": "Award-winning",
+      "role": "Led the ML work and its integration into the backend, and helped with the frontend. Scraped professor data from university pages and LinkedIn, computed embedding-based judge-poster similarity scores, used Google OR-Tools constraint programming to satisfy the matching constraints, and pushed the optimized assignments to the database. Also contributed to the async FastAPI + Celery pipeline that cut runtime by ~50%.",
+      "collaborators": [
+        {
+          "name": "Shreyas Kumar",
+          "github": "https://github.com/Shreyas0Kumar"
+        },
+        {
+          "name": "Shubham",
+          "github": "https://github.com/melvin1117"
+        },
+        {
+          "name": "Uddesh",
+          "github": "https://github.com/uddesh04"
+        },
+        {
+          "name": "Abhishek",
+          "github": "https://github.com/abhishekug99"
+        }
+      ],
+      "tags": [
+        "Optimization",
+        "Backend",
+        "ML",
+        "Decision System"
+      ],
+      "linkedinPosts": [
+        "https://www.linkedin.com/feed/update/urn:li:activity:7309291364645548033/"
+      ],
+      "images": [],
+      "featured": true,
+      "order": 2,
+      "event": "Syracuse University ECS Challenge (48-hour coding competition)"
+    },
+    {
+      "id": "su-music",
+      "name": "SU Music",
+      "category": "more",
+      "slug": "/projects/su-music",
+      "type": "iOS music client built as a course final project, with ML-driven recommendations and streaming API integration.",
+      "homepage": {
+        "tagline": "An iOS music app, built to learn by building.",
+        "body": [
+          "For our iOS development course, my team set out to build something in the spirit of Apple Music, but with more going on under the hood: ML-driven recommendations and real streaming behind it.",
+          "I led a team of three through it in SwiftUI, wiring in streaming APIs and a recommendation layer that learned from listening history. Working within a free API's hard limits, and still shipping something that demonstrably worked, was the real lesson."
+        ],
+        "cta": {
+          "label": "See how I solved this",
+          "href": "/projects/su-music"
+        }
+      },
+      "grounded": {
+        "productFacts": [
+          "Built as the final project for an iOS app development course.",
+          "An iOS music client in the spirit of Apple Music, aiming for a richer feature set.",
+          "Integrated Spotify and YouTube APIs for media streaming and user authentication.",
+          "The free Spotify API only served ~10-second audio previews per song, so the app was demonstrated within that constraint."
+        ],
+        "technicalFacts": [
+          "Led a team of 3.",
+          "Built in SwiftUI.",
+          "ML-driven recommendations based on user listening history, which reduced incorrect song recommendations in internal user testing.",
+          "Improved playback consistency by ~35% through modified RESTful services."
+        ],
+        "problem": "Building a real music client means leaning on third-party streaming APIs, each with its own auth model and limits. The free Spotify tier capped playback at ~10-second previews, so the team had to design and demo the app within that boundary.",
+        "positioning": "A course project that shows iOS/SwiftUI capability, team leadership, and the practical reality of building on top of constrained third-party APIs.",
+        "storyHooks": [
+          "Sometimes the constraint is the API's free tier, and you ship anyway."
+        ],
+        "avoidOnHomepage": []
+      },
+      "techStack": [
+        "SwiftUI",
+        "iOS",
+        "Spotify API",
+        "YouTube API",
+        "RESTful services",
+        "ML recommendations"
+      ],
+      "metrics": [
+        "Reduced incorrect song recommendations in internal user testing",
+        "~35% improvement in playback consistency via modified RESTful services"
+      ],
+      "awards": [],
+      "links": {
+        "product": null,
+        "repo": null
+      },
+      "assetPlaceholders": [
+        "app home screenshot",
+        "recommendations screen",
+        "now-playing / player screenshot"
+      ],
+      "detailContent": {
+        "sections": [
+          {
+            "heading": "A course project with bigger ambitions",
+            "body": [
+              "This came out of my iOS app development course, as the final project. We decided to build a music app in the spirit of Apple Music, but with more features layered on top.",
+              "I led a team of three through it, building in SwiftUI."
+            ]
+          },
+          {
+            "heading": "Building within the API's limits",
+            "body": [
+              "We used the Spotify API for the music itself, and that's where the interesting constraint showed up: on the free tier, each song only streamed about ten seconds of audio.",
+              "Rather than let that block us, we built and demonstrated the app within that limit, enough to show the experience working end to end even if full playback wasn't on the table."
+            ]
+          }
+        ]
+      },
+      "timeframe": "May 2024",
+      "status": "Course project (completed)",
+      "role": "Led a team of 3, building an iOS music client in SwiftUI with ML-driven recommendations from listening history and Spotify/YouTube API integration for streaming and authentication.",
+      "collaborators": [],
+      "tags": [
+        "iOS",
+        "SwiftUI",
+        "ML",
+        "Music"
+      ],
+      "linkedinPosts": [],
+      "images": [],
+      "featured": false,
+      "order": 3,
+      "event": null
+    }
+  ],
+  "hackathons": [
+    {
+      "id": "agrovision",
+      "name": "AgroVision",
+      "category": "hackathon",
+      "slug": "/hackathons/agrovision",
+      "type": "Hackathon project / smart farming intelligence platform (HackMerced '25).",
+      "homepage": {
+        "tagline": "Making scattered farm data useful.",
+        "body": [
+          "Farm decisions are rarely made from one clean signal. Soil readings, weather shifts, drone imagery, and on-ground conditions all tell part of the story, but not in one place and not in one language.",
+          "With AgroVision, we built a system that brought those signals together into a single experience, helping users see plant health, moisture conditions, weather context, and AI-generated suggestions in one place.",
+          "What I liked most about this project was that it was not just another dashboard. It was an attempt to turn fragmented, physical-world data into something a person could act on."
+        ],
+        "cta": {
+          "label": "See how I solved this",
+          "href": "/hackathons/agrovision"
+        }
+      },
+      "grounded": {
+        "productFacts": [
+          "Web-based solution for farmers to monitor farmland using drones and IoT sensors like NPK and humidity sensors.",
+          "Real-time farm analysis: plant health, soil moisture, weather insights via OpenWeather API, livestock tracking via drone and Gemini AI.",
+          "Includes an AI-powered chatbot.",
+          "Gemini AI used for smart suggestions / crop recommendations / farm management insights.",
+          "Dashboard shows real-time analytics on soil quality, crops, and weather.",
+          "UI designed to make sensor and drone data understandable."
+        ],
+        "problem": "Farming decisions are often made from scattered sources: sensor readings, weather context, visual field data, and practical on-ground interpretation. The project unifies scattered agricultural signals into one system that can actually help with decisions.",
+        "positioning": "A multi-source decision support product, not just another agriculture dashboard. A strong example of multi-modal system thinking that turns fragmented field data into something actionable.",
+        "storyHooks": [
+          "Farmers don't need more dashboards; they need one place that makes scattered field signals make sense."
+        ]
+      },
+      "techStack": [
+        "Next.js + Tailwind frontend",
+        "FastAPI backend",
+        "MongoDB",
+        "Letta API chatbot",
+        "Gemini AI",
+        "Docker / Docker Compose",
+        "Celery"
+      ],
+      "metrics": [
+        "Reduced manual scouting by ~50%"
+      ],
+      "awards": [
+        "Runner-up (2nd place), Ag-Tech category"
+      ],
+      "links": {
+        "repo": "https://github.com/melvin1117/ag-tech-hack-merced",
+        "product": null
+      },
+      "assetPlaceholders": [
+        "dashboard screenshot",
+        "field analytics illustration",
+        "drone/sensor/weather pipeline diagram",
+        "award badge / placement image",
+        "GitHub link",
+        "post-hackathon cricket watch-party photos"
+      ],
+      "detailContent": {
+        "sections": [
+          {
+            "heading": "How we ended up choosing AgTech",
+            "body": [
+              "This one started with a flight. We booked tickets from Syracuse out to California to compete at HackMerced, on the University of California, Merced campus, run with MLH.",
+              "On the way in we passed a lot of almond farms, and that stuck with us. So when the tracks were announced and we had to pick what to build, we went with AgTech. Settling on the actual idea took a while, but once it clicked we got moving."
+            ]
+          },
+          {
+            "heading": "Building far from home",
+            "body": [
+              "Part of what made it memorable was how far outside our comfort zone it was. We were working in someone else's classroom, in a place we had just flown into, and the clock started the moment we arrived.",
+              "We didn't sleep that night. We just kept pushing, tightening the idea around how almond farming could actually benefit from what we were building, until it felt like something finished rather than a sketch."
+            ]
+          },
+          {
+            "heading": "Facing the judges",
+            "body": [
+              "The judges were tough, in the best way. They pressed us on the things that matter: how does this actually help, why aren't the existing alternatives enough, why does this need to exist, and even how you would get a government to act on the recommendations our product made.",
+              "We knew our project well enough to answer all of it, and they appreciated the effort we had put in."
+            ]
+          },
+          {
+            "heading": "The part I remember most",
+            "body": [
+              "Honestly, my favorite memory isn't the code. After the coding round wrapped, there was a big cricket match on, India playing, and a few of us ended up in an empty classroom with the projector turned up, watching it for hours.",
+              "We have photos from that night that I want on this page. The next day we booked a cab toward San Francisco and left town."
+            ]
+          }
+        ]
+      },
+      "timeframe": "Mar 2025",
+      "status": "Hackathon",
+      "role": "Designed the real-time analytics platform combining drone imagery, NPK/humidity sensor streams, and OpenWeather feeds, and integrated Letta + Gemini for crop recommendations, carbon-footprint insights, and livestock tracking.",
+      "collaborators": [
+        {
+          "name": "Shreyas Kumar",
+          "github": "https://github.com/Shreyas0Kumar"
+        },
+        {
+          "name": "Shubham",
+          "github": "https://github.com/melvin1117"
+        },
+        {
+          "name": "Aatisha",
+          "github": "https://github.com/Aatisha"
+        }
+      ],
+      "tags": [
+        "IoT",
+        "Multi-modal",
+        "AgTech",
+        "Dashboard"
+      ],
+      "linkedinPosts": [
+        "https://www.linkedin.com/feed/update/urn:li:activity:7305783400798273536/"
+      ],
+      "images": [],
+      "featured": false,
+      "order": 1,
+      "event": "HackMerced",
+      "organizer": "MLH (Major League Hacking) and University of California, Merced",
+      "location": "UC Merced, Merced, California (in person)"
+    },
+    {
+      "id": "report-xplain",
+      "name": "Report Xplain",
+      "category": "hackathon",
+      "slug": "/hackathons/reportxplain",
+      "type": "Hackathon project / healthcare document intelligence product (HenHacks '25).",
+      "homepage": {
+        "tagline": "Turning intimidating medical reports into something people can understand.",
+        "body": [
+          "Medical reports often contain answers people care deeply about, but the way those answers are presented can make them feel inaccessible. Technical terminology, dense formatting, and unclear implications create distance between patients and their own information.",
+          "Report Xplain was built to close that gap. We created a flow where a report could be uploaded, processed, and turned into clearer language, visual summaries, and practical takeaways.",
+          "What made the project meaningful was not just the extraction itself. It was the idea that AI can be useful when it helps people understand something that was already theirs."
+        ],
+        "cta": {
+          "label": "See how I solved this",
+          "href": "/hackathons/reportxplain"
+        }
+      },
+      "grounded": {
+        "productFacts": [
+          "Transforms complex medical lab reports into plain-language insights.",
+          "Goal: help patients understand and manage their health.",
+          "Converts technical data into user-friendly dashboards with interactive visualizations and actionable recommendations.",
+          "Problem statement: many patients find medical reports intimidating because of technical jargon; the project bridges that gap.",
+          "Features: dashboard with technical + plain-language interpretations, PDF upload and report processing, interactive visualizations, lifestyle / dietary recommendations, security and privacy conscious framing."
+        ],
+        "problem": "A lab report can contain important health information, but the form in which it is delivered can make it inaccessible to the person who needs it most.",
+        "positioning": "About comprehension, not summarization alone. It turns intimidating medical paperwork into an interpretable experience and is a good example of AI used to reduce information asymmetry."
+      },
+      "techStack": [
+        "Angular 19 frontend",
+        "NestJS backend with TypeORM",
+        "PostgreSQL",
+        "MinIO for file storage",
+        "Docker / Docker Compose",
+        "Gemini-powered extraction"
+      ],
+      "metrics": [
+        "~10 seconds per report"
+      ],
+      "awards": [],
+      "links": {
+        "repo": "https://github.com/melvin1117/report-xplain",
+        "product": null
+      },
+      "assetPlaceholders": [
+        "upload flow screenshot",
+        "dashboard screenshot",
+        "report-to-insight pipeline illustration",
+        "GitHub link"
+      ],
+      "detailContent": {
+        "sections": [
+          {
+            "heading": "My first hackathon",
+            "body": [
+              "This was the first hackathon I ever did. We booked a rental car and drove down from Syracuse to the University of Delaware in Newark, run with MLH.",
+              "We started as three of us and met our fourth teammate there. We hit it off, decided to bring him onto the team, and got building."
+            ]
+          },
+          {
+            "heading": "What we built",
+            "body": [
+              "Report Xplain was for the person who gets a medical report from their doctor and genuinely wants to know what it says, without having to decode the jargon. It takes those complicated terms and reports and explains them in plain language.",
+              "We built the understanding layer on Gemini, and a lot of the work was prompt engineering: shaping the prompts over and over until the output came out the way we needed it. We wrote all of the code by hand too, without leaning on AI coding assistants."
+            ]
+          },
+          {
+            "heading": "The night it almost fell apart",
+            "body": [
+              "Our first night nearly ended the project. One teammate's laptop hit a corrupted disk and he lost everything he had been working on. He had been setting up the Docker files and hadn't pushed any of it to GitHub yet, so three to four hours of progress just vanished.",
+              "Amar was local, so he drove home and borrowed a roommate's laptop for us to keep working on. Meanwhile I tried to keep everyone's morale up, and I sat down with the dead laptop to see what I could salvage. I got the disk working in read-only mode, just enough to open the file he needed to reference, and we recreated the lost work by retyping it from there.",
+              "It set us back, but we clawed the progress back and kept going."
+            ]
+          },
+          {
+            "heading": "Three minutes on stage",
+            "body": [
+              "By the time the morning sun came up it was time to present, and what we had built held together. The judges were impressed by it.",
+              "The catch was the format: three minutes to explain the product and demo it. Exhausted and doing this for the first time, we lost track of the clock and spent more than two minutes just talking about the project, which left only seconds for the actual demo. We managed to show that it worked, but there was no time to let the judges interact with it themselves."
+            ]
+          }
+        ]
+      },
+      "timeframe": "Mar 2025",
+      "status": "Hackathon",
+      "role": "Implemented the Gemini-powered extraction pipeline for structured and unstructured medical reports, and architected the secure NestJS + PostgreSQL ingestion APIs with Docker/MinIO storage and PDF parsing.",
+      "collaborators": [
+        {
+          "name": "Shreyas Kumar",
+          "github": "https://github.com/Shreyas0Kumar"
+        },
+        {
+          "name": "Shubham",
+          "github": "https://github.com/melvin1117"
+        },
+        {
+          "name": "Abhishek",
+          "github": "https://github.com/abhishekug99"
+        },
+        {
+          "name": "Amar",
+          "github": "https://github.com/Amar240"
+        }
+      ],
+      "tags": [
+        "Healthcare",
+        "Document Intelligence",
+        "Accessibility"
+      ],
+      "linkedinPosts": [
+        "https://www.linkedin.com/feed/update/urn:li:activity:7302588458772910080/"
+      ],
+      "images": [],
+      "featured": false,
+      "order": 2,
+      "event": "HenHacks '25",
+      "organizer": "MLH (Major League Hacking) and University of Delaware",
+      "location": "University of Delaware, Newark, Delaware, USA"
+    },
+    {
+      "id": "hcl-tech-netbanking",
+      "name": "HCL Tech Hackathon",
+      "category": "more",
+      "slug": "/hackathons/hcl-tech-netbanking",
+      "type": "Backend / enterprise system / hackathon build (online net banking).",
+      "homepage": {
+        "tagline": "Backend foundation for an online banking-style system.",
+        "body": [
+          "For an HCL Tech hackathon, I worked on the backend foundation for an online banking-style system using Java, Spring Boot, MongoDB, and Docker. It is a different kind of project from my AI work, but that is exactly why it matters to me: it shows the discipline of building structured backend systems where clarity and reliability matter more than novelty."
+        ],
+        "cta": {
+          "label": "Explore this project",
+          "href": "/hackathons/hcl-tech-netbanking"
+        }
+      },
+      "grounded": {
+        "productFacts": [
+          "Problem statement: build online net banking software using Java, Maven, and MongoDB.",
+          "README title: HCLTech Hackathon Starter.",
+          "Layered project structure: controller, service, repository, model, dto, config.",
+          "Has a health endpoint and deployment instructions.",
+          "Mentions an EC2 deployment path."
+        ],
+        "problem": "Even though the repo reads like a starter/scaffold, the intended use case is to build a net banking system under hackathon constraints, organized in a clean, extensible way.",
+        "positioning": "Supporting evidence of backend breadth (enterprise backend patterns, structured service design, Java ecosystem, fintech-flavored problem spaces), not the flagship story."
+      },
+      "techStack": [
+        "Java 17",
+        "Spring Boot 3.2",
+        "MongoDB",
+        "Docker + Docker Compose",
+        "Maven"
+      ],
+      "metrics": [],
+      "awards": [],
+      "links": {
+        "repo": "https://github.com/Shreyas0Kumar/hclTech-Hackathon",
+        "product": null
+      },
+      "assetPlaceholders": [
+        "API structure diagram",
+        "entity / service flow",
+        "hackathon snapshot",
+        "GitHub link"
+      ],
+      "detailContent": {
+        "sections": [
+          {
+            "heading": "Not quite a hackathon",
+            "body": [
+              "This was a hackathon, but also not really one. HCL Tech ran it as a competition where the top performers would earn a shot at interviewing for a full-time role at the company itself.",
+              "I drove down from Syracuse to New Jersey for it. They hadn't said much about the format beforehand, so I showed up not really knowing what the platform or the day would look like."
+            ]
+          },
+          {
+            "heading": "Two phases, four hours",
+            "body": [
+              "Once we got there, they explained it ran in two phases. The first was planning: you formed a team of four and mapped out the approach together. The second was individual, where each of us had to actually build the thing on our own inside a four-hour limit.",
+              "Four hours is tight for something like this, but I managed to put together something real."
+            ]
+          },
+          {
+            "heading": "Learning Java in a week",
+            "body": [
+              "The catch for me was Java. I had used it before but had mostly forgotten it, so in the week leading up to the event I did a seven-day crash course to get back up to speed. By the time I arrived I felt comfortable enough to work in it.",
+              "The brief was demanding too: a net banking system with Kafka and proper authentication. With only four hours on the clock, I kept my ambitions realistic instead of trying to do all of it."
+            ]
+          },
+          {
+            "heading": "What I built",
+            "body": [
+              "I designed a layered Java service, the usual component and service structure, and built out from there. We were allowed to use AI for the frontend but not for the logic or the backend, so I used it to generate a simple static HTML net-banking interface and wrote all the backend and logic myself.",
+              "The APIs handled the core flow of a transfer: first authenticate whether a transaction was legitimate, then record in the database that the transfer was authorized, and only then allow it to go through.",
+              "Kafka was the part I let go of. My teammates were around and tried to help me with it, but as it started getting complex I made the call to drop it rather than sink my limited time into something that might not work, and went with what I had running."
+            ]
+          },
+          {
+            "heading": "The reaction, the rejection, and the reality check",
+            "body": [
+              "Through the four hours, evaluators came and went asking questions. When they learned I had no full-time experience beyond an internship, and that I had only picked Java back up through a crash course, a few were genuinely surprised and said it was commendable to get this far in so little time.",
+              "I left hopeful about an interview call. Later that same day, the rejection email arrived. I was disappointed, but it gave me a real reality check in a good way: I had shown myself I could learn something fast and implement it for real, not just build a fragment of it. It made me more aware of what I am capable of, and more eager to keep learning and building."
+            ]
+          }
+        ]
+      },
+      "timeframe": "April 2026",
+      "status": "Hackathon",
+      "role": "Built the net-banking backend solo during the 4-hour individual phase: a layered Java / Spring Boot service with APIs that authenticated whether a transaction was legitimate, recorded the authorization in the database, then allowed the transfer. Used AI only for a static HTML frontend (as permitted) and wrote all backend logic by hand; attempted Kafka but dropped it under the time limit.",
+      "collaborators": [],
+      "tags": [
+        "Java",
+        "Backend",
+        "Fintech"
+      ],
+      "linkedinPosts": [
+        "https://www.linkedin.com/feed/update/urn:li:activity:7451341745176399872/"
+      ],
+      "images": [],
+      "featured": false,
+      "order": 3,
+      "event": "4-hour hackathon",
+      "organizer": "HCLTech",
+      "location": "HCLTech office, New Jersey, USA"
+    },
+    {
+      "id": "humana-mays-case-competition",
+      "name": "Humana-Mays Healthcare Analytics Case Competition",
+      "category": "more",
+      "slug": "/hackathons/humana-mays-case-competition",
+      "type": "Healthcare analytics case competition: predictive modeling on large-scale patient data.",
+      "homepage": {
+        "tagline": "Carrying the modeling for a team in a national healthcare analytics competition.",
+        "body": [
+          "The Humana-Mays competition handed us healthcare data at a scale I'd never touched: over a million patients, tens of millions of records, with the goal of predicting where people were falling through the cracks on preventive care.",
+          "I was the only technical person on a team of four, so the modeling was mine to carry. We climbed into the top eight on the live scoreboard before a flood of last-hour submissions edged us to 21st, one spot short of advancing."
+        ],
+        "cta": {
+          "label": "See how I solved this",
+          "href": "/hackathons/humana-mays-case-competition"
+        }
+      },
+      "grounded": {
+        "productFacts": [
+          "Humana-Mays Healthcare Analytics Case Competition, Modeling & Analysis track.",
+          "Goal: predict gaps in preventive healthcare visits.",
+          "Datasets at scale: ~1.5 million patients, 33 million quality records, 19 million claims records.",
+          "First round was data/modeling heavy with a live scoreboard; later rounds were business/presentation focused.",
+          "Team of 4; the user was the only member with a technical/coding background, the rest were on the business analytics side."
+        ],
+        "problem": "Preventive care gaps are buried inside enormous, messy healthcare datasets. Surfacing who is likely to miss a preventive visit means wrangling millions of records across quality and claims data and turning that into a reliable predictive signal.",
+        "positioning": "A strong applied-ML proof point: working solo on the technical side, at real data scale, under a live competitive scoreboard, while translating business teammates' needs into model features.",
+        "storyHooks": [
+          "A team of four, but the modeling rested on one person.",
+          "Top eight on the scoreboard, until the final hour."
+        ]
+      },
+      "techStack": [
+        "Python",
+        "Random Forest",
+        "XGBoost",
+        "Ensemble models",
+        "Cross-validation",
+        "Hyperparameter optimization"
+      ],
+      "metrics": [
+        "Datasets of ~1.5M patients, 33M quality records, 19M claims records",
+        "Ensemble models (Random Forest, XGBoost) with strong predictive accuracy"
+      ],
+      "awards": [
+        "Finished 21st, narrowly missed the top-20 advancement cutoff"
+      ],
+      "links": {
+        "product": null,
+        "repo": null
+      },
+      "assetPlaceholders": [
+        "scoreboard / ranking screenshot",
+        "model performance chart",
+        "data pipeline illustration"
+      ],
+      "detailContent": {
+        "sections": [
+          {
+            "heading": "How I ended up in it",
+            "body": [
+              "This one reached me through my roommate, who was taking a business analytics course. The team that formed around it was four people, and I was the only one who could actually code; everyone else was on the business side.",
+              "That shaped the whole thing. Their strength was the analysis and the later presentation rounds; the technical first round was on me."
+            ]
+          },
+          {
+            "heading": "The data and the model",
+            "body": [
+              "The first round was data and modeling heavy. We were handed healthcare data at a scale I had never worked with before, well over a million patients and tens of millions of records, and the task was to predict gaps in people's preventive healthcare visits.",
+              "It ran on a live scoreboard, so I built an ML model and kept improving it day by day, watching our rank move. I also sat down regularly with my business-side team lead to understand exactly what they needed the analysis to surface, and fed that back into the model."
+            ]
+          },
+          {
+            "heading": "The final hour",
+            "body": [
+              "We were sitting in the top eight before submissions closed. Then in the final hour a wave of new submissions came in and pushed us down to 21st. Only the top 20 advanced, so we missed it by a single place.",
+              "I'll be honest about why: I had relaxed a little near the end, comfortable with where we were, and that's part of how the late surge caught us. I apologized to my teammates for it, and they were understanding, they knew they couldn't have carried the technical side themselves."
+            ]
+          },
+          {
+            "heading": "What I took from it",
+            "body": [
+              "Even missing the cut, this was a genuinely good experience. It was my first time dealing with data at that scale, and carrying the modeling alone for a team taught me a lot, both technically and about not easing off until the clock actually runs out.",
+              "Mostly, I had fun with it. Working with a dataset that large turned out to be the kind of challenge I enjoy."
+            ]
+          }
+        ]
+      },
+      "timeframe": "Sep 2024",
+      "status": "Case competition",
+      "role": "Sole technical member on a team of 4: built and iteratively improved the predictive models (Random Forest, XGBoost ensembles) on large-scale healthcare data via a live scoreboard, using cross-validation and hyperparameter tuning, and translated business teammates' analysis needs into model features.",
+      "collaborators": [],
+      "tags": [
+        "Healthcare",
+        "Machine Learning",
+        "XGBoost",
+        "Data at Scale"
+      ],
+      "linkedinPosts": [],
+      "images": [],
+      "featured": false,
+      "order": 4,
+      "event": "Humana-Mays Healthcare Analytics Case Competition 2024",
+      "organizer": "Humana and the Mays Business School, Texas A&M University",
+      "location": "Remote"
+    }
+  ],
+  "experience": [
+    {
+      "id": "syracuse-research-assistant",
+      "company": "Syracuse University",
+      "role": "Research Assistant",
+      "location": "Syracuse, NY",
+      "start": "Jun 2024",
+      "end": "Jun 2026",
+      "lab": {
+        "name": "C4 Lab",
+        "url": "https://ischool.syracuse.edu/research/c4lab/"
+      },
+      "advisor": {
+        "name": "Joshua Introne",
+        "url": "https://ischool.syracuse.edu/joshua-introne/#Biography"
+      },
+      "manager": null,
+      "team": [],
+      "links": {
+        "repo": null
+      },
+      "linkedinPosts": [
+        "https://www.linkedin.com/feed/update/urn:li:activity:7363197423248121856/"
+      ],
+      "summary": "Worked on large-scale NLP and retrieval workflows around ORACC data, including preprocessing, hybrid search, model adaptation, and deployment.",
+      "grounded": [
+        "Processed 500K+ annotated ORACC tokens into optimized Hugging Face datasets, reducing prep time ~40%.",
+        "Combined BM25 with 768-d dense embeddings (LangChain) to improve query relevance ~30%, validated with Recall@K and MRR.",
+        "Applied LoRA fine-tuning to Microsoft Phi, reducing VRAM ~50% with sub-second CPU inference.",
+        "Exposed the RAG pipeline as a FastAPI + Docker microservice with CI via GitHub Actions and p50/p99 latency monitoring.",
+        "Related earlier repo direction: Fine-Tunning-LLM focused on Akkadian texts and ORACC data."
+      ],
+      "detailContent": {
+        "sections": [
+          {
+            "heading": "How it started",
+            "body": [
+              "I joined in the early phase of a research project in the C4 Lab, working under Professor Joshua Introne, exploring an idea of his.",
+              "The question was a fascinating one: how the beliefs of historical people shifted over time, traced through the literature that survives from them. That literature was written in Akkadian, an ancient language, which is what made the whole thing hard and interesting at once."
+            ]
+          },
+          {
+            "heading": "What I set out to build",
+            "body": [
+              "I was given a database of this material and asked to build a RAG-based pipeline that could actually make sense of the language.",
+              "The concrete first goal was a chatbot a PhD student could use to understand Akkadian and build further research on top of. That target shaped the retrieval pipeline I put together, across roughly half a million annotated Akkadian tokens."
+            ]
+          },
+          {
+            "heading": "Carrying it solo",
+            "body": [
+              "For a long stretch of this I worked fairly independently, figuring things out on my own and pushing the pipeline to completion. It taught me how to keep a research build moving without constant guidance, and how much I could carry on my own."
+            ]
+          },
+          {
+            "heading": "Fighting the hardware",
+            "body": [
+              "Progress was slow for a very practical reason. My laptop runs an AMD GPU with no CUDA support, so I was running GPU-scale work on my CPU.",
+              "I had access to a lab GPU, but it sat in a queue behind the PhD students' projects. As a junior member of the lab I waited my turn, often around two days for a slot, which stretched everything out."
+            ]
+          },
+          {
+            "heading": "Profiling the slow path",
+            "body": [
+              "The first working version was slow: about 800ms end to end. Rather than guess, I profiled it with cProfile to get a call graph, and it pointed straight at the sentence-transformer encoder as the thing eating the time. My job was to figure out why.",
+              "Digging in, I found two problems. Every query was calling the encoder synchronously, which blocked the event loop. And I was encoding one query at a time, when I could batch several queries into a single forward pass for almost the same latency as one."
+            ]
+          },
+          {
+            "heading": "The three changes that brought it down",
+            "body": [
+              "Those two findings led me to change three things. First, I moved to async, batched embedding calls so the encoder stopped blocking and handled queries together.",
+              "Second, I fine-tuned Microsoft Phi with LoRA on ORACC domain data so the model was actually adapted to this material. Third, I added prefix caching for the common parts of the prompts, precomputing the KV-cache once on startup instead of rebuilding it on every request."
+            ]
+          },
+          {
+            "heading": "How the retrieval was built",
+            "body": [
+              "Under the hood the pipeline ran in three stages, each with its own latency budget. Retrieval came first and was I/O bound: a query went through BM25 and dense embedding at the same time, and the results were merged and re-ranked. Embedding was the compute-bound stage, encoding the query into a 768-dimensional vector with a sentence-transformer model. Generation was the memory-bound stage, where the retrieved context and the query went into the language model.",
+              "For the hybrid retrieval itself, BM25 returns in milliseconds thanks to its inverted index, while dense retrieval needs a vector similarity search, so I used FAISS with an approximate-nearest-neighbor index to keep that fast."
+            ]
+          },
+          {
+            "heading": "Fine-tuning and how I measured it",
+            "body": [
+              "LoRA was the right tool here: freeze the original weights and add small trainable rank-decomposition matrices at specific layers, so training only updates a fraction of the parameters and stays fast. At inference the adapters merge back into the base weights, so there's effectively no runtime overhead.",
+              "The big VRAM saving, around half, came from two things together: switching from the 7B base model I started with to the smaller 2.7B Phi, and using LoRA so I never had to load a full fine-tuning optimizer state.",
+              "To know whether retrieval was actually good, I tracked Recall@K (how often the correct document lands in the top K results) and MRR (how high the correct result ranks) on a held-out set. I kept the generation metrics separate from these, since the two can degrade independently."
+            ]
+          },
+          {
+            "heading": "Deploying and watching it",
+            "body": [
+              "I packaged the service as a Docker container behind a FastAPI server, with the embedding model loaded once into VRAM at startup and kept resident so there was no cold-start penalty on each request. The Dockerfile was two stages, a build stage for dependencies and a runtime stage holding just the model artifacts and application code, to keep the image small. For the research setup I deployed it on the lab's GPU cluster.",
+              "To keep myself honest about speed, I wrapped each stage in a timing decorator that logged latency to a file, then built a small dashboard on top of it. It didn't just tell me the pipeline was slow, it told me exactly which stage was the bottleneck, measured at p50 and p99."
+            ]
+          },
+          {
+            "heading": "What came of it",
+            "body": [
+              "By the time I delivered, the project's direction had shifted, so the pipeline never quite made it into a PhD student's hands. That happens in research.",
+              "Even so, I finished what I had taken on and grew a great deal doing it. Taking a pipeline from an 800ms baseline down through real profiling, retrieval design, fine-tuning, and deployment is the kind of end-to-end work I'm proudest of from this role."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "nielseniq-automation-intern",
+      "company": "NielsenIQ",
+      "role": "Software Automation Engineer Intern",
+      "location": "Pune, India (hybrid)",
+      "start": "Oct 2022",
+      "end": "Jun 2023",
+      "lab": null,
+      "advisor": null,
+      "manager": {
+        "name": "Ankur",
+        "url": "https://www.linkedin.com/in/ankur-agarwal-a247b883/"
+      },
+      "team": [],
+      "links": {
+        "repo": null
+      },
+      "linkedinPosts": [],
+      "summary": "Built automation and testing workflows that reduced execution time significantly and made release cycles more reliable.",
+      "grounded": [
+        "Automated UI validation with Selenium WebDriver + JavaScript; authored and executed 100+ regression/integration test cases, cutting daily runtime from 7-8 hours to 3 hours.",
+        "Monitored daily test runs, partnered with developers to resolve defects within 24 hours, and integrated suites into CI with improved reporting/triage."
+      ],
+      "detailContent": {
+        "sections": [
+          {
+            "heading": "My first real job",
+            "body": [
+              "This was the first job I landed, and I got it during my bachelor's, starting the internship in my final semester. I came in through my university after an interview, along with two others from the same place.",
+              "The team itself was just getting off the ground, staffed mostly with senior engineers, so the three of us were joining something at its early stage."
+            ]
+          },
+          {
+            "heading": "What the work actually was",
+            "body": [
+              "Day to day, I wrote automation scripts to test new features and re-validate the existing ones. When older scripts stopped behaving, I had to fix them or trace the bugs they had surfaced.",
+              "A lot of the job was communication. We stayed in regular contact with stakeholders, the development team, and our managers to talk through whatever new issues had appeared after each production cycle."
+            ]
+          },
+          {
+            "heading": "The Saturday release rhythm",
+            "body": [
+              "The week had a rhythm to it. We built and refined scripts through the week, and on Saturday the product went live and our scripts went live with it, sweeping the main website for defects.",
+              "When something broke, the job wasn't just to catch it. I had to pin down which team owned it and raise a ticket to the right person to get it fixed. On weekdays the scripts ran daily too, as a constant check that the site's functionality was still holding."
+            ]
+          },
+          {
+            "heading": "Growing into it",
+            "body": [
+              "I picked things up quickly, and that showed by the end. Over the nine months I went from writing my own scripts to helping supervise the two teammates who had joined alongside me and reviewing their pull requests.",
+              "For a first industry role, learning to own quality for a live website, and then to help others do the same, taught me a lot about how real release cycles actually work."
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": "iiit-hyderabad-research-intern",
+      "company": "IIIT Hyderabad",
+      "role": "Research Engineer Intern",
+      "location": "Remote",
+      "start": "Dec 2021",
+      "end": "Mar 2022",
+      "lab": {
+        "name": "Raj Reddy Center for Technology and Society (RCTS)",
+        "url": null
+      },
+      "advisor": null,
+      "manager": {
+        "name": "Prof. Ramesh Loganathan",
+        "url": null
+      },
+      "team": [
+        {
+          "name": "Koushik Ananth",
+          "role": "Lead Engineer"
+        },
+        {
+          "name": "Bhavyajeet Singh",
+          "role": "Research Engineer Intern"
+        },
+        {
+          "name": "Ayushman Panda",
+          "role": "Research Engineer Intern"
+        },
+        {
+          "name": "Rajat Kumar",
+          "role": "Research Engineer Intern"
+        },
+        {
+          "name": "Arjun Andra",
+          "role": "Research Engineer Intern"
+        }
+      ],
+      "links": {
+        "repo": null
+      },
+      "linkedinPosts": [],
+      "summary": "Built the frontend for Project Badal at the Raj Reddy Center for Technology and Society (RCTS), a platform connecting NGOs with college and corporate teams to build social-impact solutions. The project reached the top 4 at the IIIT Hyderabad R&D Showcase 2022.",
+      "grounded": [
+        "Remote research internship at RCTS, IIIT Hyderabad, during undergrad at KIIT.",
+        "Project Badal: a platform connecting NGOs with teams from colleges and companies to solve social-impact problem statements.",
+        "Spearheaded frontend development for the full-stack web platform using ReactJS.",
+        "Cut frontend-backend communication overhead by ~20%.",
+        "Project earned a place among the top 4 at the IIIT Hyderabad R&D Showcase 2022."
+      ],
+      "detailContent": {
+        "sections": [
+          {
+            "heading": "A remote start in research",
+            "body": [
+              "While I was still doing my bachelor's at KIIT, I took on a remote research internship with the Raj Reddy Center for Technology and Society (RCTS) at IIIT Hyderabad, under Prof. Ramesh Loganathan. The project was called Project Badal.",
+              "It was one of my earliest tastes of real research work, and I was doing it entirely remotely alongside a lead engineer and a handful of other interns."
+            ]
+          },
+          {
+            "heading": "What Project Badal was for",
+            "body": [
+              "NGOs do critical work, but they often can't reach the latest technology, which caps how far their impact can scale when they rely on volunteers alone. Project Badal set out to bridge that gap by connecting NGOs with teams from colleges and companies.",
+              "The flow was a cycle: NGOs brought their problems to RCTS, those problems were broken into sub-projects and published on the platform with requirements and timelines, and teams could pick the tasks they were comfortable taking on. Progress and key metrics were tracked on the platform, code lived in Git repositories, and finished modules were reviewed, integrated, and delivered back to the NGOs as real solutions."
+            ]
+          },
+          {
+            "heading": "My part: the frontend",
+            "body": [
+              "I led the frontend development for the platform, building it in ReactJS. One thing I focused on was the communication between the frontend and backend, which I tightened enough to cut its overhead by around 20%.",
+              "Working on a full-stack platform meant for actual NGO use, rather than a throwaway demo, made the engineering choices feel like they mattered."
+            ]
+          },
+          {
+            "heading": "Where it landed",
+            "body": [
+              "Project Badal earned a place among the top 4 projects at the IIIT Hyderabad R&D Showcase 2022. For an early, remote, undergrad research role, being part of something that stood out at a showcase like that was a real marker that I could contribute to research-driven product work."
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "education": [
+    {
+      "institution": "Syracuse University",
+      "degree": "MS in Computer Science",
+      "gpa": "3.6/4",
+      "start": "Aug 2023",
+      "end": "May 2025"
+    },
+    {
+      "institution": "KIIT",
+      "degree": "B.Tech in Computer Science",
+      "gpa": "9.1/10",
+      "start": "Jun 2019",
+      "end": "Apr 2023"
+    }
+  ],
+  "skills": {
+    "llmNlp": [
+      "RAG",
+      "LangChain",
+      "Hugging Face",
+      "Transformers",
+      "LoRA",
+      "BM25",
+      "Embeddings",
+      "Prompt Engineering",
+      "STT/TTS"
+    ],
+    "mlData": [
+      "PyTorch",
+      "JAX",
+      "XGBoost",
+      "Random Forest",
+      "MLflow",
+      "Model Evaluation"
+    ],
+    "backendApis": [
+      "FastAPI",
+      "Celery",
+      "PostgreSQL",
+      "SQLAlchemy",
+      "Redis",
+      "Node.js",
+      "NestJS",
+      "WebSockets",
+      "Asyncio"
+    ],
+    "deploymentTools": [
+      "Docker",
+      "Kubernetes",
+      "GitHub Actions",
+      "Azure ML",
+      "Heroku",
+      "Firebase",
+      "Selenium",
+      "MinIO"
+    ],
+    "languages": [
+      "Python",
+      "Rust",
+      "Java",
+      "Kotlin",
+      "TypeScript/JavaScript",
+      "SQL",
+      "SwiftUI"
+    ]
+  },
+  "interviews": {
+    "fieldTemplate": {
+      "company": "Company name",
+      "role": "Role you interviewed for",
+      "location": "Remote / city / On-campus",
+      "when": "e.g. Spring 2024",
+      "rating": "1-5 (overall experience)",
+      "difficulty": "Easy | Medium | Hard",
+      "outcome": "Offer | Rejected | In process | Withdrew | No offer",
+      "rounds": [
+        {
+          "stage": "Round name",
+          "description": "One sentence on what it was",
+          "date": "optional date"
+        }
+      ],
+      "questionsAsked": [
+        "A few questions they actually asked"
+      ],
+      "takeaway": "One honest takeaway",
+      "order": "display order, editable"
+    },
+    "items": [
+      {
+        "id": "checksum-ai-engineer",
+        "company": "Checksum",
+        "role": "AI Engineer",
+        "location": "California (remote interview)",
+        "when": "Oct 20 & 29, 2025",
+        "rating": 4,
+        "difficulty": "Medium",
+        "outcome": "Rejected",
+        "rounds": [
+          {
+            "stage": "Phone Interview",
+            "description": "A screening call covering basics like relocation willingness and visa status.",
+            "date": "Oct 20, 2025"
+          },
+          {
+            "stage": "Technical Screen",
+            "description": "A round with the team's hiring manager: project deep-dives followed by a live coding task building a small tool an LLM could call.",
+            "date": "Oct 29, 2025"
+          }
+        ],
+        "questionsAsked": [
+          "Are you comfortable relocating, and what is your visa status?",
+          "Walk me through your projects.",
+          "Write a small tool-based script that an LLM can call to perform a task."
+        ],
+        "takeaway": "I wanted this one too much, and the pressure I put on myself got in the way. The coding task was something I could have done in five minutes, but nerves stretched it to thirty. The lesson I'm taking is to manage my own pressure when a role matters most, because that, not the technical difficulty, is what cost me here.",
+        "order": 1,
+        "detailContent": {
+          "sections": [
+            {
+              "heading": "Two rounds",
+              "body": [
+                "The first round was a short screening call, mostly logistics: whether I was comfortable relocating, my visa status, that kind of thing.",
+                "The second was with the team's hiring manager. This was an AI Engineer role, the exact kind of work I was doing then and still do now, so it mattered a lot to me, and that weight is part of what tripped me up."
+              ]
+            },
+            {
+              "heading": "Where it slipped",
+              "body": [
+                "When the manager asked about my projects, I answered those fluently and felt good about it. Then came a technical coding task: build a small tool-based script that an LLM could call to do something.",
+                "I froze. Something I could have written in five minutes took me thirty. There was nothing hard about the problem itself. It was the pressure I had loaded onto myself because I wanted this role so badly."
+              ]
+            },
+            {
+              "heading": "What I'm taking from it",
+              "body": [
+                "I was rejected, and I still think about it, because this was close to a dream role for me. But the honest read is that the difficulty wasn't technical, it was self-inflicted pressure.",
+                "What I want to improve is exactly that: staying calm and trusting what I know when a role means the most to me, instead of letting the stakes shrink my thinking."
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "intertru-prompt-engineer",
+        "company": "Intertru.ai",
+        "role": "Prompt Engineer",
+        "location": "",
+        "when": "Feb 25, 2026",
+        "rating": 3,
+        "difficulty": "Easy",
+        "outcome": "Rejected",
+        "rounds": [
+          {
+            "stage": "Discovery Interview",
+            "description": "A conversational round, run partly as a mock since they'd flagged upfront that my experience level likely wasn't a fit. Covered my projects, my experience with AI, and, fittingly for a recruiting startup, how interviews work in general.",
+            "date": "Feb 25, 2026"
+          }
+        ],
+        "questionsAsked": [
+          "Walk me through your projects.",
+          "What's your experience working with AI?",
+          "Tell me about your experience in the USA.",
+          "How do you think interview processes work?"
+        ],
+        "takeaway": "They were a startup that wanted experienced hires first and planned to bring on recent grads later, so they told me at the start that I likely wouldn't be selected and ran it more as a mock. Being effectively rejected before I'd said much was frustrating, especially since they had reached out off my resume. Still, I took it as low-stakes practice and a clear read on the experience bar some startups set, which is useful to know going in.",
+        "order": 2,
+        "detailContent": {
+          "sections": [
+            {
+              "heading": "An unusual setup",
+              "body": [
+                "Intertru.ai was a startup, and a recruiting-focused one at that, building tools to help companies hire better. Their plan was to bring on experienced people first and hire recent grads later, so I wasn't really their target at this stage.",
+                "What caught me off guard was that they reached out off my resume and called me in, then opened the interview by saying I likely wouldn't be selected, and that we'd run it more as a mock."
+              ]
+            },
+            {
+              "heading": "What they asked",
+              "body": [
+                "The conversation stayed fairly light. They asked about my projects, my experience working with AI, and my time in the USA.",
+                "Because the company itself was in the recruiting space, they were also curious about my general read on how interview processes work, which made for a slightly different kind of discussion than a typical screen."
+              ]
+            },
+            {
+              "heading": "Being honest about it",
+              "body": [
+                "I'll be straight: this one left me frustrated. It's hard to be told you won't be selected before you've really had a chance to show anything, and I kept wondering why they picked my resume at all if experience was the dealbreaker.",
+                "Looking back, I take it as useful low-stakes practice and a clear signal about the experience bar some early-stage startups hold. Not every interview is a real shot, and knowing that going in is its own kind of lesson."
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "apple-siri-nl-platform-swe",
+        "company": "Apple",
+        "role": "Siri NL Platform Software Engineer",
+        "location": "Remote (WebEx); role based at Apple HQ, California",
+        "when": "Mar 6, 2026",
+        "rating": 5,
+        "difficulty": "Medium",
+        "outcome": "Rejected",
+        "rounds": [
+          {
+            "stage": "WebEx interview",
+            "description": "A video round with the hiring manager of the Siri NL Platform software engineering team: behavioral/STAR questions followed by a deep dive into my project Lumo, from product to architecture to approach.",
+            "date": "Mar 6, 2026"
+          }
+        ],
+        "questionsAsked": [
+          "STAR-style behavioral questions about how I've worked through past situations.",
+          "Tell me about Lumo, start with the product.",
+          "Walk down into its architecture and the approach you took.",
+          "What would you build next, and how would that learning apply to this team?"
+        ],
+        "takeaway": "I prepared hard for this one and it genuinely went well: the manager put me at ease and I was in my element talking through Lumo end to end. I walked away confident I'd reach the next round. The likely reason I didn't was experience; it read as a team that wanted someone more senior. What I hold onto is that my resume was strong enough to get pulled by a manager directly, without a referral and past the screening systems. Doing well by my own measure isn't the same as clearing the manager's bar, and I take the loss, but getting that far meant a lot.",
+        "order": 3,
+        "detailContent": {
+          "sections": [
+            {
+              "heading": "Preparing for Apple",
+              "body": [
+                "I prepared a lot for this one. Because it was Apple, I started early: reading up on the team, and going deep on my own projects so I'd have a clear answer ready for any direction the conversation took.",
+                "I expected a hiring-manager screen, so I prepped a set of STAR-based answers. That preparation is exactly what paid off."
+              ]
+            },
+            {
+              "heading": "How the round went",
+              "body": [
+                "The interview was with the manager of the Siri NL Platform software engineering team. It started well: he made it easy to talk to him, and within a few minutes the usual nerves settled and I felt comfortable.",
+                "Then he asked about Lumo, and that's where I found my spark. I started from the product, then moved down into the architecture, then the approach I'd used and why, what I'd want to do next, and how I'd carry that learning into a team like his. I came out of it confident I'd at least make the next round."
+              ]
+            },
+            {
+              "heading": "The part I'm proud of",
+              "body": [
+                "What I keep from this is that I got here without a referral. My resume was strong enough to get past the screening systems and be pulled directly by the manager, and getting that far on my own felt like real validation."
+              ]
+            },
+            {
+              "heading": "Taking the loss",
+              "body": [
+                "In the end I was rejected, most likely because the role wanted more experience than I had. I did well by my own measure, but my measure isn't the manager's, and I accept that a more senior engineer was probably the better fit for them.",
+                "I'll be honest that missing this one stung, because I'd have loved to be on the Siri NL Platform team specifically, the kind of team where you get to make decisions that shape where the product goes, rather than just building to spec. But it went about as well as I could have asked, and I'm at peace with it. All good."
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "tata-elxsi-data-engineer",
+        "company": "Tata Elxsi",
+        "role": "Data Engineer",
+        "location": "New Jersey (remote interview)",
+        "when": "Mar 31, 2026",
+        "rating": 3,
+        "difficulty": "Medium",
+        "outcome": "Rejected",
+        "rounds": [
+          {
+            "stage": "Technical Screening",
+            "description": "An initial screen covering relocation and visa status.",
+            "date": "Mar 31, 2026"
+          },
+          {
+            "stage": "Technical Interview",
+            "description": "A round with the manager and a senior developer covering SQL, LLM tool-handling, and prompt engineering.",
+            "date": "Mar 31, 2026"
+          }
+        ],
+        "questionsAsked": [
+          "MySQL / SQL questions.",
+          "Write a script for tool handling of an LLM.",
+          "Write a prompt to an LLM to accomplish a specific task."
+        ],
+        "takeaway": "A mixed experience. The technical topics covered were relevant to my work, but the dynamic in the room didn't leave much space to show what I could do. Moving on.",
+        "order": 4,
+        "detailContent": null
+      },
+      {
+        "id": "redhat-software-engineer",
+        "company": "Red Hat",
+        "role": "Software Engineer",
+        "location": "Remote; role based in Raleigh, NC",
+        "when": "May 13, 20, & 27, 2026",
+        "rating": 5,
+        "difficulty": "Medium",
+        "outcome": "Rejected",
+        "rounds": [
+          {
+            "stage": "Recruiter Screening",
+            "description": "An intro call with the recruiter covering the process, the role, and an honest heads-up that competition for this position was high.",
+            "date": "May 13, 2026"
+          },
+          {
+            "stage": "Hiring Manager Round",
+            "description": "A technical conversation with both the manager and assistant manager of the team, both on the engineering side rather than the business side.",
+            "date": "May 20, 2026"
+          },
+          {
+            "stage": "Senior Engineer Round (x2)",
+            "description": "Back-to-back sessions with two senior engineers: the first focused on projects and performance testing experience; the second on how I would approach performance testing an LLM.",
+            "date": "May 27, 2026"
+          }
+        ],
+        "questionsAsked": [
+          "Walk me through your projects and what you built.",
+          "What performance testing have you done and how did you approach it?",
+          "How would you performance-test an LLM model?"
+        ],
+        "takeaway": "Three rounds out of four at Red Hat, without a referral, is something I'm genuinely proud of. The rejection came fast after the second senior engineer, and I think the LLM performance-testing question exposed a gap in hands-on experience even though I had the right conceptual foundation from my research work. Getting that far in a competitive process taught me that I can hold my own technically, and told me clearly where to keep building depth.",
+        "order": 5,
+        "detailContent": {
+          "sections": [
+            {
+              "heading": "How it started",
+              "body": [
+                "Red Hat came through a LinkedIn outreach. The recruiter was upfront from the first call: a lot of people were interviewing for this role, so she told me not to keep my hopes too high, but wished me well.",
+                "I went in with measured expectations, which actually helped."
+              ]
+            },
+            {
+              "heading": "Rounds one and two",
+              "body": [
+                "The manager round was a good conversation. Both the manager and assistant manager were technical rather than business-focused, so it stayed grounded in engineering the whole way through and I felt comfortable.",
+                "That round got me through to the senior engineer stage."
+              ]
+            },
+            {
+              "heading": "The senior engineer round",
+              "body": [
+                "Round three was split across two engineers, back to back. The first asked a lot about my projects and performance testing work, and I answered all of it. He seemed impressed.",
+                "The second engineer asked how I would go about performance-testing an LLM. I had worked on something related during my time as a research assistant at Syracuse, so I had enough to answer him, but I could feel the gap between what I knew conceptually and what someone with direct hands-on experience at scale would have said.",
+                "Within an hour of that conversation, the rejection email arrived."
+              ]
+            },
+            {
+              "heading": "Three out of four",
+              "body": [
+                "I had real hope going into what would have been the final round with the tech leads. Missing it stung, especially with how quickly the rejection landed.",
+                "But getting three rounds into a competitive process without a referral is something I'm proud of. The gap that likely cost me, LLM performance testing at depth, is also one I know how to close. That's a useful thing to walk away with."
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "id": "amazon-sde",
+        "company": "Amazon",
+        "role": "Software Development Engineer",
+        "location": "",
+        "when": "May 29, 2026",
+        "rating": null,
+        "difficulty": "",
+        "outcome": "In process",
+        "rounds": [
+          {
+            "stage": "In-person hiring drive (4 rounds)",
+            "description": "",
+            "date": "May 29, 2026"
+          }
+        ],
+        "questionsAsked": [],
+        "takeaway": "",
+        "order": 6,
+        "detailContent": null,
+        "ongoing": true
+      }
+    ]
+  },
+  "contact": {
+    "heading": "Contact",
+    "body": [
+      "I like working on products and systems where the engineering has to earn trust.",
+      "If that sounds relevant to what you're building, I'd love to talk."
+    ]
+  }
+}
