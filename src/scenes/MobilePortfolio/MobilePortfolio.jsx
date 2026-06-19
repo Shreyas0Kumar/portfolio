@@ -135,10 +135,10 @@ export default function MobilePortfolio() {
     if (next < 0 || next >= SECTIONS.length) return
     go(SECTIONS[next][2])
   }
-  const open = (kind, id) => { setDetail({ kind, id }); toTop() }
-  const back = () => { setDetail(null); toTop() }
+  const open = (kind, id) => { setDir(1); setDetail({ kind, id }); toTop() }
+  const back = () => { setDir(-1); setDetail(null); toTop() }
 
-  // Horizontal swipe between tabs (ignored while a detail page is open).
+  // Horizontal swipe: between tabs on a section, or right→left back out of a detail.
   const touchRef = useRef(null)
   const onTouchStart = e => {
     const t = e.changedTouches[0]
@@ -147,12 +147,16 @@ export default function MobilePortfolio() {
   const onTouchEnd = e => {
     const start = touchRef.current
     touchRef.current = null
-    if (!start || detail) return
+    if (!start) return
     const t = e.changedTouches[0]
     const dx = t.clientX - start.x
     const dy = t.clientY - start.y
     // Require a clearly horizontal swipe of reasonable length.
     if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return
+    if (detail) {
+      if (dx > 0) back() // inside a case study: swipe right to go back (like the Back button)
+      return
+    }
     goByOffset(dx < 0 ? 1 : -1) // drag left → next tab, drag right → previous
   }
 

@@ -470,12 +470,14 @@
   background: rgba(242, 237, 227, 0.65);
   white-space: pre-line;
 }
+/* Pinned to the card corner (out of flow) so it never inflates the header row
+   and push the title/text down on award cards. */
 .pf-stamp--sm {
-  position: static;
+  position: absolute;
+  top: 20px; right: 20px;
   width: 60px; height: 60px;
   font-size: 8px;
   transform: rotate(-8deg);
-  flex: 0 0 auto;
   background: transparent;
 }
 
@@ -519,6 +521,7 @@
   text-transform: uppercase;
   color: var(--orange);
   line-height: 1.4;
+  padding-right: 72px;
 }
 .pf-hcard-title {
   font-family: var(--font-hand);
