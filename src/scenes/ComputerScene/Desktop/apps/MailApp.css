@@ -99,3 +99,4 @@
 
 .mail-status.ok  { color: #2e7d32; }
 .mail-status.err { color: #b3261e; }
+.mail-status a { color: inherit; text-decoration: underline; }

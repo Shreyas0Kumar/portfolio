@@ -4,43 +4,56 @@ import './MailApp.css'
 
 /**
  * MailApp
- * A Mail-style contact form. The recipient comes from public/portfolio.json
- * (profile.email). If FORMSPREE_ENDPOINT is set it POSTs there; otherwise it
- * falls back to a mailto: compose link (always works).
+ * A Mail-style contact form that sends *in-app* — the visitor never leaves the
+ * desktop. It POSTs to Formspree (a hosted form backend), which emails the
+ * message straight to profile.email. The visitor's address is sent as the
+ * reply-to, so replying lands back in their inbox.
  *
- * To enable in-app sending, create a Formspree form and paste its endpoint
- * into FORMSPREE_ENDPOINT.
+ * Setup (one-time): create a free form at https://formspree.io, then paste its
+ * endpoint below — or set VITE_FORMSPREE_ENDPOINT at build time. The endpoint is
+ * not a secret (it's a public form URL), so committing it is fine.
+ *
+ * Until an endpoint is configured, "Send" can't deliver, so we surface a clear
+ * "email directly" link instead of silently failing.
  */
-const FORMSPREE_ENDPOINT = '' // e.g. 'https://formspree.io/f/xxxxxxx'
+const FORMSPREE_ENDPOINT =
+  import.meta.env.VITE_FORMSPREE_ENDPOINT || '' // e.g. 'https://formspree.io/f/xxxxxxxx'
 
 export default function MailApp() {
   const MAIL_TO = usePortfolio().profile.email
   const [from, setFrom]       = useState('')
   const [subject, setSubject] = useState('')
   const [body, setBody]       = useState('')
+  const [trap, setTrap]       = useState('') // honeypot — real people leave it blank
   const [status, setStatus]   = useState('idle') // idle | sending | sent | error
+
+  const configured = Boolean(FORMSPREE_ENDPOINT)
 
   const send = async e => {
     e.preventDefault()
-
-    if (!FORMSPREE_ENDPOINT) {
-      // Fallback: open the user's mail client.
-      const url = `mailto:${MAIL_TO}?subject=${encodeURIComponent(subject)}` +
-        `&body=${encodeURIComponent(`${body}\n\n— ${from}`)}`
-      window.location.href = url
-      setStatus('sent')
-      return
-    }
+    if (trap) return // bot caught in the honeypot — pretend nothing happened
+    if (!configured) { setStatus('error'); return }
 
     try {
       setStatus('sending')
       const res = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify({ email: from, subject, message: body }),
+        body: JSON.stringify({
+          email: from, // Formspree uses this as the reply-to address
+          _subject: subject
+            ? `Portfolio · ${subject}`
+            : 'New message from your portfolio',
+          message: `${body}\n\n— Sent from the portfolio Mail app by ${from}`,
+          _gotcha: trap, // empty for real people; lets Formspree drop bots server-side too
+        }),
       })
-      setStatus(res.ok ? 'sent' : 'error')
-      if (res.ok) { setSubject(''); setBody('') }
+      if (res.ok) {
+        setStatus('sent')
+        setSubject(''); setBody('')
+      } else {
+        setStatus('error')
+      }
     } catch {
       setStatus('error')
     }
@@ -88,8 +101,25 @@ export default function MailApp() {
           placeholder="Write your message…"
         />
 
+        {/* Honeypot: hidden from people, tempting to bots. Kept out of the tab order. */}
+        <input
+          type="text"
+          name="_gotcha"
+          tabIndex={-1}
+          autoComplete="off"
+          value={trap}
+          onChange={e => setTrap(e.target.value)}
+          style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+          aria-hidden="true"
+        />
+
         {status === 'sent'  && <p className="mail-status ok">Thanks — your message is on its way ✓</p>}
-        {status === 'error' && <p className="mail-status err">Something went wrong. Try again or email directly.</p>}
+        {status === 'error' && (
+          <p className="mail-status err">
+            Couldn’t send right now — email me directly at{' '}
+            <a href={`mailto:${MAIL_TO}`}>{MAIL_TO}</a>.
+          </p>
+        )}
       </form>
     </div>
   )
