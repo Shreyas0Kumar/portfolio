@@ -1,218 +1,385 @@
-/* MobilePortfolio.css */
+/* MobilePortfolio.css — "printed magazine" edition for phones / touch screens.
+   Ported from the Claude Design "Mobile portfolio redesign". Warm paper palette,
+   handwritten (Caveat) + typewriter (Special Elite) + body (Patrick Hand). */
 
-.mobile {
+.mag-viewport {
   position: fixed;
   inset: 0;
   overflow-y: auto;
-  background: #f2ede3;
-  color: #1a1208;
+  -webkit-overflow-scrolling: touch;
+  background: #cabfa9;
+  -webkit-font-smoothing: antialiased;
 }
 
-.mobile-header {
-  padding: 40px 24px 28px;
-  background:
-    radial-gradient(circle at 70% 10%, rgba(200, 120, 42, 0.18), transparent 60%),
-    #ede8de;
-  border-bottom: 1px solid rgba(26, 18, 8, 0.1);
-}
+.mag {
+  --paper: #f2ede3;
+  --raised: #fbf8f1;
+  --chip: #ede8de;
+  --stripe-a: #ece4d5;
+  --stripe-b: #e5dbc8;
+  --ink: #1a1208;
+  --ink2: #2a2014;
+  --ink3: #3a3530;
+  --ink4: #4a4036;
+  --muted: #6b5d48;
+  --faint: #9a8c72;
+  --line: rgba(26, 18, 8, 0.18);
+  --line2: rgba(26, 18, 8, 0.3);
+  --orange: #c8782a;
+  --stamp: #9a6a1f;
 
-.mobile-name {
-  font-family: 'Caveat', cursive;
-  font-size: 2.6rem;
-  line-height: 1;
-}
-
-.mobile-tagline {
-  font-family: 'Special Elite', serif;
-  font-size: 0.85rem;
-  color: #c8782a;
-  margin-top: 6px;
-}
-
-.mobile-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 18px;
-}
-
-.mobile-link {
-  font-family: 'Special Elite', serif;
-  font-size: 0.78rem;
-  text-decoration: none;
-  color: #1a1208;
-  border: 1.5px solid #1a1208;
-  border-radius: 6px;
-  padding: 7px 14px;
-}
-
-.mobile-main {
-  padding: 24px 20px 8px;
-}
-
-.mobile-section {
-  font-family: 'Caveat', cursive;
-  font-size: 1.8rem;
-  margin-bottom: 14px;
-}
-
-.mobile-card {
+  max-width: 480px;
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
   position: relative;
-  background: #f2ede3;
-  border: 1.5px solid #1a1208;
-  border-radius: 8px;
-  padding: 18px 18px 16px;
-  margin-bottom: 18px;
+  overflow-x: hidden;
+  box-shadow: 0 0 60px rgba(26, 18, 8, 0.25);
+  font-family: 'Patrick Hand', cursive;
+}
+
+.mag ::selection { background: rgba(200, 120, 42, 0.22); }
+
+@keyframes mag-fade { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes mag-slide { from { opacity: 0; transform: translateX(22px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes mag-expand { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes mag-pulse { 0%, 100% { box-shadow: 0 0 0 3px rgba(90, 214, 114, 0.25); } 50% { box-shadow: 0 0 0 6px rgba(90, 214, 114, 0.06); } }
+
+/* ── Masthead ── */
+.mag-masthead {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--paper);
+  padding: 13px 20px 0;
+  border-bottom: 2.5px solid var(--ink);
+  box-shadow: 0 8px 18px -12px rgba(26, 18, 8, 0.5);
+}
+
+.mag-folio {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Special Elite', serif;
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(26, 18, 8, 0.2);
+}
+
+.mag-status { display: flex; align-items: center; gap: 6px; color: var(--orange); white-space: nowrap; }
+.mag-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #5ad672; display: inline-block;
+  animation: mag-pulse 2s ease-in-out infinite;
+}
+
+.mag-title-block { padding: 11px 0 9px; }
+.mag-name { font-family: 'Caveat', cursive; font-weight: 700; font-size: 46px; line-height: 0.8; margin: 0; letter-spacing: -0.01em; }
+.mag-byline { font-family: 'Special Elite', serif; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-top: 9px; }
+.mag-deck { font-size: 13.5px; line-height: 1.4; color: var(--ink3); margin: 6px 0 0; }
+
+.mag-nav {
+  display: flex;
+  overflow-x: auto;
+  margin: 0 -20px;
+  padding: 0 20px;
+  border-top: 1px solid rgba(26, 18, 8, 0.2);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.mag-nav::-webkit-scrollbar { display: none; }
+
+.mag-tab {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 11px 0 8px;
+  white-space: nowrap;
+  font-family: 'Special Elite', serif;
+  font-size: 12px;
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  border-bottom: 3px solid transparent;
+  color: var(--muted);
+  flex: 0 0 auto;
+  margin-right: 15px;
+  transition: color 0.15s ease;
+}
+.mag-tab.is-active { color: var(--ink); border-bottom-color: var(--orange); }
+.mag-tab-num { color: var(--orange); font-size: 9.5px; }
+
+/* ── Main / sections ── */
+.mag-main { padding: 0 20px 90px; }
+.mag-section { animation: mag-fade 0.35s ease both; }
+
+.mag-eyebrow {
+  font-family: 'Special Elite', serif;
+  font-size: 10.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin: 24px 0 4px;
+}
+
+.mag-display {
+  font-family: 'Caveat', cursive;
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 0.98;
+  margin: 0 0 16px;
+}
+.mag-display--ruled { border-bottom: 2.5px solid var(--ink); padding-bottom: 12px; margin-bottom: 0; }
+.mag-display--xl { font-size: 52px; line-height: 0.86; padding-bottom: 16px; }
+
+.mag-lede { border-left: 2px solid var(--line); padding-left: 16px; margin: 0 0 6px; }
+.mag-lede-line { font-size: 15px; line-height: 1.5; color: var(--ink3); margin: 0 0 10px; }
+
+/* ── Stats grid ── */
+.mag-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 3px;
   overflow: hidden;
-  box-shadow: 3px 3px 0 rgba(26, 18, 8, 0.12);
+  margin: 16px 0 4px;
 }
+.mag-stats--tight { margin: 8px 0 6px; }
+.mag-stat { background: var(--paper); padding: 18px 16px; }
+.mag-stat-n { font-family: 'Caveat', cursive; font-weight: 700; font-size: 42px; line-height: 0.78; color: var(--orange); }
+.mag-stat-n--sm { font-size: 40px; }
+.mag-stat-l { font-family: 'Special Elite', serif; font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
 
-.mobile-card-accent {
-  position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 6px;
-  background: var(--c, #c8782a);
-}
-
-.mobile-card-head {
+/* ── Section rules / headers ── */
+.mag-rule {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
+  margin: 38px 0 10px;
+  border-top: 1px solid rgba(26, 18, 8, 0.2);
+  padding-top: 12px;
 }
+.mag-rule--heavy { margin: 34px 0 14px; border-top: 2.5px solid var(--ink); }
+.mag-kicker { font-family: 'Special Elite', serif; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; margin: 0; }
+.mag-rule-note { font-family: 'Special Elite', serif; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.mag-link { background: transparent; border: none; cursor: pointer; font-family: 'Special Elite', serif; font-size: 11.5px; color: var(--orange); }
 
-.mobile-card-title {
-  font-family: 'Caveat', cursive;
-  font-size: 1.7rem;
+/* ── Image frames (placeholder art) ── */
+.mag-frame {
+  position: relative;
+  border-radius: 4px;
+  border: 1px solid var(--line2);
+  overflow: hidden;
+  background-image: repeating-linear-gradient(135deg, var(--stripe-a), var(--stripe-a) 11px, var(--stripe-b) 11px, var(--stripe-b) 22px);
 }
+.mag-frame--cover { min-height: 210px; }
+.mag-frame--work { min-height: 180px; cursor: pointer; margin-bottom: 16px; }
+.mag-frame-num { position: absolute; top: 8px; left: 14px; font-family: 'Caveat', cursive; font-weight: 700; font-size: 96px; line-height: 0.7; color: var(--orange); opacity: 0.85; }
+.mag-frame--cover .mag-frame-num { top: 10px; left: 16px; font-size: 104px; }
+.mag-frame-cap { position: absolute; bottom: 12px; left: 0; right: 0; text-align: center; font-family: 'Special Elite', serif; font-size: 9.5px; letter-spacing: 0.06em; color: var(--faint); }
 
-.mobile-card-badge {
+/* ── Cover story ── */
+.mag-cover { cursor: pointer; display: block; }
+.mag-cover-body { padding-top: 14px; }
+.mag-card-kicker { font-family: 'Special Elite', serif; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); }
+.mag-cover-title { font-family: 'Caveat', cursive; font-weight: 700; font-size: 54px; line-height: 0.82; margin: 5px 0 8px; }
+.mag-cover-hook { font-size: 17px; line-height: 1.38; color: var(--ink2); margin: 0 0 14px; }
+.mag-readlink { font-family: 'Special Elite', serif; font-size: 12.5px; border-bottom: 2px solid var(--orange); padding-bottom: 2px; }
+
+/* ── Teasers ── */
+.mag-teaser { cursor: pointer; padding: 16px 0; border-top: 1px solid var(--line); display: block; }
+.mag-teaser-title { font-family: 'Caveat', cursive; font-weight: 700; font-size: 34px; line-height: 0.84; margin: 3px 0 7px; }
+.mag-teaser-hook { font-size: 14.5px; line-height: 1.4; color: var(--ink3); margin: 0; }
+
+/* ── Work cards ── */
+.mag-work { padding: 28px 0; border-bottom: 1px solid var(--line); }
+.mag-meta {
+  display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+  font-family: 'Special Elite', serif; font-size: 10px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--muted);
+}
+.mag-meta-accent { color: var(--orange); }
+.mag-meta-sep { color: var(--line2); }
+.mag-work-title { font-family: 'Caveat', cursive; font-weight: 700; font-size: 48px; line-height: 0.82; margin: 7px 0; }
+.mag-work-hook { font-size: 18px; line-height: 1.36; color: var(--ink2); margin: 0 0 10px; }
+.mag-work-role { font-size: 15px; line-height: 1.5; color: var(--ink4); margin: 0 0 14px; }
+.mag-work-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.mag-work-team { font-size: 13.5px; color: var(--muted); }
+
+.mag-readbtn { background: transparent; border: none; cursor: pointer; font-family: 'Special Elite', serif; font-size: 12px; color: var(--ink); border-bottom: 2px solid var(--orange); padding: 0 0 2px; white-space: nowrap; }
+
+/* ── Metrics ── */
+.mag-metrics { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 14px; }
+.mag-metric-n { font-family: 'Caveat', cursive; font-weight: 700; font-size: 30px; line-height: 0.78; color: var(--orange); }
+.mag-metric-l { font-family: 'Special Elite', serif; font-size: 9px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-top: 5px; max-width: 130px; }
+
+/* ── Chips ── */
+.mag-chiprow { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.mag-chiprow li { font-family: 'Special Elite', serif; font-size: 10.5px; color: var(--ink3); background: var(--chip); border: 1px solid rgba(26, 18, 8, 0.14); border-radius: 5px; padding: 4px 9px; }
+.mag-chiprow--lg { gap: 7px; margin: 0; }
+.mag-chiprow--lg li { font-size: 12px; color: var(--ink); background: var(--raised); border-radius: 6px; padding: 7px 12px; }
+
+/* ── Stamps ── */
+.mag-stamp {
+  border-radius: 50%;
+  border: 2px solid var(--stamp);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform: rotate(-9deg);
   font-family: 'Special Elite', serif;
-  font-size: 0.58rem;
-  letter-spacing: 0.04em;
-  color: #7a4a1a;
-  background: rgba(200, 120, 42, 0.16);
-  border: 1px solid rgba(200, 120, 42, 0.4);
-  border-radius: 20px;
-  padding: 3px 9px;
-  white-space: nowrap;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--stamp);
+  background: rgba(242, 237, 227, 0.65);
+  white-space: pre-line;
 }
+.mag-stamp--lg { position: absolute; bottom: 14px; right: 14px; width: 78px; height: 78px; font-size: 9px; line-height: 1.25; }
+.mag-stamp--sm { flex: 0 0 auto; width: 56px; height: 56px; font-size: 8px; line-height: 1.25; letter-spacing: 0.04em; transform: rotate(-8deg); background: transparent; }
+.mag-stamp--aside { width: 84px; height: 84px; margin: 0 auto 18px; font-size: 9.5px; line-height: 1.25; background: transparent; }
 
-/* ── Intro / contact prose ── */
-.mobile-intro { margin-bottom: 28px; }
-
-.mobile-intro-head {
-  font-family: 'Caveat', cursive;
-  font-size: 1.9rem;
-  line-height: 1.15;
-  margin-bottom: 10px;
-}
-
-.mobile-intro-line {
-  font-family: 'Patrick Hand', cursive;
-  font-size: 1rem;
-  line-height: 1.5;
-  color: #3a3530;
-}
-
-.mobile-intro-line + .mobile-intro-line { margin-top: 8px; }
+/* ── Hackathon cards ── */
+.mag-hack { cursor: pointer; position: relative; padding: 22px 0 20px; border-top: 1px solid var(--line); }
+.mag-hack-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; }
+.mag-hack-event { font-family: 'Special Elite', serif; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); line-height: 1.4; flex: 1; }
+.mag-hack-title { font-family: 'Caveat', cursive; font-weight: 700; font-size: 44px; line-height: 0.84; margin: 6px 0 8px; }
+.mag-hack-hook { font-size: 16px; line-height: 1.4; color: var(--ink3); margin: 0 0 12px; }
+.mag-hack-loc { font-family: 'Special Elite', serif; font-size: 10.5px; letter-spacing: 0.04em; color: var(--muted); }
+.mag-hack .mag-metric-n { font-size: 27px; }
+.mag-hack .mag-metrics { margin-bottom: 12px; }
+.mag-hack .mag-chiprow { margin-bottom: 12px; }
 
 /* ── Experience ── */
-.mobile-exp {
-  background: #f2ede3;
-  border: 1.5px solid #1a1208;
-  border-radius: 8px;
-  padding: 16px 18px;
-  margin-bottom: 16px;
-  box-shadow: 3px 3px 0 rgba(26, 18, 8, 0.12);
+.mag-job { cursor: pointer; padding: 24px 0; border-bottom: 1px solid var(--line); }
+.mag-job-when { border-left: 3px solid var(--orange); padding-left: 14px; margin-bottom: 14px; }
+.mag-job-dates { font-family: 'Special Elite', serif; font-size: 11.5px; letter-spacing: 0.05em; color: var(--ink); }
+.mag-job-meta { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
+.mag-job-company { font-family: 'Caveat', cursive; font-weight: 700; font-size: 40px; line-height: 0.82; margin: 0 0 6px; }
+.mag-job-role { font-family: 'Special Elite', serif; font-size: 12px; letter-spacing: 0.04em; color: var(--orange); margin-bottom: 12px; }
+.mag-job-summary { font-size: 16px; line-height: 1.46; color: var(--ink2); margin: 0 0 14px; }
+
+.mag-bullets { list-style: none; margin: 0 0 14px; padding: 0; }
+.mag-bullets li { font-size: 14.5px; line-height: 1.5; color: var(--ink4); margin: 0 0 8px; padding-left: 20px; position: relative; }
+.mag-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--orange); }
+
+.mag-subhead { font-family: 'Special Elite', serif; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; margin: 30px 0 8px; }
+.mag-edu { padding: 16px 0; border-bottom: 1px solid var(--line); }
+.mag-edu-school { font-family: 'Caveat', cursive; font-weight: 700; font-size: 32px; line-height: 0.85; margin: 0 0 4px; }
+.mag-edu-degree { font-size: 15px; color: var(--ink3); }
+.mag-edu-meta { font-family: 'Special Elite', serif; font-size: 10.5px; letter-spacing: 0.05em; color: var(--muted); margin-top: 6px; }
+
+/* ── Stack ── */
+.mag-stackgroup { padding: 20px 0; border-bottom: 1px solid var(--line); }
+.mag-stackname { font-family: 'Special Elite', serif; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin: 0 0 12px; }
+
+/* ── Interviews ── */
+.mag-note-block { font-size: 14.5px; line-height: 1.45; color: var(--muted); margin: 12px 0 18px; }
+
+.mag-iv { margin-bottom: 12px; border: 1px solid rgba(26, 18, 8, 0.15); border-radius: 5px; overflow: hidden; background: var(--raised); }
+.mag-iv-head { width: 100%; display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 18px 18px 16px; border: none; background: transparent; text-align: left; cursor: pointer; font: inherit; }
+.mag-iv-headmain { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; }
+.mag-iv-kicker { font-family: 'Special Elite', serif; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); line-height: 1.4; }
+.mag-iv-company { font-family: 'Caveat', cursive; font-weight: 700; font-size: 40px; line-height: 0.84; color: var(--ink); }
+.mag-iv-role { font-family: 'Special Elite', serif; font-size: 11px; letter-spacing: 0.03em; color: var(--orange); margin-top: 2px; }
+.mag-iv-headside { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; flex-shrink: 0; }
+.mag-stars { display: flex; gap: 1px; font-size: 14px; line-height: 1; }
+.mag-iv-pills { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
+.mag-iv-chev { font-family: 'Special Elite', serif; font-size: 12px; color: var(--faint); }
+
+.mag-pill { font-size: 10px; font-weight: 600; letter-spacing: 0.02em; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+
+.mag-iv-body { padding: 0 18px 22px; border-top: 1px solid rgba(26, 18, 8, 0.1); animation: mag-expand 0.2s ease; }
+.mag-iv-h { font-family: 'Special Elite', serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin: 0 0 12px; }
+
+.mag-factgrid { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 18px; }
+.mag-fact { flex: 1 1 40%; min-width: 120px; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; }
+.mag-fact-l { font-family: 'Special Elite', serif; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.mag-fact-v { font-size: 14.5px; color: var(--ink); margin-top: 2px; }
+
+.mag-rounds { list-style: none; margin: 0 0 22px; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.mag-rounds li { padding-left: 22px; position: relative; display: flex; flex-direction: column; gap: 3px; }
+.mag-rounds li::before { content: ''; position: absolute; left: 2px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
+.mag-round-name { font-family: 'Special Elite', serif; font-size: 12px; color: var(--ink); line-height: 1.4; }
+.mag-round-detail { font-size: 14.5px; line-height: 1.45; color: var(--ink4); }
+
+.mag-qs { list-style: none; margin: 0 0 22px; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+.mag-qs li { font-size: 15.5px; line-height: 1.42; color: var(--ink3); padding-left: 20px; position: relative; }
+.mag-qs li::before { content: '▸'; position: absolute; left: 0; top: 1px; color: var(--orange); font-size: 12px; }
+
+.mag-quote {
+  font-family: 'Caveat', cursive; font-size: 21px; line-height: 1.4; color: var(--ink2);
+  margin: 0 0 22px; padding: 14px 18px 14px 46px; background: #fff8e8;
+  border-left: 4px solid var(--orange); border-radius: 0 10px 10px 0; position: relative;
 }
+.mag-quote::before { content: '“'; position: absolute; left: 12px; top: 4px; font-family: 'Caveat', cursive; font-weight: 700; font-size: 46px; line-height: 1; color: var(--orange); opacity: 0.4; }
 
-.mobile-exp-top {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 10px;
-}
+.mag-iv-sec { margin-bottom: 14px; }
+.mag-iv-sech { font-family: 'Special Elite', serif; font-size: 12px; color: var(--ink); margin: 0 0 6px; letter-spacing: 0.02em; }
+.mag-iv-p { font-size: 15.5px; line-height: 1.55; color: var(--ink3); margin: 0 0 8px; }
 
-.mobile-exp-role { font-family: 'Caveat', cursive; font-size: 1.5rem; }
-.mobile-exp-dates { font-family: 'Special Elite', serif; font-size: 0.62rem; color: #7a6f5a; white-space: nowrap; }
-.mobile-exp-company { font-family: 'Special Elite', serif; font-size: 0.78rem; color: #c8782a; }
-
-.mobile-exp-summary {
-  font-family: 'Patrick Hand', cursive;
-  font-size: 0.96rem;
-  line-height: 1.45;
-  color: #3a3530;
-  margin-top: 8px;
-}
-
-/* ── Skills ── */
-.mobile-skills { display: flex; flex-direction: column; gap: 16px; }
-
-.mobile-skillname {
-  font-family: 'Special Elite', serif;
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #c8782a;
-  margin-bottom: 8px;
-}
+/* ── Locked interview ── */
+.mag-iv--locked { border: 1px dashed var(--line2); background: #f1ece2; position: relative; min-height: 96px; }
+.mag-iv-blur { filter: blur(5px); opacity: 0.25; pointer-events: none; user-select: none; padding: 20px; display: flex; flex-direction: column; gap: 4px; }
+.mag-iv-blur .mag-iv-company { font-size: 40px; }
+.mag-iv-lock { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 12px; padding: 16px 28px; background: rgba(241, 236, 226, 0.65); text-align: center; }
+.mag-iv-lock span:last-child { font-size: 14.5px; color: var(--ink4); max-width: 240px; }
+.mag-iv-lockglyph { font-size: 20px; }
 
 /* ── Contact ── */
-.mobile-contact .mobile-cta { display: inline-block; margin-top: 16px; }
-
-.mobile-card-what {
-  font-family: 'Patrick Hand', cursive;
-  font-size: 1rem;
-  color: #3a3530;
-  line-height: 1.5;
-  margin-top: 6px;
+.mag-contact-line { font-size: 17px; line-height: 1.5; color: var(--ink2); margin: 0 0 12px; }
+.mag-sendbtn {
+  display: inline-block; margin: 8px 0 26px;
+  font-family: 'Special Elite', serif; font-size: 14px;
+  color: var(--paper); background: var(--orange); padding: 14px 26px;
+  border-radius: 9px; text-decoration: none; box-shadow: 0 8px 20px rgba(200, 120, 42, 0.35);
 }
+.mag-contacts { list-style: none; margin: 0; padding: 0; }
+.mag-contact-row { display: flex; align-items: center; gap: 14px; text-decoration: none; padding: 16px 2px; border-bottom: 1px solid var(--line); }
+.mag-contact-glyph { flex: 0 0 auto; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 9px; background: var(--ink); color: #e8a55a; font-family: 'Special Elite', serif; font-size: 13px; }
+.mag-contact-text { flex: 1 1 auto; display: flex; flex-direction: column; min-width: 0; }
+.mag-contact-label { font-family: 'Special Elite', serif; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.mag-contact-value { font-size: 16px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mag-contact-arrow { color: var(--orange); font-size: 18px; }
+.mag-coda { font-size: 13px; color: var(--faint); text-align: center; margin: 34px 0 0; line-height: 1.5; }
 
-.mobile-stack {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 12px;
-}
+/* ── Detail view ── */
+.mag-detail { animation: mag-slide 0.3s ease both; }
+.mag-backbtn { margin: 20px 0 8px; background: transparent; border: 1px solid var(--line2); cursor: pointer; font-family: 'Special Elite', serif; font-size: 12px; color: var(--ink); padding: 8px 16px; border-radius: 8px; }
+.mag-detail-head { border-left: 6px solid var(--orange); padding: 14px 0 16px 22px; margin: 6px 0 14px; border-bottom: 2.5px solid var(--ink); }
+.mag-detail-title { font-family: 'Caveat', cursive; font-weight: 700; font-size: 56px; line-height: 0.8; margin: 6px 0 12px; }
+.mag-detail-hook { font-size: 19px; line-height: 1.34; color: var(--ink2); margin: 0; }
+.mag-detail-role { font-size: 16px; line-height: 1.55; color: var(--ink4); margin: 0 0 18px; padding: 12px 0 12px 16px; border-left: 2px solid var(--line); }
+.mag-detail-h { font-family: 'Special Elite', serif; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin: 24px 0 8px; }
+.mag-detail-h:first-of-type { margin-top: 0; }
+.mag-detail-p { font-size: 17px; line-height: 1.62; color: var(--ink); margin: 0 0 14px; }
+.mag-dropcap { float: left; font-family: 'Caveat', cursive; font-weight: 700; font-size: 60px; line-height: 0.62; color: var(--orange); padding: 8px 12px 0 0; }
 
-.mobile-chip {
-  font-family: 'Special Elite', serif;
-  font-size: 0.66rem;
-  color: #3a3530;
-  background: #ede8de;
-  border: 1px solid rgba(26, 18, 8, 0.18);
-  border-radius: 3px;
-  padding: 3px 8px;
-}
+.mag-aside { margin-top: 26px; background: var(--raised); border: 1px solid rgba(26, 18, 8, 0.16); border-radius: 12px; padding: 22px; }
+.mag-aside-row { margin-bottom: 14px; }
+.mag-aside-l { font-family: 'Special Elite', serif; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.mag-aside-v { font-size: 15.5px; color: var(--ink); margin-top: 2px; }
+.mag-aside-link { display: block; font-size: 16px; color: var(--ink); text-decoration: none; margin-top: 2px; }
+.mag-aside-block { margin-bottom: 16px; }
+.mag-aside-block .mag-aside-l { margin-bottom: 8px; }
+.mag-aside-block .mag-metrics { margin-bottom: 0; }
+.mag-aside-block .mag-chiprow { margin-bottom: 0; }
+.mag-award { font-size: 15px; color: var(--ink); margin-top: 4px; line-height: 1.4; }
+.mag-aside .mag-metric-n { font-size: 28px; }
+.mag-aside .mag-metric-l { max-width: 120px; }
 
-.mobile-card-links {
-  display: flex;
-  gap: 10px;
-  margin-top: 16px;
-}
+.mag-team { display: flex; flex-direction: column; gap: 8px; }
+.mag-team-row { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--ink); }
+.mag-avatar { width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: #e8a55a; display: inline-flex; align-items: center; justify-content: center; font-family: 'Special Elite', serif; font-size: 9px; flex: 0 0 auto; }
 
-.mobile-cta {
-  font-family: 'Special Elite', serif;
-  font-size: 0.76rem;
-  text-decoration: none;
-  color: #1a1208;
-  border: 1.5px solid #1a1208;
-  border-radius: 6px;
-  padding: 7px 14px;
-}
-
-.mobile-cta.primary {
-  background: #c8782a;
-  border-color: #c8782a;
-  color: #f2ede3;
-}
-
-.mobile-footer {
-  padding: 24px;
-  text-align: center;
-  font-family: 'Patrick Hand', cursive;
-  font-size: 0.85rem;
-  color: #7a6f5a;
-}
+.mag-aside-actions { display: flex; flex-direction: column; gap: 8px; }
+.mag-aside-btn { text-decoration: none; font-family: 'Special Elite', serif; font-size: 12px; text-align: center; color: var(--ink); border: 1.5px solid var(--ink); border-radius: 8px; padding: 10px 14px; }
+.mag-aside-btn--ghost { color: var(--muted); border: 1.5px dashed var(--line2); }
