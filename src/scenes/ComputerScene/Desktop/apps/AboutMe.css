@@ -42,7 +42,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.76rem;
   color: #f2ede3;
   pointer-events: none;
@@ -61,7 +61,7 @@
   border-radius: 50%;
   background: linear-gradient(150deg, #c8782a, #7a4a1a);
   color: #f2ede3;
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-size: 2rem;
   display: flex;
   align-items: center;
@@ -70,14 +70,14 @@
 }
 
 .about-name {
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-size: 1.9rem;
   color: #1a1208;
   line-height: 1;
 }
 
 .about-role {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.74rem;
   color: #c8782a;
   margin-top: 4px;
@@ -85,7 +85,7 @@
 }
 
 .about-bio {
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
   font-size: 0.95rem;
   color: #3a3530;
   line-height: 1.45;
@@ -108,14 +108,14 @@
 }
 
 .about-contact-label {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.7rem;
   color: #7a6f5a;
   letter-spacing: 0.04em;
 }
 
 .about-contact-value {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.74rem;
   color: #1a1208;
   text-decoration: none;

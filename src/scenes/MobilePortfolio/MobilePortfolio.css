@@ -1,6 +1,6 @@
 /* MobilePortfolio.css — "printed magazine" edition for phones / touch screens.
    Ported from the Claude Design "Mobile portfolio redesign". Warm paper palette,
-   handwritten (Caveat) + typewriter (Special Elite) + body (Patrick Hand). */
+   handwritten display (Caveat) + serif body/labels (Source Serif 4). */
 
 .mag-viewport {
   position: fixed;
@@ -36,7 +36,7 @@
   position: relative;
   overflow-x: hidden;
   box-shadow: 0 0 60px rgba(26, 18, 8, 0.25);
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
 }
 
 .mag ::selection { background: rgba(200, 120, 42, 0.22); }
@@ -62,8 +62,8 @@
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  font-family: 'Special Elite', serif;
-  font-size: 9px;
+  font-family: var(--font-typewriter);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted);
@@ -79,20 +79,43 @@
 }
 
 .mag-title-block { padding: 11px 0 9px; }
-.mag-name { font-family: 'Caveat', cursive; font-weight: 700; font-size: 46px; line-height: 0.8; margin: 0; letter-spacing: -0.01em; }
-.mag-byline { font-family: 'Special Elite', serif; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-top: 9px; }
+.mag-name { font-family: var(--font-hand); font-weight: 700; font-size: 46px; line-height: 0.8; margin: 0; letter-spacing: -0.01em; }
+.mag-byline { font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-top: 9px; }
 .mag-deck { font-size: 13.5px; line-height: 1.4; color: var(--ink3); margin: 6px 0 0; }
 
 .mag-nav {
   display: flex;
-  overflow-x: auto;
+  align-items: stretch;
+  gap: 4px;
   margin: 0 -20px;
-  padding: 0 20px;
+  padding: 0 12px;
   border-top: 1px solid rgba(26, 18, 8, 0.2);
+}
+/* « » swipe hints — also tappable; dim out at the first / last tab (no wrap). */
+.mag-nav-arrow {
+  flex: 0 0 auto;
+  align-self: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-typewriter);
+  font-size: 16px;
+  line-height: 1;
+  color: var(--orange);
+  padding: 10px 8px;
+  transition: opacity 0.15s ease, transform 0.12s ease;
+}
+.mag-nav-arrow:disabled { opacity: 0.2; cursor: default; }
+.mag-nav-arrow:not(:disabled):active { transform: scale(0.82); }
+/* Centered tab row that still scrolls horizontally if it can't all fit. */
+.mag-tabs {
+  flex: 1 1 auto;
+  overflow-x: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-.mag-nav::-webkit-scrollbar { display: none; }
+.mag-tabs::-webkit-scrollbar { display: none; }
+.mag-tabs-row { display: flex; gap: 16px; width: max-content; margin: 0 auto; }
 
 .mag-tab {
   background: transparent;
@@ -100,7 +123,7 @@
   cursor: pointer;
   padding: 11px 0 8px;
   white-space: nowrap;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 12px;
   display: flex;
   align-items: baseline;
@@ -108,19 +131,36 @@
   border-bottom: 3px solid transparent;
   color: var(--muted);
   flex: 0 0 auto;
-  margin-right: 15px;
   transition: color 0.15s ease;
 }
 .mag-tab.is-active { color: var(--ink); border-bottom-color: var(--orange); }
-.mag-tab-num { color: var(--orange); font-size: 9.5px; }
+.mag-tab-num { color: var(--orange); font-size: 11px; }
 
 /* ── Main / sections ── */
-.mag-main { padding: 0 20px 90px; }
-.mag-section { animation: mag-fade 0.35s ease both; }
+.mag-main { padding: 0 20px 28px; }
+.mag-section { }
+
+/* Swift slide+fade when switching tabs (also used for detail open/back). The
+   wrapper is keyed on the active view, so it remounts and replays on each
+   change; the direction follows the swipe — next slides in from the right,
+   previous from the left. */
+.mag-swipe { animation: mag-swipe-next 0.32s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+.mag-swipe--prev { animation-name: mag-swipe-prev; }
+@keyframes mag-swipe-next {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes mag-swipe-prev {
+  from { opacity: 0; transform: translateX(-24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mag-swipe { animation: none; }
+}
 
 .mag-eyebrow {
-  font-family: 'Special Elite', serif;
-  font-size: 10.5px;
+  font-family: var(--font-typewriter);
+  font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--orange);
@@ -128,7 +168,7 @@
 }
 
 .mag-display {
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-weight: 700;
   font-size: 34px;
   line-height: 0.98;
@@ -153,9 +193,9 @@
 }
 .mag-stats--tight { margin: 8px 0 6px; }
 .mag-stat { background: var(--paper); padding: 18px 16px; }
-.mag-stat-n { font-family: 'Caveat', cursive; font-weight: 700; font-size: 42px; line-height: 0.78; color: var(--orange); }
+.mag-stat-n { font-family: var(--font-hand); font-weight: 700; font-size: 42px; line-height: 0.78; color: var(--orange); }
 .mag-stat-n--sm { font-size: 40px; }
-.mag-stat-l { font-family: 'Special Elite', serif; font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+.mag-stat-l { font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
 
 /* ── Section rules / headers ── */
 .mag-rule {
@@ -168,9 +208,9 @@
   padding-top: 12px;
 }
 .mag-rule--heavy { margin: 34px 0 14px; border-top: 2.5px solid var(--ink); }
-.mag-kicker { font-family: 'Special Elite', serif; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; margin: 0; }
-.mag-rule-note { font-family: 'Special Elite', serif; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
-.mag-link { background: transparent; border: none; cursor: pointer; font-family: 'Special Elite', serif; font-size: 11.5px; color: var(--orange); }
+.mag-kicker { font-family: var(--font-typewriter); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; margin: 0; }
+.mag-rule-note { font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.mag-link { background: transparent; border: none; cursor: pointer; font-family: var(--font-typewriter); font-size: 11.5px; color: var(--orange); }
 
 /* ── Image frames (placeholder art) ── */
 .mag-frame {
@@ -182,48 +222,56 @@
 }
 .mag-frame--cover { min-height: 210px; }
 .mag-frame--work { min-height: 180px; cursor: pointer; margin-bottom: 16px; }
-.mag-frame-num { position: absolute; top: 8px; left: 14px; font-family: 'Caveat', cursive; font-weight: 700; font-size: 96px; line-height: 0.7; color: var(--orange); opacity: 0.85; }
+.mag-frame-num { position: absolute; top: 8px; left: 14px; font-family: var(--font-hand); font-weight: 700; font-size: 96px; line-height: 0.7; color: var(--orange); opacity: 0.85; }
 .mag-frame--cover .mag-frame-num { top: 10px; left: 16px; font-size: 104px; }
-.mag-frame-cap { position: absolute; bottom: 12px; left: 0; right: 0; text-align: center; font-family: 'Special Elite', serif; font-size: 9.5px; letter-spacing: 0.06em; color: var(--faint); }
+.mag-frame-cap { position: absolute; bottom: 12px; left: 0; right: 0; text-align: center; font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.06em; color: var(--faint); }
+
+/* Real image fills the placeholder frame when portfolio.json images[] exist. */
+.mag-img-fill { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Keep the corner index legible over a photo. */
+.mag-img-fill ~ .mag-frame-num {
+  padding: 0 6px 2px; border-radius: 4px;
+  backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
+}
 
 /* ── Cover story ── */
 .mag-cover { cursor: pointer; display: block; }
 .mag-cover-body { padding-top: 14px; }
-.mag-card-kicker { font-family: 'Special Elite', serif; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); }
-.mag-cover-title { font-family: 'Caveat', cursive; font-weight: 700; font-size: 54px; line-height: 0.82; margin: 5px 0 8px; }
+.mag-card-kicker { font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); }
+.mag-cover-title { font-family: var(--font-hand); font-weight: 700; font-size: 54px; line-height: 0.82; margin: 5px 0 8px; }
 .mag-cover-hook { font-size: 17px; line-height: 1.38; color: var(--ink2); margin: 0 0 14px; }
-.mag-readlink { font-family: 'Special Elite', serif; font-size: 12.5px; border-bottom: 2px solid var(--orange); padding-bottom: 2px; }
+.mag-readlink { font-family: var(--font-typewriter); font-size: 12.5px; border-bottom: 2px solid var(--orange); padding-bottom: 2px; }
 
 /* ── Teasers ── */
 .mag-teaser { cursor: pointer; padding: 16px 0; border-top: 1px solid var(--line); display: block; }
-.mag-teaser-title { font-family: 'Caveat', cursive; font-weight: 700; font-size: 34px; line-height: 0.84; margin: 3px 0 7px; }
+.mag-teaser-title { font-family: var(--font-hand); font-weight: 700; font-size: 34px; line-height: 0.84; margin: 3px 0 7px; }
 .mag-teaser-hook { font-size: 14.5px; line-height: 1.4; color: var(--ink3); margin: 0; }
 
 /* ── Work cards ── */
 .mag-work { padding: 28px 0; border-bottom: 1px solid var(--line); }
 .mag-meta {
   display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
-  font-family: 'Special Elite', serif; font-size: 10px; letter-spacing: 0.06em;
+  font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.06em;
   text-transform: uppercase; color: var(--muted);
 }
 .mag-meta-accent { color: var(--orange); }
 .mag-meta-sep { color: var(--line2); }
-.mag-work-title { font-family: 'Caveat', cursive; font-weight: 700; font-size: 48px; line-height: 0.82; margin: 7px 0; }
+.mag-work-title { font-family: var(--font-hand); font-weight: 700; font-size: 48px; line-height: 0.82; margin: 7px 0; }
 .mag-work-hook { font-size: 18px; line-height: 1.36; color: var(--ink2); margin: 0 0 10px; }
 .mag-work-role { font-size: 15px; line-height: 1.5; color: var(--ink4); margin: 0 0 14px; }
 .mag-work-foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .mag-work-team { font-size: 13.5px; color: var(--muted); }
 
-.mag-readbtn { background: transparent; border: none; cursor: pointer; font-family: 'Special Elite', serif; font-size: 12px; color: var(--ink); border-bottom: 2px solid var(--orange); padding: 0 0 2px; white-space: nowrap; }
+.mag-readbtn { background: transparent; border: none; cursor: pointer; font-family: var(--font-typewriter); font-size: 12px; color: var(--ink); border-bottom: 2px solid var(--orange); padding: 0 0 2px; white-space: nowrap; }
 
 /* ── Metrics ── */
 .mag-metrics { display: flex; flex-wrap: wrap; gap: 18px; margin-bottom: 14px; }
-.mag-metric-n { font-family: 'Caveat', cursive; font-weight: 700; font-size: 30px; line-height: 0.78; color: var(--orange); }
-.mag-metric-l { font-family: 'Special Elite', serif; font-size: 9px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-top: 5px; max-width: 130px; }
+.mag-metric-n { font-family: var(--font-hand); font-weight: 700; font-size: 30px; line-height: 0.78; color: var(--orange); }
+.mag-metric-l { font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); margin-top: 5px; max-width: 130px; }
 
 /* ── Chips ── */
 .mag-chiprow { list-style: none; margin: 0 0 16px; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-.mag-chiprow li { font-family: 'Special Elite', serif; font-size: 10.5px; color: var(--ink3); background: var(--chip); border: 1px solid rgba(26, 18, 8, 0.14); border-radius: 5px; padding: 4px 9px; }
+.mag-chiprow li { font-family: var(--font-typewriter); font-size: 11px; color: var(--ink3); background: var(--chip); border: 1px solid rgba(26, 18, 8, 0.14); border-radius: 5px; padding: 4px 9px; }
 .mag-chiprow--lg { gap: 7px; margin: 0; }
 .mag-chiprow--lg li { font-size: 12px; color: var(--ink); background: var(--raised); border-radius: 6px; padding: 7px 12px; }
 
@@ -236,7 +284,7 @@
   justify-content: center;
   text-align: center;
   transform: rotate(-9deg);
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--stamp);
@@ -245,15 +293,15 @@
 }
 .mag-stamp--lg { position: absolute; bottom: 14px; right: 14px; width: 78px; height: 78px; font-size: 9px; line-height: 1.25; }
 .mag-stamp--sm { flex: 0 0 auto; width: 56px; height: 56px; font-size: 8px; line-height: 1.25; letter-spacing: 0.04em; transform: rotate(-8deg); background: transparent; }
-.mag-stamp--aside { width: 84px; height: 84px; margin: 0 auto 18px; font-size: 9.5px; line-height: 1.25; background: transparent; }
+.mag-stamp--aside { width: 84px; height: 84px; margin: 0 auto 18px; font-size: 11px; line-height: 1.25; background: transparent; }
 
 /* ── Hackathon cards ── */
 .mag-hack { cursor: pointer; position: relative; padding: 22px 0 20px; border-top: 1px solid var(--line); }
 .mag-hack-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; }
-.mag-hack-event { font-family: 'Special Elite', serif; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); line-height: 1.4; flex: 1; }
-.mag-hack-title { font-family: 'Caveat', cursive; font-weight: 700; font-size: 44px; line-height: 0.84; margin: 6px 0 8px; }
+.mag-hack-event { font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--orange); line-height: 1.4; flex: 1; }
+.mag-hack-title { font-family: var(--font-hand); font-weight: 700; font-size: 44px; line-height: 0.84; margin: 6px 0 8px; }
 .mag-hack-hook { font-size: 16px; line-height: 1.4; color: var(--ink3); margin: 0 0 12px; }
-.mag-hack-loc { font-family: 'Special Elite', serif; font-size: 10.5px; letter-spacing: 0.04em; color: var(--muted); }
+.mag-hack-loc { font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.04em; color: var(--muted); }
 .mag-hack .mag-metric-n { font-size: 27px; }
 .mag-hack .mag-metrics { margin-bottom: 12px; }
 .mag-hack .mag-chiprow { margin-bottom: 12px; }
@@ -261,25 +309,25 @@
 /* ── Experience ── */
 .mag-job { cursor: pointer; padding: 24px 0; border-bottom: 1px solid var(--line); }
 .mag-job-when { border-left: 3px solid var(--orange); padding-left: 14px; margin-bottom: 14px; }
-.mag-job-dates { font-family: 'Special Elite', serif; font-size: 11.5px; letter-spacing: 0.05em; color: var(--ink); }
+.mag-job-dates { font-family: var(--font-typewriter); font-size: 11.5px; letter-spacing: 0.05em; color: var(--ink); }
 .mag-job-meta { font-size: 13.5px; color: var(--muted); margin-top: 4px; }
-.mag-job-company { font-family: 'Caveat', cursive; font-weight: 700; font-size: 40px; line-height: 0.82; margin: 0 0 6px; }
-.mag-job-role { font-family: 'Special Elite', serif; font-size: 12px; letter-spacing: 0.04em; color: var(--orange); margin-bottom: 12px; }
+.mag-job-company { font-family: var(--font-hand); font-weight: 700; font-size: 40px; line-height: 0.82; margin: 0 0 6px; }
+.mag-job-role { font-family: var(--font-typewriter); font-size: 12px; letter-spacing: 0.04em; color: var(--orange); margin-bottom: 12px; }
 .mag-job-summary { font-size: 16px; line-height: 1.46; color: var(--ink2); margin: 0 0 14px; }
 
 .mag-bullets { list-style: none; margin: 0 0 14px; padding: 0; }
 .mag-bullets li { font-size: 14.5px; line-height: 1.5; color: var(--ink4); margin: 0 0 8px; padding-left: 20px; position: relative; }
 .mag-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--orange); }
 
-.mag-subhead { font-family: 'Special Elite', serif; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; margin: 30px 0 8px; }
+.mag-subhead { font-family: var(--font-typewriter); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; margin: 30px 0 8px; }
 .mag-edu { padding: 16px 0; border-bottom: 1px solid var(--line); }
-.mag-edu-school { font-family: 'Caveat', cursive; font-weight: 700; font-size: 32px; line-height: 0.85; margin: 0 0 4px; }
+.mag-edu-school { font-family: var(--font-hand); font-weight: 700; font-size: 32px; line-height: 0.85; margin: 0 0 4px; }
 .mag-edu-degree { font-size: 15px; color: var(--ink3); }
-.mag-edu-meta { font-family: 'Special Elite', serif; font-size: 10.5px; letter-spacing: 0.05em; color: var(--muted); margin-top: 6px; }
+.mag-edu-meta { font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.05em; color: var(--muted); margin-top: 6px; }
 
 /* ── Stack ── */
 .mag-stackgroup { padding: 20px 0; border-bottom: 1px solid var(--line); }
-.mag-stackname { font-family: 'Special Elite', serif; font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin: 0 0 12px; }
+.mag-stackname { font-family: var(--font-typewriter); font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin: 0 0 12px; }
 
 /* ── Interviews ── */
 .mag-note-block { font-size: 14.5px; line-height: 1.45; color: var(--muted); margin: 12px 0 18px; }
@@ -287,28 +335,28 @@
 .mag-iv { margin-bottom: 12px; border: 1px solid rgba(26, 18, 8, 0.15); border-radius: 5px; overflow: hidden; background: var(--raised); }
 .mag-iv-head { width: 100%; display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 18px 18px 16px; border: none; background: transparent; text-align: left; cursor: pointer; font: inherit; }
 .mag-iv-headmain { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; }
-.mag-iv-kicker { font-family: 'Special Elite', serif; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); line-height: 1.4; }
-.mag-iv-company { font-family: 'Caveat', cursive; font-weight: 700; font-size: 40px; line-height: 0.84; color: var(--ink); }
-.mag-iv-role { font-family: 'Special Elite', serif; font-size: 11px; letter-spacing: 0.03em; color: var(--orange); margin-top: 2px; }
+.mag-iv-kicker { font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); line-height: 1.4; }
+.mag-iv-company { font-family: var(--font-hand); font-weight: 700; font-size: 40px; line-height: 0.84; color: var(--ink); }
+.mag-iv-role { font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.03em; color: var(--orange); margin-top: 2px; }
 .mag-iv-headside { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; flex-shrink: 0; }
 .mag-stars { display: flex; gap: 1px; font-size: 14px; line-height: 1; }
 .mag-iv-pills { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; }
-.mag-iv-chev { font-family: 'Special Elite', serif; font-size: 12px; color: var(--faint); }
+.mag-iv-chev { font-family: var(--font-typewriter); font-size: 12px; color: var(--faint); }
 
-.mag-pill { font-size: 10px; font-weight: 600; letter-spacing: 0.02em; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+.mag-pill { font-size: 11px; font-weight: 600; letter-spacing: 0.02em; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
 
 .mag-iv-body { padding: 0 18px 22px; border-top: 1px solid rgba(26, 18, 8, 0.1); animation: mag-expand 0.2s ease; }
-.mag-iv-h { font-family: 'Special Elite', serif; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin: 0 0 12px; }
+.mag-iv-h { font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin: 0 0 12px; }
 
 .mag-factgrid { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 18px; }
 .mag-fact { flex: 1 1 40%; min-width: 120px; background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; }
-.mag-fact-l { font-family: 'Special Elite', serif; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.mag-fact-l { font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
 .mag-fact-v { font-size: 14.5px; color: var(--ink); margin-top: 2px; }
 
 .mag-rounds { list-style: none; margin: 0 0 22px; padding: 0; display: flex; flex-direction: column; gap: 14px; }
 .mag-rounds li { padding-left: 22px; position: relative; display: flex; flex-direction: column; gap: 3px; }
 .mag-rounds li::before { content: ''; position: absolute; left: 2px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--orange); }
-.mag-round-name { font-family: 'Special Elite', serif; font-size: 12px; color: var(--ink); line-height: 1.4; }
+.mag-round-name { font-family: var(--font-typewriter); font-size: 12px; color: var(--ink); line-height: 1.4; }
 .mag-round-detail { font-size: 14.5px; line-height: 1.45; color: var(--ink4); }
 
 .mag-qs { list-style: none; margin: 0 0 22px; padding: 0; display: flex; flex-direction: column; gap: 9px; }
@@ -316,14 +364,14 @@
 .mag-qs li::before { content: '▸'; position: absolute; left: 0; top: 1px; color: var(--orange); font-size: 12px; }
 
 .mag-quote {
-  font-family: 'Caveat', cursive; font-size: 21px; line-height: 1.4; color: var(--ink2);
+  font-family: var(--font-hand); font-size: 21px; line-height: 1.4; color: var(--ink2);
   margin: 0 0 22px; padding: 14px 18px 14px 46px; background: #fff8e8;
   border-left: 4px solid var(--orange); border-radius: 0 10px 10px 0; position: relative;
 }
-.mag-quote::before { content: '“'; position: absolute; left: 12px; top: 4px; font-family: 'Caveat', cursive; font-weight: 700; font-size: 46px; line-height: 1; color: var(--orange); opacity: 0.4; }
+.mag-quote::before { content: '“'; position: absolute; left: 12px; top: 4px; font-family: var(--font-hand); font-weight: 700; font-size: 46px; line-height: 1; color: var(--orange); opacity: 0.4; }
 
 .mag-iv-sec { margin-bottom: 14px; }
-.mag-iv-sech { font-family: 'Special Elite', serif; font-size: 12px; color: var(--ink); margin: 0 0 6px; letter-spacing: 0.02em; }
+.mag-iv-sech { font-family: var(--font-typewriter); font-size: 12px; color: var(--ink); margin: 0 0 6px; letter-spacing: 0.02em; }
 .mag-iv-p { font-size: 15.5px; line-height: 1.55; color: var(--ink3); margin: 0 0 8px; }
 
 /* ── Locked interview ── */
@@ -334,38 +382,57 @@
 .mag-iv-lock span:last-child { font-size: 14.5px; color: var(--ink4); max-width: 240px; }
 .mag-iv-lockglyph { font-size: 20px; }
 
-/* ── Contact ── */
+/* ── Contact footer (No.07) — espresso block at the foot of every page ── */
+.mag-footer {
+  background: #161009;
+  color: #e9e1d2;
+  padding: 42px 20px 48px;
+  animation: mag-fade 0.4s ease both;
+}
+.mag-footer .mag-display { color: #f4eee2; }
+.mag-footer .mag-display--ruled { border-bottom-color: rgba(233, 225, 210, 0.26); }
+.mag-footer .mag-contact-line { color: #cabfa9; }
+.mag-footer .mag-contact-row { border-bottom-color: rgba(233, 225, 210, 0.13); }
+.mag-footer .mag-contact-glyph { background: rgba(233, 225, 210, 0.1); color: #e8a55a; }
+.mag-footer .mag-contact-label { color: #9a8c72; }
+.mag-footer .mag-contact-value { color: #ede6d6; }
+.mag-footer .mag-coda { color: #897b63; }
+
 .mag-contact-line { font-size: 17px; line-height: 1.5; color: var(--ink2); margin: 0 0 12px; }
 .mag-sendbtn {
   display: inline-block; margin: 8px 0 26px;
-  font-family: 'Special Elite', serif; font-size: 14px;
+  font-family: var(--font-typewriter); font-size: 14px;
   color: var(--paper); background: var(--orange); padding: 14px 26px;
   border-radius: 9px; text-decoration: none; box-shadow: 0 8px 20px rgba(200, 120, 42, 0.35);
 }
 .mag-contacts { list-style: none; margin: 0; padding: 0; }
 .mag-contact-row { display: flex; align-items: center; gap: 14px; text-decoration: none; padding: 16px 2px; border-bottom: 1px solid var(--line); }
-.mag-contact-glyph { flex: 0 0 auto; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 9px; background: var(--ink); color: #e8a55a; font-family: 'Special Elite', serif; font-size: 13px; }
+.mag-contact-glyph { flex: 0 0 auto; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 9px; background: var(--ink); color: #e8a55a; font-family: var(--font-typewriter); font-size: 13px; }
 .mag-contact-text { flex: 1 1 auto; display: flex; flex-direction: column; min-width: 0; }
-.mag-contact-label { font-family: 'Special Elite', serif; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.mag-contact-label { font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 .mag-contact-value { font-size: 16px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .mag-contact-arrow { color: var(--orange); font-size: 18px; }
 .mag-coda { font-size: 13px; color: var(--faint); text-align: center; margin: 34px 0 0; line-height: 1.5; }
 
 /* ── Detail view ── */
-.mag-detail { animation: mag-slide 0.3s ease both; }
-.mag-backbtn { margin: 20px 0 8px; background: transparent; border: 1px solid var(--line2); cursor: pointer; font-family: 'Special Elite', serif; font-size: 12px; color: var(--ink); padding: 8px 16px; border-radius: 8px; }
+.mag-detail { }
+.mag-backbtn { margin: 20px 0 8px; background: transparent; border: 1px solid var(--line2); cursor: pointer; font-family: var(--font-typewriter); font-size: 12px; color: var(--ink); padding: 8px 16px; border-radius: 8px; }
 .mag-detail-head { border-left: 6px solid var(--orange); padding: 14px 0 16px 22px; margin: 6px 0 14px; border-bottom: 2.5px solid var(--ink); }
-.mag-detail-title { font-family: 'Caveat', cursive; font-weight: 700; font-size: 56px; line-height: 0.8; margin: 6px 0 12px; }
+.mag-detail-title { font-family: var(--font-hand); font-weight: 700; font-size: 56px; line-height: 0.8; margin: 6px 0 12px; }
 .mag-detail-hook { font-size: 19px; line-height: 1.34; color: var(--ink2); margin: 0; }
 .mag-detail-role { font-size: 16px; line-height: 1.55; color: var(--ink4); margin: 0 0 18px; padding: 12px 0 12px 16px; border-left: 2px solid var(--line); }
-.mag-detail-h { font-family: 'Special Elite', serif; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin: 24px 0 8px; }
+.mag-detail-h { font-family: var(--font-typewriter); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); margin: 24px 0 8px; }
 .mag-detail-h:first-of-type { margin-top: 0; }
 .mag-detail-p { font-size: 17px; line-height: 1.62; color: var(--ink); margin: 0 0 14px; }
-.mag-dropcap { float: left; font-family: 'Caveat', cursive; font-weight: 700; font-size: 60px; line-height: 0.62; color: var(--orange); padding: 8px 12px 0 0; }
+.mag-dropcap { float: left; font-family: var(--font-hand); font-weight: 700; font-size: 60px; line-height: 0.62; color: var(--orange); padding: 8px 12px 0 0; }
+
+/* Detail gallery (populated once portfolio.json images[] are filled) */
+.mag-gallery { display: flex; flex-direction: column; gap: 10px; margin: 4px 0 8px; }
+.mag-gallery-img { width: 100%; border-radius: 8px; border: 1px solid var(--line); display: block; }
 
 .mag-aside { margin-top: 26px; background: var(--raised); border: 1px solid rgba(26, 18, 8, 0.16); border-radius: 12px; padding: 22px; }
 .mag-aside-row { margin-bottom: 14px; }
-.mag-aside-l { font-family: 'Special Elite', serif; font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.mag-aside-l { font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
 .mag-aside-v { font-size: 15.5px; color: var(--ink); margin-top: 2px; }
 .mag-aside-link { display: block; font-size: 16px; color: var(--ink); text-decoration: none; margin-top: 2px; }
 .mag-aside-block { margin-bottom: 16px; }
@@ -378,8 +445,8 @@
 
 .mag-team { display: flex; flex-direction: column; gap: 8px; }
 .mag-team-row { display: flex; align-items: center; gap: 10px; font-size: 15px; color: var(--ink); }
-.mag-avatar { width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: #e8a55a; display: inline-flex; align-items: center; justify-content: center; font-family: 'Special Elite', serif; font-size: 9px; flex: 0 0 auto; }
+.mag-avatar { width: 26px; height: 26px; border-radius: 50%; background: var(--ink); color: #e8a55a; display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-typewriter); font-size: 9px; flex: 0 0 auto; }
 
 .mag-aside-actions { display: flex; flex-direction: column; gap: 8px; }
-.mag-aside-btn { text-decoration: none; font-family: 'Special Elite', serif; font-size: 12px; text-align: center; color: var(--ink); border: 1.5px solid var(--ink); border-radius: 8px; padding: 10px 14px; }
+.mag-aside-btn { text-decoration: none; font-family: var(--font-typewriter); font-size: 12px; text-align: center; color: var(--ink); border: 1.5px solid var(--ink); border-radius: 8px; padding: 10px 14px; }
 .mag-aside-btn--ghost { color: var(--muted); border: 1.5px dashed var(--line2); }

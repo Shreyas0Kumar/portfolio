@@ -1,6 +1,6 @@
 /* globals.css — design tokens for the sketchbook theme */
 
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Special+Elite&family=Patrick+Hand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300..700;1,300..600&display=swap');
 
 :root {
   /* Paper & ink */
@@ -22,10 +22,12 @@
   --xp-chrome:    #d4cfc8;
   --xp-border:    #8a8070;
 
-  /* Typography */
+  /* Typography — two-font system: Caveat for display/headlines,
+     Source Serif 4 for everything you actually read. --font-typewriter is
+     kept (now the serif) so existing rules still resolve. */
   --font-hand:       'Caveat', cursive;
-  --font-typewriter: 'Special Elite', serif;
-  --font-body:       'Patrick Hand', cursive;
+  --font-body:       'Source Serif 4', Georgia, serif;
+  --font-typewriter: var(--font-body);
 
   /* Sizing */
   --radius-sketch: 2px;   /* lines aren't perfectly rounded */
@@ -48,6 +50,7 @@ html, body, #root {
 body {
   font-family: var(--font-body);
   color: var(--ink);
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 

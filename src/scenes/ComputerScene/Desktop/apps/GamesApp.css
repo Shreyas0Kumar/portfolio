@@ -12,7 +12,7 @@
 .games-menu { padding: 38px 44px; overflow-y: auto; }
 
 .games-eyebrow {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.68rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -21,7 +21,7 @@
 }
 
 .games-title {
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-size: 2.4rem;
   color: #1a1208;
   margin-bottom: 26px;
@@ -68,21 +68,21 @@
 }
 
 .games-tile-name {
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-size: 1.7rem;
   color: #1a1208;
   line-height: 1;
 }
 
 .games-tile-blurb {
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
   font-size: 0.92rem;
   line-height: 1.4;
   color: #3a3530;
 }
 
 .games-tile-play {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.74rem;
   color: #c8782a;
   margin-top: 2px;
@@ -106,7 +106,7 @@
   background: transparent;
   cursor: pointer;
   text-align: left;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.78rem;
   color: #c8782a;
   padding: 6px 4px;
@@ -114,7 +114,7 @@
 .games-back:hover { color: #7a4a1a; }
 
 .games-now {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.82rem;
   color: #1a1208;
 }
@@ -156,7 +156,7 @@
 }
 
 .chess-status {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.86rem;
   color: #3a3530;
 }
@@ -177,7 +177,7 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.72rem;
   color: #7a6f5a;
   padding: 6px 12px;
@@ -188,7 +188,7 @@
   border: 1px solid rgba(26, 18, 8, 0.18);
   background: #fbf8f1;
   cursor: pointer;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.72rem;
   color: #1a1208;
   padding: 6px 12px;
@@ -270,7 +270,7 @@
 
 .chess-coord {
   position: absolute;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.5rem;
   color: rgba(26, 18, 8, 0.5);
   z-index: 1;
@@ -305,7 +305,7 @@
 }
 
 .sdk-status {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.84rem;
   color: #3a3530;
 }
@@ -325,7 +325,7 @@
   border: none;
   background: transparent;
   cursor: pointer;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.7rem;
   color: #7a6f5a;
   padding: 6px 12px;
@@ -337,7 +337,7 @@
   border: 1px solid rgba(26, 18, 8, 0.18);
   background: #fbf8f1;
   cursor: pointer;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.72rem;
   color: #1a1208;
   padding: 6px 12px;
@@ -360,7 +360,7 @@
   border: 0.5px solid rgba(26, 18, 8, 0.16);
   background: #f7f2e8;
   cursor: pointer;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 1em;
   color: #2a6fc8;
   display: flex;
@@ -392,7 +392,7 @@
   background: #fbf8f1;
   border-radius: 9px;
   cursor: pointer;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 1rem;
   color: #1a1208;
   transition: background 0.12s ease, transform 0.08s ease;

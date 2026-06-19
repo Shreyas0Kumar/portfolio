@@ -12,7 +12,7 @@
 }
 
 .xp-title {
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-size: 2.8rem;
   color: #f2ede3;
   line-height: 1;
@@ -39,7 +39,7 @@
 }
 
 .xp-status {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.75rem;
   color: rgba(242, 237, 227, 0.5);
   letter-spacing: 0.04em;

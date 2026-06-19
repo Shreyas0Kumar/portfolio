@@ -7,7 +7,7 @@
   background:
     radial-gradient(circle at 28% 18%, #46402f 0%, transparent 55%),
     linear-gradient(160deg, #3a3530 0%, #1a1208 100%);
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
 }
 
 /* Layer that holds the draggable windows. Establishes its own stacking context
@@ -61,7 +61,7 @@
 }
 
 .desktop-icon-label {
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
   font-size: 0.82rem;
   color: #f2ede3;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
@@ -73,7 +73,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.85rem;
   color: rgba(242, 237, 227, 0.45);
   letter-spacing: 0.05em;
@@ -137,13 +137,13 @@
 
 .quicklook-title {
   flex: 1 1 auto;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.82rem;
   color: #1a1208;
 }
 
 .quicklook-open {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.74rem;
   text-decoration: none;
   color: #c8782a;

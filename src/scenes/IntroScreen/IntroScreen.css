@@ -28,7 +28,7 @@
 }
 
 .intro-lead {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.95rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -36,13 +36,13 @@
 }
 
 .intro-key {
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-size: 2rem;
   color: rgba(242, 237, 227, 0.92);
 }
 
 .intro-key kbd {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 1.1rem;
   padding: 3px 10px;
   margin: 0 4px;
@@ -55,7 +55,7 @@
 
 .intro-sub {
   margin-top: 10px;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.8rem;
   letter-spacing: 0.06em;
   color: rgba(242, 237, 227, 0.4);

@@ -83,7 +83,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.8rem;
   color: #f2ede3;
   letter-spacing: 0.04em;

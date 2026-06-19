@@ -40,7 +40,7 @@
 }
 
 .room-loading-text {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.95rem;
   letter-spacing: 0.06em;
   color: rgba(242, 237, 227, 0.7);
@@ -60,12 +60,12 @@
 }
 
 .room-name {
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-size: 1.4rem;
 }
 
 .room-tagline {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.85rem;
   letter-spacing: 0.03em;
 }

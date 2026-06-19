@@ -19,7 +19,7 @@
 }
 
 .mail-toolbar-title {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.82rem;
   color: #1a1208;
 }
@@ -28,7 +28,7 @@
   border: none;
   background: #c8782a;
   color: #f2ede3;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.78rem;
   padding: 7px 18px;
   border-radius: 7px;
@@ -56,13 +56,13 @@
 
 .mail-label {
   flex: 0 0 64px;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.74rem;
   color: #7a6f5a;
 }
 
 .mail-static {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.8rem;
   color: #1a1208;
 }
@@ -72,7 +72,7 @@
   border: none;
   background: transparent;
   outline: none;
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
   font-size: 1rem;
   color: #1a1208;
 }
@@ -85,14 +85,14 @@
   border: none;
   background: transparent;
   outline: none;
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
   font-size: 1.05rem;
   line-height: 1.6;
   color: #3a3530;
 }
 
 .mail-status {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.78rem;
   padding-top: 10px;
 }

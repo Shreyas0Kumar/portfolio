@@ -23,7 +23,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 6px 10px 10px;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.74rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -70,7 +70,7 @@
 .music-row-meta { display: flex; flex-direction: column; min-width: 0; }
 
 .music-row-title {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.78rem;
   color: #1a1208;
   white-space: nowrap;
@@ -79,7 +79,7 @@
 }
 
 .music-row-artist {
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
   font-size: 0.76rem;
   color: #7a6f5a;
   white-space: nowrap;
@@ -118,7 +118,7 @@
 @keyframes musicSpin { to { transform: rotate(360deg); } }
 
 .music-title {
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-size: 2rem;
   line-height: 1.1;
   color: #1a1208;
@@ -130,7 +130,7 @@
 }
 
 .music-artist {
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
   font-size: 1rem;
   color: #7a6f5a;
   margin-top: 2px;
@@ -146,7 +146,7 @@
 }
 
 .music-time {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.68rem;
   color: #7a6f5a;
   flex: 0 0 auto;
@@ -253,14 +253,14 @@
 }
 
 .music-empty-title {
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-size: 2rem;
   color: #1a1208;
   margin-top: 20px;
 }
 
 .music-empty-note {
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
   font-size: 1rem;
   line-height: 1.5;
   color: #3a3530;
@@ -269,7 +269,7 @@
 }
 
 .music-empty-note code {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.84rem;
   background: #ede8de;
   border: 1px solid rgba(26, 18, 8, 0.14);

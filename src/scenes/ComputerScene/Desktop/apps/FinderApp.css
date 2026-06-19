@@ -16,7 +16,7 @@
 }
 
 .finder-sidebar-head {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.66rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -32,7 +32,7 @@
   text-align: left;
   border: none;
   background: transparent;
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
   font-size: 0.95rem;
   color: #3a3530;
   padding: 7px 8px;
@@ -60,7 +60,7 @@
 }
 
 .finder-path {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.78rem;
   color: #1a1208;
   margin-bottom: 16px;
@@ -92,7 +92,7 @@
 
 .finder-tip {
   margin-top: 20px;
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
   font-size: 0.85rem;
   color: #7a6f5a;
 }
@@ -117,7 +117,7 @@
 .finder-drive-open {
   align-self: flex-start;
   margin-top: 12px;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.74rem;
   text-decoration: none;
   color: #c8782a;
@@ -125,7 +125,7 @@
 
 .finder-drive-loading {
   margin: 28px auto 0;
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
   font-size: 0.95rem;
   color: #7a6f5a;
 }
@@ -144,27 +144,27 @@
 .finder-drive-empty-icon { font-size: 44px; line-height: 1; }
 
 .finder-drive-empty-title {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.92rem;
   color: #1a1208;
 }
 
 .finder-drive-empty-sub {
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
   font-size: 0.9rem;
   line-height: 1.45;
   color: #7a6f5a;
 }
 
 .finder-drive-empty-sub code {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.78rem;
   color: #c8782a;
 }
 
 .finder-drive-empty-link {
   margin-top: 6px;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.78rem;
   text-decoration: none;
   color: #c8782a;
@@ -204,13 +204,13 @@
 
 .finder-ql-title {
   flex: 1 1 auto;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.8rem;
   color: #1a1208;
 }
 
 .finder-ql-open {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.74rem;
   text-decoration: none;
   color: #c8782a;
@@ -237,7 +237,7 @@
 .finder-file-icon { font-size: 38px; line-height: 1; }
 
 .finder-file-name {
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
   font-size: 0.9rem;
   color: #1a1208;
   text-align: center;
@@ -254,7 +254,7 @@
 }
 
 .finder-file-kind {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.6rem;
   color: #7a6f5a;
   letter-spacing: 0.04em;

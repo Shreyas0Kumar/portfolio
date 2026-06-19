@@ -35,7 +35,7 @@
   border: none;
   background: transparent;
   outline: none;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 1.1rem;
   color: #1a1208;
 }
@@ -69,13 +69,13 @@
 }
 
 .spotlight-result-label {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 0.86rem;
   color: #1a1208;
 }
 
 .spotlight-result-hint {
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
   font-size: 0.82rem;
   color: #7a6f5a;
 }

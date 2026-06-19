@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { usePortfolio, accentFor } from '../../data/portfolio.jsx'
 import MobileIntro from './MobileIntro.jsx'
 import './MobilePortfolio.css'
@@ -19,14 +19,15 @@ const INTRO_KEY = 'shreyas-mobile-intro-seen'
 const byOrder = (a, b) => (a.order ?? 99) - (b.order ?? 99)
 
 // The masthead nav + the section each tab maps to.
+// Contact (No.07) is intentionally not a tab — it lives in the page footer.
 const SECTIONS = [
   ['01', 'Overview', 'overview'],
   ['02', 'Work', 'work'],
   ['03', 'Hacks', 'hackathons'],
   ['04', 'Career', 'experience'],
   ['05', 'Stack', 'stack'],
-  ['06', 'Interviews', 'interviews'],
-  ['07', 'Contact', 'contact'],
+  // Temporarily hidden on mobile — the layout is too cramped and content cuts off.
+  // ['06', 'Interviews', 'interviews'],
 ]
 
 const STACK_LABELS = {
@@ -114,15 +115,46 @@ export default function MobilePortfolio() {
   const [view, setView] = useState('overview')
   const [detail, setDetail] = useState(null) // { kind: 'project' | 'experience', id }
   const [openIv, setOpenIv] = useState(null)
+  const [dir, setDir] = useState(1)          // slide direction: 1 = next (→), -1 = prev (←)
 
   const dismissIntro = () => {
     try { sessionStorage.setItem(INTRO_KEY, '1') } catch { /* ignore */ }
     setShowIntro(false)
   }
   const toTop = () => { try { window.scrollTo(0, 0) } catch { /* ignore */ } }
-  const go = next => { setView(next); setDetail(null); toTop() }
+  const idxOf = id => SECTIONS.findIndex(([, , sid]) => sid === id)
+  const go = next => {
+    const from = idxOf(view)
+    const to = idxOf(next)
+    if (from !== -1 && to !== -1) setDir(to >= from ? 1 : -1)
+    setView(next); setDetail(null); toTop()
+  }
+  // Step to an adjacent tab; clamped so there's no wrap-around (first↔last).
+  const goByOffset = delta => {
+    const next = idxOf(view) + delta
+    if (next < 0 || next >= SECTIONS.length) return
+    go(SECTIONS[next][2])
+  }
   const open = (kind, id) => { setDetail({ kind, id }); toTop() }
   const back = () => { setDetail(null); toTop() }
+
+  // Horizontal swipe between tabs (ignored while a detail page is open).
+  const touchRef = useRef(null)
+  const onTouchStart = e => {
+    const t = e.changedTouches[0]
+    touchRef.current = { x: t.clientX, y: t.clientY }
+  }
+  const onTouchEnd = e => {
+    const start = touchRef.current
+    touchRef.current = null
+    if (!start || detail) return
+    const t = e.changedTouches[0]
+    const dx = t.clientX - start.x
+    const dy = t.clientY - start.y
+    // Require a clearly horizontal swipe of reasonable length.
+    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return
+    goByOffset(dx < 0 ? 1 : -1) // drag left → next tab, drag right → previous
+  }
 
   if (showIntro) return <MobileIntro onContinue={dismissIntro} />
 
@@ -144,44 +176,71 @@ export default function MobilePortfolio() {
             <p className="mag-deck">{data.profile.tagline}</p>
           </div>
           <nav className="mag-nav">
-            {SECTIONS.map(([num, label, id]) => {
-              const active = !detail && view === id
-              return (
-                <button
-                  key={id}
-                  className={'mag-tab' + (active ? ' is-active' : '')}
-                  onClick={() => go(id)}
-                >
-                  <span className="mag-tab-num">{num}</span>{label}
-                </button>
-              )
-            })}
+            <button
+              className="mag-nav-arrow"
+              onClick={() => goByOffset(-1)}
+              disabled={idxOf(view) <= 0}
+              aria-label="Previous section"
+            >
+              «
+            </button>
+            <div className="mag-tabs">
+              <div className="mag-tabs-row">
+                {SECTIONS.map(([num, label, id]) => {
+                  const active = !detail && view === id
+                  return (
+                    <button
+                      key={id}
+                      className={'mag-tab' + (active ? ' is-active' : '')}
+                      onClick={() => go(id)}
+                    >
+                      <span className="mag-tab-num">{num}</span>{label}
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
+            <button
+              className="mag-nav-arrow"
+              onClick={() => goByOffset(1)}
+              disabled={idxOf(view) >= SECTIONS.length - 1}
+              aria-label="Next section"
+            >
+              »
+            </button>
           </nav>
         </header>
 
-        <main className="mag-main">
-          {builtDetail ? (
-            <DetailView detail={builtDetail} onBack={back} />
-          ) : view === 'overview' ? (
-            <Overview data={data} projects={projects} hacks={hacks} onOpen={open} onWork={() => go('work')} />
-          ) : view === 'work' ? (
-            <Work projects={projects} onOpen={open} />
-          ) : view === 'hackathons' ? (
-            <Hacks hacks={hacks} onOpen={open} />
-          ) : view === 'experience' ? (
-            <Experience data={data} onOpen={open} />
-          ) : view === 'stack' ? (
-            <Stack skills={data.skills || {}} />
-          ) : view === 'interviews' ? (
-            <Interviews
-              interviews={data.interviews || {}}
-              openIv={openIv}
-              onToggle={id => setOpenIv(cur => (cur === id ? null : id))}
-            />
-          ) : (
-            <Contact data={data} />
-          )}
+        <main className="mag-main" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+          <div
+            className={'mag-swipe' + (dir < 0 ? ' mag-swipe--prev' : '')}
+            key={builtDetail ? `d-${detail.kind}-${detail.id}` : view}
+          >
+            {builtDetail ? (
+              <DetailView detail={builtDetail} onBack={back} />
+            ) : view === 'work' ? (
+              <Work projects={projects} onOpen={open} />
+            ) : view === 'hackathons' ? (
+              <Hacks hacks={hacks} onOpen={open} />
+            ) : view === 'experience' ? (
+              <Experience data={data} onOpen={open} />
+            ) : view === 'stack' ? (
+              <Stack skills={data.skills || {}} />
+            /* Interviews temporarily hidden on mobile — too cramped, content cuts off.
+            ) : view === 'interviews' ? (
+              <Interviews
+                interviews={data.interviews || {}}
+                openIv={openIv}
+                onToggle={id => setOpenIv(cur => (cur === id ? null : id))}
+              />
+            */
+            ) : (
+              <Overview data={data} projects={projects} hacks={hacks} onOpen={open} onWork={() => go('work')} />
+            )}
+          </div>
         </main>
+
+        <Contact data={data} />
       </div>
     </div>
   )
@@ -228,8 +287,10 @@ function Overview({ data, projects, hacks, onOpen, onWork }) {
           </div>
           <article className="mag-cover" onClick={() => onOpen('project', cover.id)}>
             <div className="mag-frame mag-frame--cover">
+              {cover.images?.[0]
+                ? <img className="mag-img-fill" src={cover.images[0]} alt={cover.name} loading="lazy" />
+                : <span className="mag-frame-cap">[ {(cover.assetPlaceholders || [])[0] || 'cover image'} ]</span>}
               <span className="mag-frame-num">01</span>
-              <span className="mag-frame-cap">[ {(cover.assetPlaceholders || [])[0] || 'cover image'} ]</span>
             </div>
             <div className="mag-cover-body">
               <span className="mag-card-kicker">{kickerFor(cover)}</span>
@@ -271,8 +332,10 @@ function Work({ projects, onOpen }) {
       {projects.map((p, i) => (
         <article key={p.id} className="mag-work">
           <div className="mag-frame mag-frame--work" onClick={() => onOpen('project', p.id)}>
+            {p.images?.[0]
+              ? <img className="mag-img-fill" src={p.images[0]} alt={p.name} loading="lazy" />
+              : <span className="mag-frame-cap">[ {(p.assetPlaceholders || [])[0] || 'project image'} ]</span>}
             <span className="mag-frame-num">{String(i + 1).padStart(2, '0')}</span>
-            <span className="mag-frame-cap">[ {(p.assetPlaceholders || [])[0] || 'project image'} ]</span>
             <Stamp text={awardStamp(p)} size="lg" />
           </div>
           <div className="mag-meta">
@@ -557,11 +620,11 @@ function Contact({ data }) {
   ].filter(Boolean)
 
   return (
-    <section className="mag-section">
-      <p className="mag-eyebrow">No.07 — Contact</p>
+    <footer className="mag-footer">
+      {/* <p className="mag-eyebrow">No.07 — Contact</p> */}
       <h2 className="mag-display mag-display--ruled mag-display--xl">{contact.heading || "Let's build something."}</h2>
       {(contact.body || []).map((line, i) => <p key={i} className="mag-contact-line">{line}</p>)}
-      <a className="mag-sendbtn" href={`mailto:${pr.email}`}>✉ &nbsp;Send a message</a>
+      {/* <a className="mag-sendbtn" href={`mailto:${pr.email}`}>✉ &nbsp;Send a message</a> */}
       <ul className="mag-contacts">
         {links.map(c => (
           <li key={c.label}>
@@ -577,10 +640,10 @@ function Contact({ data }) {
         ))}
       </ul>
       <p className="mag-coda">
-        This is the mobile edition. The full interactive desktop — a 3D room you boot into a
-        macOS of working apps — lives at portfolio.shreyas.space.
+        This is the mobile edition. The full interactive desktop, a 3D room you boot into a
+        macOS of working apps, lives at portfolio.shreyas.space.
       </p>
-    </section>
+    </footer>
   )
 }
 
@@ -629,6 +692,7 @@ function buildDetail(d, detail, projects, hacks) {
     hook: p.homepage?.tagline || '',
     accent: accentFor(p.id),
     role: p.role || '',
+    images: p.images || [],
     story: buildStory(secs),
     facts: [
       { label: 'Timeframe', value: p.timeframe },
@@ -692,6 +756,17 @@ function DetailView({ detail, onBack }) {
           <ul className="mag-bullets">
             {detail.highlights.map((b, i) => <li key={i}>{b}</li>)}
           </ul>
+        </>
+      )}
+
+      {detail.images?.length > 0 && (
+        <>
+          <h3 className="mag-detail-h">Gallery</h3>
+          <div className="mag-gallery">
+            {detail.images.map((src, i) => (
+              <img key={i} className="mag-gallery-img" src={src} alt={`${detail.title} ${i + 1}`} loading="lazy" />
+            ))}
+          </div>
         </>
       )}
 

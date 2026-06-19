@@ -1,7 +1,7 @@
 /* ===========================================================================
    InterviewsTab — editorial "newspaper" rendition of interview reviews.
-   Mirrors PortfolioApp's warm paper-and-typewriter system: Caveat headlines,
-   Special Elite labels, Patrick Hand body, espresso ink on cream with a
+   Mirrors PortfolioApp's warm paper system: Caveat headlines,
+   Source Serif 4 labels + body, espresso ink on cream with a
    #c8782a orange. All content comes from public/portfolio.json.
    =========================================================================== */
 
@@ -62,7 +62,7 @@
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -88,7 +88,7 @@
   flex-wrap: wrap;
 }
 .iv-mast-name {
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-weight: 700;
   font-size: clamp(32px, 6cqi, 54px);
   line-height: 0.82;
@@ -99,14 +99,14 @@
 }
 .iv-mast-roleblock { text-align: right; max-width: 380px; flex: 0 1 auto; }
 .iv-mast-role {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 11px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--orange);
 }
 .iv-mast-tag {
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
   font-size: 13px;
   line-height: 1.42;
   color: var(--ink-4);
@@ -121,7 +121,7 @@
 }
 
 .iv-eyebrow {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 11px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -141,15 +141,15 @@
 .iv-stat { padding: 20px; border-right: 1px solid rgba(26, 18, 8, 0.12); }
 .iv-stat:last-child { border-right: none; }
 .iv-stat-n {
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-weight: 700;
   font-size: clamp(38px, 5cqi, 52px);
   line-height: 0.8;
   color: var(--orange);
 }
 .iv-stat-l {
-  font-family: 'Special Elite', serif;
-  font-size: 10px;
+  font-family: var(--font-typewriter);
+  font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
@@ -157,7 +157,7 @@
 }
 
 .iv-sectitle {
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-weight: 700;
   font-size: clamp(30px, 5cqi, 46px);
   line-height: 0.95;
@@ -202,15 +202,15 @@
 
 .iv-cardmain { display: flex; flex-direction: column; gap: 3px; min-width: 0; flex: 1; }
 .iv-kicker {
-  font-family: 'Special Elite', serif;
-  font-size: 10px;
+  font-family: var(--font-typewriter);
+  font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--orange);
   line-height: 1.5;
 }
 .iv-company {
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-weight: 700;
   font-size: clamp(34px, 5cqi, 48px);
   line-height: 0.85;
@@ -218,7 +218,7 @@
   display: block;
 }
 .iv-role {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 12px;
   letter-spacing: 0.04em;
   color: var(--orange);
@@ -255,7 +255,7 @@
 .iv-badge.outcome.wait    { background: #f3e8d0; color: #8a5a2a; }
 .iv-badge.outcome.neutral { background: rgba(26, 18, 8, 0.08); color: #6b6051; }
 
-.iv-chevron { font-family: 'Special Elite', serif; font-size: 13px; color: var(--faint); margin-top: 2px; }
+.iv-chevron { font-family: var(--font-typewriter); font-size: 13px; color: var(--faint); margin-top: 2px; }
 
 /* ===================== EXPANDED DETAIL ===================== */
 
@@ -275,7 +275,7 @@
 .iv-block { margin-bottom: 24px; }
 .iv-block:last-child { margin-bottom: 0; }
 .iv-block-label {
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
   font-size: 11px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -302,13 +302,13 @@
   background: var(--orange);
   display: block;
 }
-.iv-round-name { font-family: 'Special Elite', serif; font-size: 13px; color: var(--ink); line-height: 1.4; }
-.iv-round-detail { font-family: 'Patrick Hand', cursive; font-size: 15px; line-height: 1.45; color: var(--ink-4); }
+.iv-round-name { font-family: var(--font-typewriter); font-size: 13px; color: var(--ink); line-height: 1.4; }
+.iv-round-detail { font-family: var(--font-body); font-size: 15px; line-height: 1.45; color: var(--ink-4); }
 
 /* questions */
 .iv-questions { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .iv-question {
-  font-family: 'Patrick Hand', cursive;
+  font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.42;
   color: var(--ink-3);
@@ -321,12 +321,12 @@
   left: 0; top: 2px;
   color: var(--orange);
   font-size: 12px;
-  font-family: 'Special Elite', serif;
+  font-family: var(--font-typewriter);
 }
 
 /* takeaway blockquote */
 .iv-takeaway {
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-size: 21px;
   line-height: 1.42;
   color: var(--ink-2);
@@ -340,7 +340,7 @@
 .iv-quote {
   position: absolute;
   left: 13px; top: 6px;
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-weight: 700;
   font-size: 50px;
   line-height: 1;
@@ -350,8 +350,8 @@
 
 /* full story (from detailContent) */
 .iv-storysec + .iv-storysec { margin-top: 14px; }
-.iv-story-head { font-family: 'Special Elite', serif; font-size: 12px; color: var(--ink); margin: 0 0 6px; letter-spacing: 0.02em; }
-.iv-story-text { font-family: 'Patrick Hand', cursive; font-size: 16px; line-height: 1.55; color: var(--ink-3); margin: 0 0 8px; }
+.iv-story-head { font-family: var(--font-typewriter); font-size: 12px; color: var(--ink); margin: 0 0 6px; letter-spacing: 0.02em; }
+.iv-story-text { font-family: var(--font-body); font-size: 16px; line-height: 1.55; color: var(--ink-3); margin: 0 0 8px; }
 
 /* facts sidebar */
 .iv-aside {
@@ -363,18 +363,18 @@
   top: 120px;
 }
 .iv-aside-label {
-  font-family: 'Special Elite', serif;
-  font-size: 10px;
+  font-family: var(--font-typewriter);
+  font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
   margin-bottom: 3px;
 }
 .iv-fact { margin-bottom: 13px; padding-bottom: 13px; border-bottom: 1px solid rgba(26, 18, 8, 0.1); }
-.iv-fact-val { font-family: 'Patrick Hand', cursive; font-size: 16px; color: var(--ink); }
+.iv-fact-val { font-family: var(--font-body); font-size: 16px; color: var(--ink); }
 .iv-fact--rating { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
 .iv-rating-big {
-  font-family: 'Caveat', cursive;
+  font-family: var(--font-hand);
   font-weight: 700;
   font-size: 36px;
   line-height: 1;
@@ -407,7 +407,7 @@
   background: rgba(241, 236, 226, 0.65);
 }
 .iv-lock { font-size: 20px; flex-shrink: 0; }
-.iv-locktext { font-family: 'Patrick Hand', cursive; font-size: 15px; color: var(--ink-4); max-width: 440px; }
+.iv-locktext { font-family: var(--font-body); font-size: 15px; color: var(--ink-4); max-width: 440px; }
 .iv-locked-badge { position: absolute; top: 14px; right: 18px; }
 
 /* ===================== RESPONSIVE (narrow window) ===================== */

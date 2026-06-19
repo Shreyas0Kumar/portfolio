@@ -65,8 +65,15 @@ const maxZ = ws => ws.reduce((m, w) => Math.max(m, w.z), 0)
 const bringToFront = (ws, id) =>
   ws.map(w => (w.id === id ? { ...w, z: maxZ(ws) + 1, minimized: false } : w))
 const defaultSize = () => ({
-  w: Math.min(1180, window.innerWidth - 64),
-  h: Math.min(760, window.innerHeight - 120),
+  w: Math.min(1320, window.innerWidth - 48),
+  h: Math.min(820, window.innerHeight - 100),
+})
+
+// Place a freshly opened window so a wider default still fits on screen,
+// keeping the cascade offset but clamping to the viewport.
+const placeWindow = (w, h, offset = 0) => ({
+  x: Math.max(8, Math.min(90 + offset * 30, window.innerWidth - w - 8)),
+  y: Math.max(34, Math.min(56 + offset * 28, window.innerHeight - h - 8)),
 })
 
 const readLS = (k, fallback) => { try { return localStorage.getItem(k) ?? fallback } catch { return fallback } }
@@ -76,7 +83,7 @@ export default function Desktop({ onExit }) {
   const [loggedIn, setLoggedIn] = useState(false)
   const [windows, setWindows] = useState(() => {
     const { w, h } = defaultSize()
-    return [{ id: 'portfolio', x: 150, y: 70, w, h, z: 1, minimized: false, maximized: false, prev: null }]
+    return [{ id: 'portfolio', ...placeWindow(w, h), w, h, z: 1, minimized: false, maximized: false, prev: null }]
   })
   const [appleOpen, setAppleOpen]       = useState(false)
   const [aboutOpen, setAboutOpen]       = useState(false)
@@ -106,7 +113,7 @@ export default function Desktop({ onExit }) {
       const offset = ws.length % 6
       sOpen()
       return [...ws, {
-        id, x: 130 + offset * 32, y: 64 + offset * 30, w, h,
+        id, ...placeWindow(w, h, offset), w, h,
         z: maxZ(ws) + 1, minimized: false, maximized: false, prev: null,
       }]
     })

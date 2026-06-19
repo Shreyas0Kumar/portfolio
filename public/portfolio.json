@@ -8,6 +8,7 @@
     "role": "AI Engineer",
     "tagline": "AI Engineer building AI products, retrieval systems, and backend infrastructure that are meant to be used in the real world.",
     "location": "New York",
+    "coverImage": "/images/portfolio.webp",
     "email": "shreyaskr2000@gmail.com",
     "links": {
       "github": "https://github.com/Shreyas0Kumar",
@@ -1448,9 +1449,6 @@
   },
   "contact": {
     "heading": "Contact",
-    "body": [
-      "I like working on products and systems where the engineering has to earn trust.",
-      "If that sounds relevant to what you're building, I'd love to talk."
-    ]
+    "body": []
   }
 }

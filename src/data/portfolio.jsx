@@ -33,7 +33,7 @@ export function PortfolioProvider({ children }) {
       <div style={{
         position: 'fixed', inset: 0, display: 'flex', alignItems: 'center',
         justifyContent: 'center', textAlign: 'center', padding: 24,
-        background: '#1a1208', color: '#e8a55a', fontFamily: 'Patrick Hand, cursive',
+        background: '#1a1208', color: '#e8a55a', fontFamily: 'var(--font-body)',
       }}>
         Couldn’t load portfolio content. Please refresh.
       </div>
