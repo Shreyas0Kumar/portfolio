@@ -1,14 +1,15 @@
 # Shreyas Portfolio — start here
 
-**Read `README.md` first, especially the `## Roadmap` section.** It is the source
-of truth for what's done and what's next. This file is just orientation; keep both
-in sync as the project evolves.
+**Read `README.md` first** for what the project is and how it fits together. The
+README is visitor-facing (no run/deploy instructions); this file is the working
+orientation for changes. Keep both in sync as the project evolves.
 
 ## What this is
 
 An interactive macOS-style portfolio (React + Vite + Spline 3D room) that "boots"
-into a desktop of working apps. Mobile gets a scrollable portfolio plus a "open on
-desktop" handoff screen. Live at https://portfolio.shreyas.space.
+into a desktop of working apps. Mobile gets its own "printed magazine" edition (a
+sectioned reader with tap-through detail pages) plus an "open on desktop" handoff
+screen. Live at https://portfolio.shreyas.space.
 
 ## How it ships
 
@@ -30,5 +31,6 @@ desktop" handoff screen. Live at https://portfolio.shreyas.space.
 
 ## Current focus
 
-See README → Roadmap: (1) a PDF-style, mobile-friendly portfolio; (2) project
-imagery (`portfolio.json` projects have empty `images: []` + `assetPlaceholders`).
+Project imagery: `portfolio.json` projects have empty `images: []` arrays and
+`assetPlaceholders` describing the shots to add. Detail pages already render a
+gallery once `images` is populated.

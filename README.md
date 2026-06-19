@@ -1,66 +1,45 @@
-  # Shreyas Kumar — Portfolio
+# Shreyas Kumar — Portfolio
 
-An interactive, macOS-style portfolio. Desktop visitors land in a live Spline 3D
-room and click the monitor to "boot" into a retro desktop with working apps;
-touch / small screens get a clean, fast scrollable portfolio instead.
+An interactive, macOS-style portfolio. Instead of a static page, desktop visitors
+land in a live 3D room and click the monitor to **boot into a working desktop** —
+a little operating system where each app reveals a different part of my work.
 
-Live: **https://portfolio.shreyas.space**
+**Live → https://portfolio.shreyas.space**
 
-## Tech
+## What it is
 
-- **React 18** + **Vite 8**
-- **Spline** (`@splinetool/react-spline`) for the 3D room
-- Scenes are code-split with `React.lazy` so each device only downloads its own
-  path (mobile never loads the 3D runtime).
-- Hosted on **Cloudflare Pages** (free tier); a Pages Function backs the Drive
-  integration.
+- **A 3D room you boot into.** Desktop visitors arrive in a live Spline 3D scene,
+  click the monitor, and watch it power on into a retro desktop.
+- **Working apps, not screenshots.** The desktop is a real little OS:
+  - **Portfolio** — projects, hackathons, and experience with tap-through case studies
+  - **Interviews** — honest write-ups of real interview loops (rounds, questions, takeaways)
+  - **About / Terminal / Safari** — different lenses on the same content
+  - **Mail** — a contact form that actually sends, in-app, straight to my inbox
+  - **Finder** — Documents (résumé, certificates) served live from Google Drive with
+    in-app Quick Look
+- **A mobile edition that stands on its own.** Phones and touch screens get a
+  "printed magazine" portfolio — a sectioned reader (Overview, Work, Hackathons,
+  Experience, Stack, Interviews, Contact) with tap-through detail pages — rather
+  than a cramped version of the desktop.
 
-## Develop
+## How it's built
 
-```bash
-npm install
-npm run dev      # local dev server (no Pages Functions — see note)
-npm run build    # production build → dist/
-npm run preview  # preview the production build locally
-```
+- **React 18 + Vite** single-page app.
+- **Spline** (`@splinetool/react-spline`) for the 3D room.
+- Scenes are **code-split with `React.lazy`**, so each device only downloads its own
+  path — mobile never loads the 3D runtime at all.
+- Hosted on **Cloudflare Pages**. A Pages Function (`functions/api/drive.js`) lists
+  the public Drive folder server-side, so the API key never reaches the browser.
+- The in-app **Mail** sends through Formspree and stays on-screen — no `mailto:`
+  handoff — with the visitor's address set as reply-to.
 
-> The Finder "Documents" list is served by a Cloudflare Pages Function
-> (`functions/api/drive.js`). Plain `npm run dev` doesn't run Functions, so Finder
-> falls back to a keyless folder embed. To exercise the real in-app grid locally:
-> `npm run build` then `npx wrangler pages dev dist` (with a `.dev.vars` file).
+## One source of truth
 
-## Deploy (Cloudflare Pages)
-
-Connected via Cloudflare's **native Git integration** — every push to `main`
-triggers a build automatically. No GitHub Actions, no secrets in the repo.
-
-| Setting          | Value           |
-| ---------------- | --------------- |
-| Framework preset | Vite            |
-| Build command    | `npm run build` |
-| Build output dir | `dist`          |
-| Node version     | `22` (`.nvmrc`) |
-
-### Environment variables (Cloudflare → project → Settings → Environment variables)
-
-| Name              | Purpose                                                                                                |
-| ----------------- | ------------------------------------------------------------------------------------------------------ |
-| `DRIVE_API_KEY`   | Google Drive API key (mark **encrypted**). Restrict to *Google Drive API*; **no** referrer restriction (the call is server-side). |
-| `DRIVE_FOLDER_ID` | ID of the public Drive folder shown in Finder "Documents".                                             |
-
-The folder is link-public ("Anyone with the link → Viewer"). Upload a file to it
-and it appears in Finder automatically (edge-cached ~5 min). The API key never
-ships to the browser — it lives only in the Pages Function. Client config:
-`src/scenes/ComputerScene/Desktop/apps/drive.js`.
-
-## Content (single source of truth)
-
-- `public/portfolio.json` — **everything**: profile, intro, projects, hackathons,
-  experience, education, skills, interviews, and contact. It's served as a static
-  asset and fetched at runtime (see `src/data/portfolio.jsx`), so editing the JSON
-  updates the whole site — desktop apps and the mobile portfolio alike — with no
-  code changes. Add an entry following the shape of the existing ones and it
-  appears automatically.
+All content lives in **`public/portfolio.json`** — profile, intro, projects,
+hackathons, experience, education, skills, interviews, and contact. It's served as
+a static asset and fetched at runtime (`src/data/portfolio.jsx`), so editing the
+JSON updates every surface — desktop apps *and* the mobile edition — with no code
+changes.
 
 ## Structure
 
@@ -70,35 +49,10 @@ public/
   portfolio.json             single source of truth for ALL content
 src/
   App.jsx                    scene orchestration + mobile/desktop split
-  data/
-    portfolio.jsx            fetches portfolio.json + usePortfolio() hook
+  data/portfolio.jsx         fetches portfolio.json + usePortfolio() hook
   scenes/
     IntroScreen/             first-load full-screen nudge (desktop)
     RoomScene/               live Spline 3D room (desktop entry)
-    ComputerScene/           XP-style boot loader + macOS desktop & apps
-    MobilePortfolio/         scrollable portfolio + MobileIntro handoff (mobile)
+    ComputerScene/           boot loader + macOS desktop & apps
+    MobilePortfolio/         "magazine" mobile edition + intro handoff
 ```
-
-## Roadmap
-
-Tracked here so the work survives across chat sessions.
-
-**In progress**
-
-1. **PDF-style mobile portfolio** — a clean, professional, print-like layout that
-   reads great on phones. Becomes the mobile default and the destination of the
-   mobile intro's "continue here"; a button toggles it on the same page (desktop too).
-   (The current mobile portfolio is data-driven and scrollable; this is the polish pass.)
-
-2. **Project imagery** — `portfolio.json` projects have empty `images: []` arrays
-   and `assetPlaceholders` describing the shots to add. The detail pages already
-   render an `images` gallery when populated.
-
-**Done**
-
-Cloudflare Pages deploy + custom domain · Vite 8 / Node 22 · code-split scenes ·
-favicon · Drive-backed Finder with the API key hidden in a Pages Function ·
-desktop Resume/Certificates icons + in-app Quick Look · mobile intro handoff
-screen · **single-source `portfolio.json`** driving every surface (Portfolio app,
-Interviews, About, Terminal, Safari, Mail, mobile) · real content pass (projects,
-hackathons, experience, education, skills, interviews).
