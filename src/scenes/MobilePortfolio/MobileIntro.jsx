@@ -55,7 +55,7 @@ export default function MobileIntro({ onContinue }) {
           {pr.coverImage && (
             <img className="mintro-cover-img" src={pr.coverImage} alt="" loading="eager" />
           )}
-          <span className="mintro-cover-num">01</span>
+          {/* <span className="mintro-cover-num">01</span> */}
           <div className="mintro-cover-caption">
             <div className="mintro-cover-kicker">Cover Story &nbsp;·&nbsp; Desktop Edition</div>
             <div className="mintro-cover-title">an interactive<br />desktop world</div>
@@ -70,7 +70,7 @@ export default function MobileIntro({ onContinue }) {
 
           <div className="mintro-lede">
             <p className="mintro-lede-line">
-              The full experience boots into a 3D room — a working macOS you can click
+              The full experience boots into a 3D room, a working macOS you can click
               around in, with apps, a desktop, and everything in between.
             </p>
             <p className="mintro-lede-line mintro-lede-line--soft">
