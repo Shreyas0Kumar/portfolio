@@ -87,6 +87,40 @@
   z-index: 30;
 }
 
+/* Dims the desktop behind an open Control Center (menu bar stays bright). */
+.cc-dim {
+  position: absolute;
+  inset: 0;
+  z-index: 38;
+  background: rgba(13, 10, 5, 0.34);
+  animation: cc-dim-in 0.18s ease-out;
+}
+
+@keyframes cc-dim-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* ── Control Center display filters (pointer-events: none) ── */
+.display-dim {
+  position: absolute;
+  inset: 0;
+  z-index: 57;
+  background: #000;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+
+.nightlight-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 58;
+  background: linear-gradient(160deg, rgba(255, 170, 60, 0.9), rgba(255, 140, 30, 0.9));
+  mix-blend-mode: multiply;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+}
+
+.nightlight-overlay.on { opacity: 0.32; }
+
 /* ── About Me dialog ── */
 .about-layer {
   position: absolute;
@@ -162,6 +196,16 @@
   width: 100%;
   border: none;
   background: #fff;
+}
+
+/* Image previews show the picture itself, contained on a paper backdrop. */
+.quicklook-img {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 0;
+  object-fit: contain;
+  background: #fff;
+  padding: 16px;
 }
 
 /* ── Shutdown fade ── */

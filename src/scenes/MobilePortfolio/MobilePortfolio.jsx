@@ -30,6 +30,10 @@ const SECTIONS = [
   // ['06', 'Interviews', 'interviews'],
 ]
 
+// Pages in swipe order — just the section tabs. Contact isn't a page; it's the
+// footer at the bottom of every section's vertical scroll.
+const PAGE_IDS = SECTIONS.map(s => s[2])
+
 const STACK_LABELS = {
   llmNlp: 'LLMs & NLP',
   mlData: 'ML & Data',
@@ -112,52 +116,90 @@ export default function MobilePortfolio() {
   const [showIntro, setShowIntro] = useState(() => {
     try { return sessionStorage.getItem(INTRO_KEY) !== '1' } catch { return true }
   })
-  const [view, setView] = useState('overview')
-  const [detail, setDetail] = useState(null) // { kind: 'project' | 'experience', id }
+  const [view, setView] = useState('overview') // active page id: a section sid, or 'contact'
+  const [detail, setDetail] = useState(null)    // { kind: 'project' | 'experience', id }
+  const [closing, setClosing] = useState(false) // case study is sliding back out
   const [openIv, setOpenIv] = useState(null)
-  const [dir, setDir] = useState(1)          // slide direction: 1 = next (→), -1 = prev (←)
+
+  const pagerRef = useRef(null)
+  const rafRef = useRef(0)
+  // Briefly mute scroll-sync during a programmatic (tab / arrow) scroll so the
+  // active tab doesn't flicker through every panel it passes on the way.
+  const lockRef = useRef(0)
+
+  const prefersReduced =
+    typeof window !== 'undefined' &&
+    !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
   const dismissIntro = () => {
     try { sessionStorage.setItem(INTRO_KEY, '1') } catch { /* ignore */ }
     setShowIntro(false)
   }
-  const toTop = () => { try { window.scrollTo(0, 0) } catch { /* ignore */ } }
-  const idxOf = id => SECTIONS.findIndex(([, , sid]) => sid === id)
-  const go = next => {
-    const from = idxOf(view)
-    const to = idxOf(next)
-    if (from !== -1 && to !== -1) setDir(to >= from ? 1 : -1)
-    setView(next); setDetail(null); toTop()
-  }
-  // Step to an adjacent tab; clamped so there's no wrap-around (first↔last).
-  const goByOffset = delta => {
-    const next = idxOf(view) + delta
-    if (next < 0 || next >= SECTIONS.length) return
-    go(SECTIONS[next][2])
-  }
-  const open = (kind, id) => { setDir(1); setDetail({ kind, id }); toTop() }
-  const back = () => { setDir(-1); setDetail(null); toTop() }
 
-  // Horizontal swipe: between tabs on a section, or right→left back out of a detail.
+  const pageIdx = id => PAGE_IDS.indexOf(id)
+
+  // The swipe itself is pure CSS scroll-snap; we only nudge the scroller when a
+  // tab or one of the « » arrows is tapped.
+  const scrollToIndex = i => {
+    const pager = pagerRef.current
+    if (!pager) return
+    lockRef.current = Date.now() + 450
+    pager.scrollTo({ left: i * pager.clientWidth, behavior: prefersReduced ? 'auto' : 'smooth' })
+  }
+  const go = id => {
+    const i = pageIdx(id)
+    if (i < 0) return
+    setClosing(false)
+    setDetail(null)
+    setView(id)
+    scrollToIndex(i)
+  }
+  // Step to an adjacent page; clamped so there's no wrap-around (first↔last).
+  const goByOffset = delta => {
+    const next = pageIdx(view) + delta
+    if (next < 0 || next >= PAGE_IDS.length) return
+    go(PAGE_IDS[next])
+  }
+
+  // Keep the active tab in sync as the user swipes between panels.
+  const onPagerScroll = () => {
+    if (Date.now() < lockRef.current) return
+    cancelAnimationFrame(rafRef.current)
+    rafRef.current = requestAnimationFrame(() => {
+      const pager = pagerRef.current
+      if (!pager || !pager.clientWidth) return
+      const id = PAGE_IDS[Math.round(pager.scrollLeft / pager.clientWidth)]
+      if (id && id !== view) setView(id)
+    })
+  }
+
+  const open = (kind, id) => setDetail({ kind, id })
+  // Slide the case study back out before unmounting it (the swipe-right gesture
+  // and the Back button both land here). Reduced-motion users just jump back.
+  const back = () => {
+    if (prefersReduced) { setDetail(null); return }
+    setClosing(true)
+  }
+  const onOverlayAnimEnd = e => {
+    if (e.target !== e.currentTarget) return // ignore animations bubbling from children
+    if (closing) { setClosing(false); setDetail(null) }
+  }
+
+  // A case study is an overlay, not a snap panel: swipe right to go back (mirrors
+  // the Back button). The pages themselves need no JS — scroll-snap handles them.
   const touchRef = useRef(null)
-  const onTouchStart = e => {
+  const onDetailTouchStart = e => {
     const t = e.changedTouches[0]
     touchRef.current = { x: t.clientX, y: t.clientY }
   }
-  const onTouchEnd = e => {
+  const onDetailTouchEnd = e => {
     const start = touchRef.current
     touchRef.current = null
     if (!start) return
     const t = e.changedTouches[0]
     const dx = t.clientX - start.x
     const dy = t.clientY - start.y
-    // Require a clearly horizontal swipe of reasonable length.
-    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return
-    if (detail) {
-      if (dx > 0) back() // inside a case study: swipe right to go back (like the Back button)
-      return
-    }
-    goByOffset(dx < 0 ? 1 : -1) // drag left → next tab, drag right → previous
+    if (dx > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) back()
   }
 
   if (showIntro) return <MobileIntro onContinue={dismissIntro} />
@@ -165,6 +207,26 @@ export default function MobilePortfolio() {
   const projects = [...(data.projects || [])].sort(byOrder)
   const hacks = [...(data.hackathons || [])].sort(byOrder)
   const builtDetail = detail ? buildDetail(data, detail, projects, hacks) : null
+
+  const renderSection = sid => {
+    switch (sid) {
+      case 'work': return <Work projects={projects} onOpen={open} />
+      case 'hackathons': return <Hacks hacks={hacks} onOpen={open} />
+      case 'experience': return <Experience data={data} onOpen={open} />
+      case 'stack': return <Stack skills={data.skills || {}} />
+      /* Interviews temporarily hidden on mobile — too cramped, content cuts off.
+      case 'interviews': return (
+        <Interviews
+          interviews={data.interviews || {}}
+          openIv={openIv}
+          onToggle={id => setOpenIv(cur => (cur === id ? null : id))}
+        />
+      ) */
+      default: return (
+        <Overview data={data} projects={projects} hacks={hacks} onOpen={open} onWork={() => go('work')} />
+      )
+    }
+  }
 
   return (
     <div className="mag-viewport">
@@ -183,7 +245,7 @@ export default function MobilePortfolio() {
             <button
               className="mag-nav-arrow"
               onClick={() => goByOffset(-1)}
-              disabled={idxOf(view) <= 0}
+              disabled={pageIdx(view) <= 0}
               aria-label="Previous section"
             >
               «
@@ -207,7 +269,7 @@ export default function MobilePortfolio() {
             <button
               className="mag-nav-arrow"
               onClick={() => goByOffset(1)}
-              disabled={idxOf(view) >= SECTIONS.length - 1}
+              disabled={pageIdx(view) >= PAGE_IDS.length - 1}
               aria-label="Next section"
             >
               »
@@ -215,36 +277,27 @@ export default function MobilePortfolio() {
           </nav>
         </header>
 
-        <main className="mag-main" onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
-          <div
-            className={'mag-swipe' + (dir < 0 ? ' mag-swipe--prev' : '')}
-            key={builtDetail ? `d-${detail.kind}-${detail.id}` : view}
-          >
-            {builtDetail ? (
-              <DetailView detail={builtDetail} onBack={back} />
-            ) : view === 'work' ? (
-              <Work projects={projects} onOpen={open} />
-            ) : view === 'hackathons' ? (
-              <Hacks hacks={hacks} onOpen={open} />
-            ) : view === 'experience' ? (
-              <Experience data={data} onOpen={open} />
-            ) : view === 'stack' ? (
-              <Stack skills={data.skills || {}} />
-            /* Interviews temporarily hidden on mobile — too cramped, content cuts off.
-            ) : view === 'interviews' ? (
-              <Interviews
-                interviews={data.interviews || {}}
-                openIv={openIv}
-                onToggle={id => setOpenIv(cur => (cur === id ? null : id))}
-              />
-            */
-            ) : (
-              <Overview data={data} projects={projects} hacks={hacks} onOpen={open} onWork={() => go('work')} />
-            )}
+        <div className="mag-stage">
+          <div className="mag-pager" ref={pagerRef} onScroll={onPagerScroll}>
+            {SECTIONS.map(([, , sid]) => (
+              <section className="mag-page" key={sid} aria-hidden={detail ? true : undefined}>
+                <div className="mag-page-inner">{renderSection(sid)}</div>
+                <Contact data={data} />
+              </section>
+            ))}
           </div>
-        </main>
 
-        <Contact data={data} />
+          {builtDetail && (
+            <div
+              className={'mag-detail-overlay' + (closing ? ' mag-detail-overlay--out' : '')}
+              onTouchStart={onDetailTouchStart}
+              onTouchEnd={onDetailTouchEnd}
+              onAnimationEnd={onOverlayAnimEnd}
+            >
+              <DetailView detail={builtDetail} onBack={back} />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
@@ -294,7 +347,6 @@ function Overview({ data, projects, hacks, onOpen, onWork }) {
               {cover.images?.[0]
                 ? <img className="mag-img-fill" src={cover.images[0]} alt={cover.name} loading="lazy" />
                 : <span className="mag-frame-cap">[ {(cover.assetPlaceholders || [])[0] || 'cover image'} ]</span>}
-              <span className="mag-frame-num">01</span>
             </div>
             <div className="mag-cover-body">
               <span className="mag-card-kicker">{kickerFor(cover)}</span>
@@ -339,7 +391,6 @@ function Work({ projects, onOpen }) {
             {p.images?.[0]
               ? <img className="mag-img-fill" src={p.images[0]} alt={p.name} loading="lazy" />
               : <span className="mag-frame-cap">[ {(p.assetPlaceholders || [])[0] || 'project image'} ]</span>}
-            <span className="mag-frame-num">{String(i + 1).padStart(2, '0')}</span>
             <Stamp text={awardStamp(p)} size="lg" />
           </div>
           <div className="mag-meta">

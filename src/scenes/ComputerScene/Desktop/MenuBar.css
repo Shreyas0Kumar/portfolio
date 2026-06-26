@@ -68,6 +68,20 @@
 
 button.menu-extra { cursor: pointer; }
 
+/* ── Control Center button + panel anchor ── */
+.menu-cc-wrap { position: relative; display: flex; align-items: center; }
+
+.menu-cc {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+  padding: 3px 4px;
+  border-radius: 5px;
+}
+
+.menu-cc:hover,
+.menu-cc.active { background: rgba(242, 237, 227, 0.18); }
+
 .menu-clock {
   font-family: var(--font-typewriter);
   font-size: 0.74rem;

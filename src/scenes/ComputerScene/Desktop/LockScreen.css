@@ -38,7 +38,7 @@
 }
 
 .lock-name {
-  font-family: var(--font-hand);
+  font-family: var(--font-name);
   font-size: 1.8rem;
   color: #f2ede3;
 }

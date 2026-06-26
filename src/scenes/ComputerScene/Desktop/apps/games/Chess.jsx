@@ -1,11 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { initialState, legalMoves, applyMove, statusOf, aiMove, cOf } from './chessEngine.js'
 import { useSquareSize } from './useSquareSize.js'
-
-const GLYPH = {
-  K: '♔', Q: '♕', R: '♖', B: '♗', N: '♘', P: '♙',
-  k: '♚', q: '♛', r: '♜', b: '♝', n: '♞', p: '♟',
-}
+import { PIECE_SVG, pieceLabel, KIWEN_SUWI } from './pieces/index.js'
 
 const sameSq = (a, b) => a && b && a[0] === b[0] && a[1] === b[1]
 
@@ -113,7 +109,9 @@ export default function Chess() {
       </div>
 
       <div className="chess-captured">
-        {captured.b.map((p, i) => <span key={'b' + i} className="cap">{GLYPH[p]}</span>)}
+        {captured.b.map((p, i) => (
+          <img key={'b' + i} className="cap" src={PIECE_SVG[p]} alt={pieceLabel(p)} />
+        ))}
       </div>
 
       <div className="chess-boardwrap" ref={wrapRef}>
@@ -140,7 +138,12 @@ export default function Chess() {
                 {c === 0 && <span className="chess-coord rank">{8 - r}</span>}
                 {r === 7 && <span className="chess-coord file">{'abcdefgh'[c]}</span>}
                 {piece && (
-                  <span className={`chess-piece ${cOf(piece)}`}>{GLYPH[piece]}</span>
+                  <img
+                    className={`chess-piece ${cOf(piece)}`}
+                    src={PIECE_SVG[piece]}
+                    alt={pieceLabel(piece)}
+                    draggable={false}
+                  />
                 )}
                 {isTarget && <span className={`chess-dot${isCapture ? ' cap' : ''}`} />}
               </button>
@@ -151,8 +154,18 @@ export default function Chess() {
       </div>
 
       <div className="chess-captured">
-        {captured.w.map((p, i) => <span key={'w' + i} className="cap">{GLYPH[p]}</span>)}
+        {captured.w.map((p, i) => (
+          <img key={'w' + i} className="cap" src={PIECE_SVG[p]} alt={pieceLabel(p)} />
+        ))}
       </div>
+
+      <p className="chess-credit">
+        Pieces:{' '}
+        <a href={KIWEN_SUWI.url} target="_blank" rel="noreferrer">
+          {KIWEN_SUWI.name}
+        </a>{' '}
+        by {KIWEN_SUWI.author} · {KIWEN_SUWI.license}
+      </p>
     </div>
   )
 }

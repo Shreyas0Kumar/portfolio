@@ -200,12 +200,23 @@
   min-height: 22px;
   display: flex;
   flex-wrap: wrap;
-  gap: 1px;
-  font-size: 1.1rem;
-  line-height: 1;
-  color: #5a5045;
-  opacity: 0.75;
+  align-items: center;
+  gap: 2px;
+  opacity: 0.8;
 }
+.chess-captured .cap {
+  width: 18px;
+  height: 18px;
+}
+
+.chess-credit {
+  font-family: var(--font-typewriter);
+  font-size: 0.62rem;
+  color: #9a8f7a;
+  text-align: center;
+}
+.chess-credit a { color: #c8782a; text-decoration: none; }
+.chess-credit a:hover { text-decoration: underline; }
 
 .chess-board {
   display: grid;
@@ -245,12 +256,12 @@
 .chess-piece {
   position: relative;
   z-index: 1;
-  font-size: calc(var(--sq, 48px) * 0.74);
-  line-height: 1;
+  width: calc(var(--sq, 48px) * 0.82);
+  height: calc(var(--sq, 48px) * 0.82);
   user-select: none;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.3));
 }
-.chess-piece.w { color: #fbf8f1; text-shadow: 0 1px 1px rgba(0, 0, 0, 0.55), 0 0 2px rgba(0,0,0,0.4); }
-.chess-piece.b { color: #1a1208; text-shadow: 0 1px 1px rgba(255, 255, 255, 0.25); }
 
 .chess-dot {
   position: absolute;

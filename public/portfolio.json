@@ -6,8 +6,8 @@
   "profile": {
     "name": "Shreyas Kumar",
     "role": "AI Engineer",
-    "tagline": "AI Engineer building AI products, retrieval systems, and backend infrastructure that are meant to be used in the real world.",
-    "location": "New York",
+    "tagline": "AI Engineer building smart products and the heavy-duty backends that power them.",
+    "location": "India",
     "coverImage": "/images/portfolio.webp",
     "email": "shreyaskr2000@gmail.com",
     "links": {
@@ -99,7 +99,7 @@
       ],
       "metrics": [
         "<300ms target latency",
-        "~90% reduction in race conditions / duplicate emissions",
+        "~90% reduction in race conditions",
         "<150ms barge-in response time"
       ],
       "awards": [],
@@ -153,12 +153,9 @@
         {
           "name": "Shreyas Kumar",
           "github": "https://github.com/Shreyas0Kumar"
-        },
-        {
-          "name": "Claude",
-          "github": null
         }
       ],
+      "builtWithClaude": true,
       "tags": ["Voice AI", "Child Safety", "Real-time", "Product"],
       "linkedinPosts": [
         "https://www.linkedin.com/feed/update/urn:li:activity:7470157780293951488/",
@@ -506,9 +503,9 @@
       ],
       "featured": false,
       "order": 1,
-      "event": "HackMerced",
+      "event": "HackMerced '25",
       "organizer": "MLH (Major League Hacking) and University of California, Merced",
-      "location": "UC Merced, Merced, California (in person)"
+      "location": "UC Merced, Merced, California, USA"
     },
     {
       "id": "report-xplain",
@@ -731,7 +728,7 @@
     },
     {
       "id": "humana-mays-case-competition",
-      "name": "Humana-Mays Healthcare Analytics Case Competition",
+      "name": "Healthcare Analytics",
       "category": "more",
       "slug": "/hackathons/humana-mays-case-competition",
       "type": "Healthcare analytics case competition: predictive modeling on large-scale patient data.",
@@ -826,9 +823,9 @@
       "images": ["/images/humana-mays-case-competition/logo.webp"],
       "featured": false,
       "order": 4,
-      "event": "Humana-Mays Healthcare Analytics Case Competition 2024",
+      "event": "Humana-Mays Healthcare Analytics Case Competition '24",
       "organizer": "Humana and the Mays Business School, Texas A&M University",
-      "location": "Remote"
+      "location": "Remote, USA"
     }
   ],
   "experience": [
@@ -1097,12 +1094,16 @@
     "llmNlp": [
       "RAG",
       "LangChain",
+      "LlamaIndex",
       "Hugging Face",
       "Transformers",
       "LoRA",
       "BM25",
       "Embeddings",
       "Prompt Engineering",
+      "Jailbreak Hardening",
+      "LLM Guardrails / Safety",
+      "Vector DBs (Milvus/Chroma/Qdrant)",
       "STT/TTS"
     ],
     "mlData": [
@@ -1110,8 +1111,12 @@
       "JAX",
       "XGBoost",
       "Random Forest",
+      "Apache Spark (PySpark)",
       "MLflow",
-      "Model Evaluation"
+      "Weights & Biases",
+      "Model Evaluation",
+      "LLM Observability & Tracing",
+      "Data Pipelines / ETL"
     ],
     "backendApis": [
       "FastAPI",
@@ -1122,17 +1127,21 @@
       "Node.js",
       "NestJS",
       "WebSockets",
-      "Asyncio"
+      "Asyncio",
+      "gRPC",
+      "RESTful APIs"
     ],
     "deploymentTools": [
       "Docker",
       "Kubernetes",
-      "GitHub Actions",
-      "Azure ML",
+      "GitHub Actions (CI/CD)",
+      "Azure ML / Vertex AI",
+      "Terraform (IaC)",
       "Heroku",
       "Firebase",
       "Selenium",
-      "MinIO"
+      "MinIO",
+      "Prometheus & Grafana"
     ],
     "languages": [
       "Python",
@@ -1141,7 +1150,9 @@
       "Kotlin",
       "TypeScript/JavaScript",
       "SQL",
-      "SwiftUI"
+      "SwiftUI",
+      "C",
+      "C++"
     ]
   },
   "interviews": {

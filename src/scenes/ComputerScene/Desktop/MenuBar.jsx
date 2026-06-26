@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import './MenuBar.css'
+import ControlCenter from './ControlCenter.jsx'
+
+// Two stacked toggle pills — the macOS Control Center glyph.
+const CONTROL_CENTER_ICON = (
+  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+    <rect x="3" y="5.5" width="18" height="5.4" rx="2.7" fill="none" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="8" cy="8.2" r="1.7" fill="currentColor" />
+    <rect x="3" y="13.1" width="18" height="5.4" rx="2.7" fill="none" stroke="currentColor" strokeWidth="1.5" />
+    <circle cx="16" cy="15.8" r="1.7" fill="currentColor" />
+  </svg>
+)
 
 /**
  * MenuBar
@@ -32,8 +43,9 @@ export default function MenuBar({
   onToggleApple,
   onAbout,
   onShutDown,
-  soundOn,
-  onToggleSound,
+  ccOpen,
+  onToggleCC,
+  controlCenter,
 }) {
   const clock = useClock()
 
@@ -70,17 +82,21 @@ export default function MenuBar({
       </div>
 
       <div className="menu-right">
-        <button
-          type="button"
-          className="menu-extra"
-          onClick={onToggleSound}
-          aria-label={soundOn ? 'Mute' : 'Unmute'}
-          title={soundOn ? 'Sound on' : 'Muted'}
-        >
-          {soundOn ? '🔊' : '🔇'}
-        </button>
-        <span className="menu-extra" title="Wi-Fi">📶</span>
         <span className="menu-extra" title="Battery">🔋</span>
+        <span className="menu-extra" title="Wi-Fi">{controlCenter.wifi ? '📶' : '🚫'}</span>
+        <div className="menu-cc-wrap">
+          <button
+            type="button"
+            className={`menu-extra menu-cc${ccOpen ? ' active' : ''}`}
+            onClick={onToggleCC}
+            aria-label="Control Center"
+            aria-expanded={ccOpen}
+            title="Control Center"
+          >
+            {CONTROL_CENTER_ICON}
+          </button>
+          {ccOpen && <ControlCenter {...controlCenter} />}
+        </div>
         <span className="menu-clock">{clock}</span>
       </div>
     </div>

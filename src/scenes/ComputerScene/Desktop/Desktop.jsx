@@ -94,6 +94,14 @@ export default function Desktop({ onExit }) {
   const [wallpaper, setWallpaper]       = useState(() => Number(readLS('shreyas-wallpaper', '0')) || 0)
   const [soundOn, setSoundOn]           = useState(() => readLS('shreyas-sound', '1') === '1')
 
+  // Control Center state.
+  const [ccOpen, setCcOpen]       = useState(false)
+  const [brightness, setBrightness] = useState(100)
+  const [volume, setVolume]       = useState(() => (readLS('shreyas-sound', '1') === '1' ? 70 : 0))
+  const [nightLight, setNightLight] = useState(false)
+  const [wifi, setWifi]           = useState(true)
+  const [bluetooth, setBluetooth] = useState(true)
+
   // Keep the sound module + storage in sync.
   useEffect(() => {
     setMuted(!soundOn)
@@ -107,6 +115,7 @@ export default function Desktop({ onExit }) {
   const openApp = id => {
     setAppleOpen(false)
     setSpotlightOpen(false)
+    setCcOpen(false)
     setWindows(ws => {
       if (ws.find(w => w.id === id)) return bringToFront(ws, id)
       const { w, h } = defaultSize()
@@ -154,6 +163,27 @@ export default function Desktop({ onExit }) {
 
   const cycleWallpaper = () => setWallpaper(i => (i + 1) % WALLPAPERS.length)
 
+  // Volume slider and the Sound toggle stay in sync with the master mute state.
+  const handleVolume = v => { setVolume(v); setSoundOn(v > 0) }
+  const toggleSound  = () => {
+    const next = !soundOn
+    setSoundOn(next)
+    setVolume(next ? (volume === 0 ? 60 : volume) : 0)
+  }
+
+  const controlCenter = {
+    soundOn, onToggleSound: toggleSound,
+    volume, onVolume: handleVolume,
+    brightness, onBrightness: setBrightness,
+    nightLight, onToggleNightLight: () => setNightLight(n => !n),
+    wifi, onToggleWifi: () => setWifi(w => !w),
+    bluetooth, onToggleBluetooth: () => setBluetooth(b => !b),
+    onCycleWallpaper: cycleWallpaper,
+  }
+
+  // Black wash for the brightness slider (0 at full brightness).
+  const dimOpacity = ((100 - brightness) / 100) * 0.72
+
   // Keyboard: Spotlight (⌘/Ctrl+Space) + Escape handling.
   useEffect(() => {
     if (!loggedIn) return
@@ -163,6 +193,7 @@ export default function Desktop({ onExit }) {
         setSpotlightOpen(o => !o)
       } else if (e.key === 'Escape') {
         if (spotlightOpen) setSpotlightOpen(false)
+        else if (ccOpen) setCcOpen(false)
         else if (quickLook) setQuickLook(null)
         else if (ctxMenu) setCtxMenu(null)
         else if (aboutOpen) setAboutOpen(false)
@@ -171,7 +202,7 @@ export default function Desktop({ onExit }) {
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [loggedIn, spotlightOpen, quickLook, ctxMenu, aboutOpen, focusedId])
+  }, [loggedIn, spotlightOpen, ccOpen, quickLook, ctxMenu, aboutOpen, focusedId])
 
   // Spotlight + Terminal + Finder share this app API.
   const api = { openApp, openAbout: handleAbout, quickLook: setQuickLook }
@@ -204,15 +235,18 @@ export default function Desktop({ onExit }) {
         <MenuBar
           activeAppName={focusedId ? APPS[focusedId].name : 'Finder'}
           appleOpen={appleOpen}
-          onToggleApple={() => setAppleOpen(o => !o)}
+          onToggleApple={() => { setAppleOpen(o => !o); setCcOpen(false) }}
           onAbout={handleAbout}
           onShutDown={handleShutDown}
-          soundOn={soundOn}
-          onToggleSound={() => setSoundOn(s => !s)}
+          ccOpen={ccOpen}
+          onToggleCC={() => { setCcOpen(o => !o); setAppleOpen(false) }}
+          controlCenter={controlCenter}
         />
       )}
 
       {appleOpen && <div className="desktop-clickaway" onClick={() => setAppleOpen(false)} />}
+
+      {ccOpen && <div className="cc-dim" onClick={() => setCcOpen(false)} />}
 
       {loggedIn && <Stickies />}
 
@@ -299,10 +333,16 @@ export default function Desktop({ onExit }) {
                 ✕
               </button>
             </div>
-            <iframe className="quicklook-frame" src={quickLook.src} title={quickLook.name} />
+            {quickLook.kind === 'image'
+              ? <img className="quicklook-img" src={quickLook.src} alt={quickLook.name} />
+              : <iframe className="quicklook-frame" src={quickLook.src} title={quickLook.name} />}
           </div>
         </div>
       )}
+
+      {/* Display filters from Control Center — never block clicks. */}
+      <div className="display-dim" style={{ opacity: dimOpacity }} />
+      <div className={`nightlight-overlay${nightLight ? ' on' : ''}`} />
 
       <div className={`shutdown-overlay${shuttingDown ? ' on' : ''}`} />
     </div>

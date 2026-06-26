@@ -104,6 +104,7 @@ export default function App() {
         {/* Room is always mounted so the scene doesn't re-render on exit */}
         <RoomScene
           visible={scene === 'room'}
+          introDone={!showIntro}
           onEnterComputer={handleEnterComputer}
         />
 

@@ -70,7 +70,7 @@
 }
 
 .about-name {
-  font-family: var(--font-hand);
+  font-family: var(--font-name);
   font-size: 1.9rem;
   color: #1a1208;
   line-height: 1;

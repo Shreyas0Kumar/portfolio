@@ -1,12 +1,11 @@
 /* MobilePortfolio.css — "printed magazine" edition for phones / touch screens.
    Ported from the Claude Design "Mobile portfolio redesign". Warm paper palette,
-   handwritten display (Caveat) + serif body/labels (Source Serif 4). */
+   Caveat for the signature name, Arvo slab-serif display, Inter body/labels. */
 
 .mag-viewport {
   position: fixed;
   inset: 0;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: hidden;
   background: #cabfa9;
   -webkit-font-smoothing: antialiased;
 }
@@ -30,11 +29,13 @@
 
   max-width: 480px;
   margin: 0 auto;
-  min-height: 100vh;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   background: var(--paper);
   color: var(--ink);
   position: relative;
-  overflow-x: hidden;
+  overflow: hidden;
   box-shadow: 0 0 60px rgba(26, 18, 8, 0.25);
   font-family: var(--font-body);
 }
@@ -48,9 +49,9 @@
 
 /* ── Masthead ── */
 .mag-masthead {
-  position: sticky;
-  top: 0;
-  z-index: 30;
+  position: relative;
+  z-index: 2;
+  flex: 0 0 auto;
   background: var(--paper);
   padding: 13px 20px 0;
   border-bottom: 2.5px solid var(--ink);
@@ -79,7 +80,7 @@
 }
 
 .mag-title-block { padding: 11px 0 9px; }
-.mag-name { font-family: var(--font-hand); font-weight: 700; font-size: 46px; line-height: 0.8; margin: 0; letter-spacing: -0.01em; }
+.mag-name { font-family: var(--font-name); font-weight: 700; font-size: 46px; line-height: 0.8; margin: 0; letter-spacing: -0.01em; }
 .mag-byline { font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orange); margin-top: 9px; }
 .mag-deck { font-size: 13.5px; line-height: 1.4; color: var(--ink3); margin: 6px 0 0; }
 
@@ -136,26 +137,76 @@
 .mag-tab.is-active { color: var(--ink); border-bottom-color: var(--orange); }
 .mag-tab-num { color: var(--orange); font-size: 11px; }
 
-/* ── Main / sections ── */
-.mag-main { padding: 0 20px 28px; }
+/* ── Stage / horizontal pager (pure CSS scroll-snap) ──
+   The sections live side-by-side in one scroller, so the browser owns the swipe
+   — finger-tracking, momentum, snap and keyboard/AT scrolling, all native. Each
+   panel scrolls vertically on its own; the active tab is synced from scroll
+   position in JS. */
+.mag-stage { position: relative; flex: 1 1 auto; min-height: 0; overflow: hidden; }
+
+.mag-pager {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.mag-pager::-webkit-scrollbar { display: none; }
+
+.mag-page {
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.mag-page::-webkit-scrollbar { display: none; }
+.mag-page-inner { padding: 0 20px 28px; }
+
 .mag-section { }
 
-/* Swift slide+fade when switching tabs (also used for detail open/back). The
-   wrapper is keyed on the active view, so it remounts and replays on each
-   change; the direction follows the swipe — next slides in from the right,
-   previous from the left. */
-.mag-swipe { animation: mag-swipe-next 0.32s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
-.mag-swipe--prev { animation-name: mag-swipe-prev; }
-@keyframes mag-swipe-next {
+/* A case study slides in over the pager, which keeps its scroll position
+   underneath — so "Back" returns you to exactly where you were. */
+.mag-detail-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  background: var(--paper);
+  padding: 0 20px 40px;
+  animation: mag-swipe-in 0.32s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.mag-detail-overlay::-webkit-scrollbar { display: none; }
+/* Going back: slide the case study off to the right (Back button or swipe). */
+.mag-detail-overlay--out {
+  animation: mag-swipe-out 0.24s cubic-bezier(0.4, 0, 0.7, 0.5) both;
+}
+
+@keyframes mag-swipe-in {
   from { opacity: 0; transform: translateX(24px); }
   to   { opacity: 1; transform: translateX(0); }
 }
-@keyframes mag-swipe-prev {
-  from { opacity: 0; transform: translateX(-24px); }
-  to   { opacity: 1; transform: translateX(0); }
+@keyframes mag-swipe-out {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(32px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .mag-swipe { animation: none; }
+  .mag-pager { scroll-behavior: auto; }
+  .mag-detail-overlay,
+  .mag-detail-overlay--out { animation: none; }
 }
 
 .mag-eyebrow {
@@ -222,17 +273,10 @@
 }
 .mag-frame--cover { min-height: 210px; }
 .mag-frame--work { min-height: 180px; cursor: pointer; margin-bottom: 16px; }
-.mag-frame-num { position: absolute; top: 8px; left: 14px; font-family: var(--font-hand); font-weight: 700; font-size: 96px; line-height: 0.7; color: var(--orange); opacity: 0.85; }
-.mag-frame--cover .mag-frame-num { top: 10px; left: 16px; font-size: 104px; }
 .mag-frame-cap { position: absolute; bottom: 12px; left: 0; right: 0; text-align: center; font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.06em; color: var(--faint); }
 
 /* Real image fills the placeholder frame when portfolio.json images[] exist. */
 .mag-img-fill { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-/* Keep the corner index legible over a photo. */
-.mag-img-fill ~ .mag-frame-num {
-  padding: 0 6px 2px; border-radius: 4px;
-  backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
-}
 
 /* ── Cover story ── */
 .mag-cover { cursor: pointer; display: block; }

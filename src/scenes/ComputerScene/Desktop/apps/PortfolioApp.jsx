@@ -5,14 +5,17 @@ import { usePortfolio, accentFor, SKILL_GROUP_LABELS } from '../../../../data/po
 /**
  * PortfolioApp
  * A full-bleed editorial "magazine" rendition of the portfolio, fully driven by
- * public/portfolio.json. Keeps the warm paper system (Caveat
- * headlines, Source Serif 4 labels + body, espresso ink on cream with
+ * public/portfolio.json. Keeps the warm paper system (Caveat signature name,
+ * Arvo slab-serif headlines, Inter labels + body, espresso ink on cream with
  * a #c8782a orange) but trades the narrow column for a masthead + numbered
  * contents, a cover story, big-type project "articles", award stamps, a dated
  * experience timeline, and drop-capped case-study reads.
  *
  * Props:
- *   api {object} — { openApp, openAbout } from Desktop (used by Contact).
+ *   api {object} — { openApp, openAbout } from Desktop (used by CaseStudy).
+ *
+ * Contact is not a tab — it lives as a footer at the bottom of every section
+ * page (mirrors the mobile edition).
  */
 
 const byOrder = (a, b) => (a.order ?? 99) - (b.order ?? 99)
@@ -21,6 +24,11 @@ const initials = name =>
   (name || '').trim().split(/\s+/).map(w => w[0]).filter(Boolean).slice(0, 2).join('').toUpperCase()
 
 const short = url => (url || '').replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
+
+// The portfolio owner. A project whose only listed collaborator is the owner
+// (or none at all) is treated as a solo build rather than showing a lone avatar.
+const SELF_NAME = 'Shreyas Kumar'
+const isSelf = c => c?.name === SELF_NAME
 
 // A metric that LEADS with a number ("<300ms target latency") splits into a
 // giant value + caption. Strings that don't lead with a number return null and
@@ -55,7 +63,6 @@ const SECTIONS = [
   { id: 'hackathons', label: 'Hackathons' },
   { id: 'experience', label: 'Experience' },
   { id: 'stack',      label: 'Stack' },
-  { id: 'contact',    label: 'Contact' },
 ]
 const STACK_ORDER = ['languages', 'llmNlp', 'mlData', 'backendApis', 'deploymentTools']
 
@@ -108,10 +115,10 @@ export default function PortfolioApp({ api }) {
       {/* ===== MASTHEAD ===== */}
       <header className="pf-mast">
         <div className="pf-mast-top">
-          <span>The Portfolio &nbsp;·&nbsp; Issue No. 01 · {year}</span>
+          <span>The Portfolio </span>
           {profile.openToRelocate && (
             <span className="pf-mast-status">
-              <i className="pf-status-dot" /> Open to work · {profile.location}
+              <i className="pf-status-dot" /> Open to work
             </span>
           )}
         </div>
@@ -144,13 +151,7 @@ export default function PortfolioApp({ api }) {
         {current ? (
           detail.kind === 'experience'
             ? <ExperienceDetail entry={current} onBack={back} />
-            : <CaseStudy entry={current} onBack={back} />
-        ) : view === 'overview' ? (
-          <Overview
-            intro={intro} stats={stats} cover={cover}
-            teasers={work.filter(p => p.featured && p.id !== cover?.id)}
-            onOpen={openProject} onSeeAll={() => go('work')}
-          />
+            : <CaseStudy entry={current} onBack={back} api={api} />
         ) : view === 'work' ? (
           <Work items={work} onOpen={openProject} />
         ) : view === 'hackathons' ? (
@@ -160,8 +161,16 @@ export default function PortfolioApp({ api }) {
         ) : view === 'stack' ? (
           <Stack skills={skills} />
         ) : (
-          <Contact contact={contact} profile={profile} api={api} />
+          <Overview
+            intro={intro} stats={stats} cover={cover}
+            teasers={work.filter(p => p.featured && p.id !== cover?.id)}
+            onOpen={openProject} onSeeAll={() => go('work')}
+          />
         )}
+
+        {/* Contact is a footer, not a tab — closes out every section page
+            (but not the focused detail/case-study reads). */}
+        {!current && <Contact contact={contact} profile={profile} year={year} />}
       </div>
     </div>
   )
@@ -205,14 +214,16 @@ function Overview({ intro, stats, cover, teasers, onOpen, onSeeAll }) {
               {cover.images?.[0] && (
                 <img className="pf-img-fill" src={cover.images[0]} alt={cover.name} loading="lazy" />
               )}
-              <span className="pf-cover-idx">01</span>
               {!cover.images?.[0] && (
                 <span className="pf-cover-cap">[ {(cover.assetPlaceholders || [])[0] || 'cover image'} ]</span>
               )}
             </div>
             <div className="pf-cover-body">
               <span className="pf-art-kicker">{projectKicker(cover)}</span>
-              <h2 className="pf-cover-title">{cover.name}</h2>
+              <div className="pf-titlerow">
+                <h2 className="pf-cover-title">{cover.name}</h2>
+                <ClaudeTag show={cover.builtWithClaude} />
+              </div>
               <p className="pf-cover-hook">{cover.homepage?.tagline}</p>
               <MetricRow metrics={numberMetrics(cover).slice(0, 3)} size="md" />
               <span className="pf-readcs">Read the case study →</span>
@@ -255,7 +266,6 @@ function Work({ items, onOpen }) {
             {p.images?.[0] && (
               <img className="pf-img-fill" src={p.images[0]} alt={p.name} loading="lazy" />
             )}
-            <span className="pf-art-idx">{String(i + 1).padStart(2, '0')}</span>
             {!p.images?.[0] && (
               <span className="pf-art-cap">[ {(p.assetPlaceholders || [])[0] || 'project image'} ]</span>
             )}
@@ -267,7 +277,10 @@ function Work({ items, onOpen }) {
               {p.timeframe && <><span className="pf-sep">/</span><span>{p.timeframe}</span></>}
               {p.status && <><span className="pf-sep">/</span><span>{p.status}</span></>}
             </div>
-            <h3 className="pf-art-title">{p.name}</h3>
+            <div className="pf-titlerow">
+              <h3 className="pf-art-title">{p.name}</h3>
+              <ClaudeTag show={p.builtWithClaude} />
+            </div>
             <p className="pf-art-hook">{p.homepage?.tagline}</p>
             {p.role && <p className="pf-art-role">{p.role}</p>}
             <MetricRow metrics={numberMetrics(p).slice(0, 3)} size="md" />
@@ -298,17 +311,16 @@ function Hackathons({ items, onOpen }) {
         {items.map(p => (
           <article
             key={p.id}
-            className="pf-hcard"
+            className={`pf-hcard${awardStamp(p) ? ' pf-hcard--stamped' : ''}`}
             style={{ '--accent': accentFor(p.id) }}
             onClick={() => onOpen(p.id)}
           >
             <div className="pf-hcard-top">
               <span className="pf-hcard-event">{p.event || 'Hackathon'}</span>
-              {awardStamp(p) && <span className="pf-stamp pf-stamp--sm">{awardStamp(p)}</span>}
             </div>
+            {awardStamp(p) && <span className="pf-stamp pf-stamp--sm">{awardStamp(p)}</span>}
             <h3 className="pf-hcard-title">{p.name}</h3>
             <p className="pf-hcard-hook">{p.homepage?.tagline}</p>
-            <MetricRow metrics={numberMetrics(p).slice(0, 2)} size="sm" />
             {p.tags?.length > 0 && (
               <ul className="pf-chips">
                 {p.tags.slice(0, 3).map(t => <li key={t} className="pf-chip">{t}</li>)}
@@ -403,9 +415,9 @@ function Stack({ skills }) {
   )
 }
 
-/* ───────────────────────── Contact (No.06) ───────────────────────── */
+/* ───────────────────────── Contact (footer) ───────────────────────── */
 
-function Contact({ contact, profile, api }) {
+function Contact({ contact, profile, year }) {
   const links = [
     { label: 'Email', value: profile.email, href: `mailto:${profile.email}`, glyph: '✉' },
     profile.links?.github && { label: 'GitHub', value: short(profile.links.github), href: profile.links.github, glyph: '⌥' },
@@ -414,15 +426,12 @@ function Contact({ contact, profile, api }) {
   ].filter(Boolean)
 
   return (
-    <section className="pf-fade">
-      <p className="pf-eyebrow">No.06 — Contact</p>
+    <footer className="pf-footer">
+      <p className="pf-eyebrow">Get in touch</p>
       <h2 className="pf-contact-title">Let's build something.</h2>
       <div className="pf-contact-grid">
         <div>
           {contact.body.map((line, i) => <p key={i} className="pf-contact-line">{line}</p>)}
-          <button type="button" className="pf-contact-btn" onClick={() => api?.openApp?.('mail')}>
-            ✉ Send a message
-          </button>
         </div>
         <ul className="pf-links">
           {links.map(c => (
@@ -439,13 +448,14 @@ function Contact({ contact, profile, api }) {
           ))}
         </ul>
       </div>
-    </section>
+      <p className="pf-colophon">© {year} {profile.name}</p>
+    </footer>
   )
 }
 
 /* ───────────────────────── Case study (project / hackathon) ───────────────────────── */
 
-function CaseStudy({ entry: p, onBack }) {
+function CaseStudy({ entry: p, onBack, api }) {
   const sections = p.detailContent?.sections || []
   const linkList = [
     p.links?.product && { href: p.links.product, label: 'Visit product →', primary: true },
@@ -458,13 +468,16 @@ function CaseStudy({ entry: p, onBack }) {
 
       <div className="pf-detail-head">
         <span className="pf-art-kicker">{projectKicker(p)}</span>
-        <h2 className="pf-detail-title">{p.name}</h2>
+        <div className="pf-titlerow">
+          <h2 className="pf-detail-title">{p.name}</h2>
+          <ClaudeTag show={p.builtWithClaude} />
+        </div>
         <p className="pf-detail-hook">{p.homepage?.tagline}</p>
       </div>
 
       <div className="pf-detail-grid">
         <div className="pf-story">
-          <ImageGallery images={p.images} name={p.name} />
+          <ImageGallery images={p.images} name={p.name} api={api} />
           <StoryBody role={p.role} sections={sections} />
         </div>
 
@@ -645,10 +658,17 @@ function Fact({ label, value }) {
   )
 }
 
+// "Built with Claude" credit — replaces listing Claude as a human collaborator.
+// Driven by the project's `builtWithClaude` flag in portfolio.json.
+function ClaudeTag({ show }) {
+  if (!show) return null
+  return <span className="pf-claude-tag">✦ Built with Claude</span>
+}
+
 function TeamLine({ collaborators }) {
   const people = collaborators || []
-  if (people.length === 0) return <span className="pf-teamlabel">Solo build</span>
-  const others = people.filter(c => c.name !== 'Shreyas Kumar')
+  const others = people.filter(c => !isSelf(c))
+  if (others.length === 0) return <span className="pf-teamlabel">Solo build</span>
   return (
     <span className="pf-team">
       <span className="pf-avatars">
@@ -656,20 +676,28 @@ function TeamLine({ collaborators }) {
           <span key={c.name} className="pf-avatar" title={c.name}>{initials(c.name)}</span>
         ))}
       </span>
-      {others.length > 0 && (
-        <span className="pf-teamlabel">with {others.map(c => c.name.split(' ')[0]).join(', ')}</span>
-      )}
+      <span className="pf-teamlabel">with {others.map(c => c.name.split(' ')[0]).join(', ')}</span>
     </span>
   )
 }
 
 function CollabList({ people }) {
-  if (!people?.length) return null
+  const all = people || []
+  const others = all.filter(c => !isSelf(c))
+  // Solo build (only the owner, or nobody) — show a label, not a lone avatar.
+  if (others.length === 0) {
+    return (
+      <div className="pf-aside-block">
+        <div className="pf-aside-label">Team</div>
+        <div className="pf-aside-team"><span className="pf-teammember">Solo project</span></div>
+      </div>
+    )
+  }
   return (
     <div className="pf-aside-block">
       <div className="pf-aside-label">Team</div>
       <div className="pf-aside-team">
-        {people.map(c => (
+        {all.map(c => (
           c.github
             ? <a key={c.name} className="pf-teammember" href={c.github} target="_blank" rel="noreferrer">
                 <span className="pf-avatar">{initials(c.name)}</span>{c.name} ↗
@@ -701,12 +729,22 @@ function AsideLinks({ links, posts }) {
   )
 }
 
-function ImageGallery({ images, name }) {
+// Each shot opens in the desktop's Quick Look (the same in-app preview documents
+// use), so visitors read images full-size without leaving the page.
+function ImageGallery({ images, name, api }) {
   if (!images?.length) return null
   return (
     <div className="pf-gallery">
       {images.map((src, i) => (
-        <img key={i} className="pf-gallery-img" src={src} alt={`${name} screenshot ${i + 1}`} loading="lazy" />
+        <button
+          key={i}
+          type="button"
+          className="pf-gallery-img"
+          onClick={() => api?.quickLook?.({ name: `${name} — ${i + 1} of ${images.length}`, src, kind: 'image' })}
+          title="Click to preview"
+        >
+          <img src={src} alt={`${name} screenshot ${i + 1}`} loading="lazy" />
+        </button>
       ))}
     </div>
   )

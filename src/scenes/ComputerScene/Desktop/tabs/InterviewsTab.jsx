@@ -6,8 +6,8 @@ import './InterviewsTab.css'
  * InterviewsTab
  * Editorial "newspaper" rendition of interview reviews, driven by
  * public/portfolio.json (interviews.items). Matches PortfolioApp's warm
- * paper system (Caveat headlines, Source Serif 4 labels + body,
- * espresso ink on cream with a #c8782a orange): a sticky
+ * paper system (Caveat signature name, Arvo slab-serif headlines, Inter
+ * labels + body, espresso ink on cream with a #c8782a orange): a sticky
  * masthead, a four-up stats strip, and expandable company "articles" that open
  * into a two-column read (story + a sticky facts sidebar).
  *
@@ -73,7 +73,7 @@ export default function InterviewsTab() {
           <div className="iv-mast-roleblock">
             <div className="iv-mast-role">Process · Questions · Takeaway</div>
             <p className="iv-mast-tag">
-              Honest accounts of every loop I've been through — what they asked,
+              Honest accounts of every loop I've been through: what they asked,
               how it went, and what I'd do differently.
             </p>
           </div>

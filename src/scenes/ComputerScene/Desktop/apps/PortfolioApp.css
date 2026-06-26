@@ -1,7 +1,7 @@
 /* ===========================================================================
    PortfolioApp — editorial "magazine" rendition of the portfolio.
-   Warm paper system: Caveat headlines, Source Serif 4 labels + body,
-   espresso ink on cream with a #c8782a orange.
+   Warm paper system: Caveat for the signature name only, Arvo slab-serif
+   headlines, Inter labels + body, espresso ink on cream with a #c8782a orange.
    All content comes from public/portfolio.json; this file is presentation only.
    =========================================================================== */
 
@@ -94,7 +94,7 @@
   padding: 12px 0 10px;
 }
 .pf-mast-name {
-  font-family: var(--font-hand);
+  font-family: var(--font-name);
   font-weight: 700;
   font-size: clamp(34px, 6cqi, 56px);
   line-height: 0.82;
@@ -238,7 +238,7 @@
   grid-template-columns: repeat(4, 1fr);
   margin: 6px 0 4px;
 }
-.pf-stat { padding: 22px 20px; border-right: 1px solid rgba(26, 18, 8, 0.16); }
+.pf-stat { padding: 12px 20px; border-right: 1px solid rgba(26, 18, 8, 0.16); }
 .pf-stat:last-child { border-right: none; }
 .pf-stat-n {
   font-family: var(--font-hand);
@@ -283,24 +283,22 @@
   object-fit: cover;
   display: block;
 }
-/* Over a photo, softly blur just the area behind the corner index so it stays
-   legible — no visible box (only applies when an image precedes it). */
-.pf-img-fill ~ .pf-cover-idx,
-.pf-img-fill ~ .pf-art-idx {
-  padding: 0 8px 4px;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+/* When a real image is present, let the box take the image's own aspect ratio
+   instead of a fixed stretched box — so the photo is shown in full, never
+   cropped. The placeholder boxes (no image) keep their fixed min-height + stripes
+   and stay stretched to the text column. */
+.pf-cover:has(.pf-img-fill) { align-items: center; }
+.pf-article:has(.pf-img-fill) { align-items: center; }
+.pf-cover-img:has(.pf-img-fill),
+.pf-art-img:has(.pf-img-fill) {
+  min-height: 0;
+  background-image: none;
 }
-.pf-cover-idx,
-.pf-art-idx {
-  position: absolute;
-  top: 12px; left: 18px;
-  font-family: var(--font-hand);
-  font-weight: 700;
-  font-size: clamp(80px, 13cqi, 128px);
-  line-height: 0.7;
-  color: var(--accent);
-  opacity: 0.85;
+.pf-cover-img:has(.pf-img-fill) .pf-img-fill,
+.pf-art-img:has(.pf-img-fill) .pf-img-fill {
+  position: static;
+  height: auto;
+  object-fit: contain;
 }
 .pf-cover-cap,
 .pf-art-cap {
@@ -449,6 +447,34 @@
   margin-top: auto;
 }
 
+/* Project name + "Built with Claude" credit on one line: title left, pill
+   pushed to the right edge. align-items:center keeps the small pill optically
+   centred against the large script title (project names are short — one line). */
+.pf-titlerow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* "Built with Claude" credit pill — a distinct accent tag, set apart from the
+   neutral tech chips. */
+.pf-claude-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  width: fit-content;
+  font-family: var(--font-typewriter);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--orange);
+  background: rgba(200, 120, 42, 0.10);
+  border: 1px solid rgba(200, 120, 42, 0.35);
+  border-radius: 5px;
+  padding: 4px 10px;
+}
+
 /* award stamp */
 .pf-stamp {
   position: absolute;
@@ -470,15 +496,16 @@
   background: rgba(242, 237, 227, 0.65);
   white-space: pre-line;
 }
-/* Pinned to the card corner (out of flow) so it never inflates the header row
-   and push the title/text down on award cards. */
+/* Pinned to the card's bottom-right corner (out of flow) so it never inflates
+   the header row or collides with the event label, which gets the full width. */
 .pf-stamp--sm {
   position: absolute;
-  top: 20px; right: 20px;
-  width: 60px; height: 60px;
+  top: auto;
+  bottom: 18px; right: 18px;
+  width: 58px; height: 58px;
   font-size: 8px;
   transform: rotate(-8deg);
-  background: transparent;
+  background: rgba(242, 237, 227, 0.72);
 }
 
 /* team / collaborators inline */
@@ -513,6 +540,11 @@
   transition: background 0.15s ease;
 }
 .pf-hcard:hover { background: var(--raised); }
+/* Reserve a bottom-right gutter on award cards so the corner stamp never sits on
+   the chips or location line; the band is only added when a stamp is present. */
+.pf-hcard--stamped .pf-chips,
+.pf-hcard--stamped .pf-hcard-loc { padding-right: 70px; }
+.pf-hcard--stamped { padding-bottom: 26px; }
 .pf-hcard-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; }
 .pf-hcard-event {
   font-family: var(--font-typewriter);
@@ -521,7 +553,6 @@
   text-transform: uppercase;
   color: var(--orange);
   line-height: 1.4;
-  padding-right: 72px;
 }
 .pf-hcard-title {
   font-family: var(--font-hand);
@@ -621,7 +652,35 @@
   margin: 0 0 14px;
 }
 
-/* ===================== CONTACT ===================== */
+/* ===================== CONTACT (footer) ===================== */
+
+/* Closes out every section page as a full-bleed dark-brown band (matching the
+   mobile edition). Negative side margins cancel .pf-content's horizontal
+   padding so the band runs edge to edge; the negative bottom margin cancels its
+   60px bottom padding so it reaches the very bottom of the scroll. */
+.pf-footer {
+  margin: clamp(48px, 7cqi, 88px) calc(-1 * clamp(20px, 4cqi, 52px)) -60px;
+  padding: clamp(38px, 5cqi, 60px) clamp(20px, 4cqi, 52px) clamp(42px, 5cqi, 58px);
+  background: #161009;
+}
+/* Re-tint the (light-theme) contact children for the dark band. */
+.pf-footer .pf-contact-title { color: #f4eee2; }
+.pf-footer .pf-contact-grid { border-top-color: rgba(233, 225, 210, 0.26); }
+.pf-footer .pf-contact-line { color: #cabfa9; }
+.pf-footer .pf-link-row { border-bottom-color: rgba(233, 225, 210, 0.13); }
+.pf-footer .pf-link-glyph { background: rgba(233, 225, 210, 0.1); }
+.pf-footer .pf-link-label { color: #9a8c72; }
+.pf-footer .pf-link-value { color: #ede6d6; }
+
+.pf-colophon {
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(233, 225, 210, 0.13);
+  font-family: var(--font-typewriter);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: #897b63;
+}
 
 .pf-contact-title {
   font-family: var(--font-hand);
@@ -813,7 +872,9 @@ a.pf-ref-name:hover { color: var(--orange); }
 
 /* image gallery (populated once portfolio.json images[] are filled) */
 .pf-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin-bottom: 22px; }
-.pf-gallery-img { width: 100%; border-radius: 8px; border: 1px solid var(--line); display: block; }
+.pf-gallery-img { width: 100%; padding: 0; border-radius: 8px; border: 1px solid var(--line); display: block; overflow: hidden; background: none; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.pf-gallery-img:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(26, 18, 8, 0.18); }
+.pf-gallery-img img { width: 100%; display: block; }
 
 /* ===================== RESPONSIVE (narrow window) ===================== */
 

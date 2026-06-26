@@ -1,0 +1,157 @@
+/* ControlCenter.css — macOS-style Control Center panel */
+
+.control-center {
+  position: absolute;
+  top: 26px;
+  right: 0;
+  width: 300px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 12px;
+  background: rgba(242, 237, 227, 0.9);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid rgba(26, 18, 8, 0.14);
+  border-radius: 16px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.38);
+  color: #1a1208;
+  transform-origin: top right;
+  animation: cc-pop 0.16s ease-out;
+}
+
+@keyframes cc-pop {
+  from { opacity: 0; transform: scale(0.94) translateY(-6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Cards / tiles share a soft frosted look */
+.cc-card,
+.cc-tile {
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid rgba(26, 18, 8, 0.08);
+  border-radius: 12px;
+}
+
+/* ── Connectivity ── */
+.cc-connectivity {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  gap: 2px;
+}
+
+.cc-conn {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  border: none;
+  background: transparent;
+  padding: 7px 8px;
+  border-radius: 9px;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+}
+
+.cc-conn:hover { background: rgba(26, 18, 8, 0.05); }
+
+.cc-conn-icon {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 0.82rem;
+  background: rgba(26, 18, 8, 0.16);
+  color: #f2ede3;
+  transition: background 0.15s ease;
+}
+
+.cc-conn.on .cc-conn-icon { background: #c8782a; }
+
+.cc-conn-text { display: flex; flex-direction: column; line-height: 1.15; }
+.cc-conn-label { font-family: var(--font-typewriter); font-size: 0.78rem; font-weight: 700; }
+.cc-conn-state { font-family: var(--font-typewriter); font-size: 0.66rem; opacity: 0.6; }
+
+/* ── Toggle tiles ── */
+.cc-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 11px 12px;
+  cursor: pointer;
+  text-align: left;
+  color: inherit;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.cc-tile:hover { background: rgba(255, 255, 255, 0.82); }
+
+.cc-tile.on {
+  background: #c8782a;
+  color: #f9f3e9;
+  border-color: transparent;
+}
+
+.cc-tile-icon { font-size: 1rem; line-height: 1; }
+.cc-tile-label { font-family: var(--font-typewriter); font-size: 0.78rem; font-weight: 700; }
+.cc-tile-state { font-family: var(--font-typewriter); font-size: 0.66rem; opacity: 0.65; }
+.cc-tile.on .cc-tile-state { opacity: 0.85; }
+
+.cc-tile--wide {
+  grid-column: 1 / -1;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+.cc-tile--wide .cc-tile-text { display: flex; flex-direction: column; gap: 2px; }
+
+/* ── Sliders ── */
+.cc-slider-card {
+  grid-column: 1 / -1;
+  padding: 10px 12px 12px;
+}
+
+.cc-slider-title {
+  display: block;
+  font-family: var(--font-typewriter);
+  font-size: 0.72rem;
+  font-weight: 700;
+  opacity: 0.7;
+  margin-bottom: 8px;
+}
+
+.cc-slider { display: flex; align-items: center; gap: 10px; }
+.cc-slider-icon { font-size: 0.85rem; width: 16px; text-align: center; opacity: 0.75; }
+
+.cc-slider input[type='range'] {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 22px;
+  border-radius: 11px;
+  background: rgba(26, 18, 8, 0.12);
+  cursor: pointer;
+}
+
+.cc-slider input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid rgba(26, 18, 8, 0.12);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}
+
+.cc-slider input[type='range']::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid rgba(26, 18, 8, 0.12);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+}

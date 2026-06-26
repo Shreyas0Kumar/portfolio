@@ -3,6 +3,7 @@
 .room-scene {
   position: fixed;
   inset: 0;
+  overflow: hidden; /* clip the cropped overflow of the cover-sized scene */
   background: #1a1208; /* letterbox color behind the image */
   transition: opacity 0.4s ease;
 }
@@ -12,15 +13,25 @@
   pointer-events: none;
 }
 
-/* Live Spline 3D scene, stretched to fill the viewport.
+/* Live Spline 3D scene, scaled to COVER the viewport without distortion.
    @splinetool/react-spline renders a wrapper <div> (this class) around a
-   <canvas>. The runtime sets pixel width/height *inline* on the canvas, so we
-   override with !important to make it always fill the wrapper. */
+   <canvas>. The Spline runtime sizes its drawing buffer AND its camera aspect to
+   match this wrapper — so if the wrapper takes the viewport's aspect ratio, the
+   3D scene itself stretches (most visible in F11 fullscreen). To avoid that we
+   pin the wrapper to one fixed aspect ratio (--room-aspect, the scene's native
+   design ratio) and size it to cover the viewport: whichever of the two min-*
+   constraints is larger wins, so the box always fills the screen while the
+   camera renders at a constant, undistorted aspect. The overflow is cropped. */
 .room-spline {
+  --room-aspect: calc(16 / 9); /* scene's native aspect — tweak to match Spline */
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100vw;
+  height: calc(100vw / var(--room-aspect));
+  min-width: calc(100vh * var(--room-aspect));
+  min-height: 100vh;
 }
 
 .room-spline canvas {
@@ -60,7 +71,7 @@
 }
 
 .room-name {
-  font-family: var(--font-hand);
+  font-family: var(--font-name);
   font-size: 1.4rem;
 }
 
@@ -68,4 +79,54 @@
   font-family: var(--font-typewriter);
   font-size: 0.85rem;
   letter-spacing: 0.03em;
+}
+
+/* Idle nudge — bottom-center pill prompting the visitor to click the monitor.
+   pointer-events: none so it never intercepts a click meant for the scene. */
+.room-hint {
+  position: absolute;
+  bottom: 34px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.95rem;
+  border-radius: 999px;
+  background: rgba(26, 18, 8, 0.55);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(242, 237, 227, 0.18);
+  color: rgba(242, 237, 227, 0.9);
+  font-family: var(--font-typewriter);
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  animation: room-hint-in 0.5s ease both;
+}
+
+.room-hint-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(242, 237, 227, 0.9);
+  animation: room-hint-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes room-hint-in {
+  from { opacity: 0; transform: translate(-50%, 8px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+
+@keyframes room-hint-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(0.85); }
+  50%      { opacity: 1;    transform: scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .room-hint { animation: none; }
+  .room-hint-dot { animation: none; }
 }
