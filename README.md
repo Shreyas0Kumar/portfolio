@@ -9,7 +9,8 @@ a little operating system where each app reveals a different part of my work.
 ## What it is
 
 - **A 3D room you boot into.** Desktop visitors arrive in a live Spline 3D scene,
-  click the monitor, and watch it power on into a retro desktop.
+  click the monitor, and watch it power on into a retro desktop. First-time
+  visitors get a skippable guided tour of the desktop's features.
 - **Working apps, not screenshots.** The desktop is a real little OS:
   - **Portfolio** — projects, hackathons, and experience with tap-through case studies
   - **Interviews** — honest write-ups of real interview loops (rounds, questions, takeaways)
@@ -17,6 +18,8 @@ a little operating system where each app reveals a different part of my work.
   - **Mail** — a contact form that actually sends, in-app, straight to my inbox
   - **Finder** — Documents (résumé, certificates) served live from Google Drive with
     in-app Quick Look
+  - **Photo Booth / Calculator** — the little utilities, faithfully recreated:
+    a live-camera booth with effects and a working macOS calculator
 - **A mobile edition that stands on its own.** Phones and touch screens get a
   "printed magazine" portfolio — a sectioned reader (Overview, Work, Hackathons,
   Experience, Stack, Interviews, Contact) with tap-through detail pages — rather

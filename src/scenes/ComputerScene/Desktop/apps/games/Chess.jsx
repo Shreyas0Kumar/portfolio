@@ -80,9 +80,9 @@ export default function Chess() {
 
   const turnLabel = state.turn === 'w' ? 'White' : 'Black'
   let banner
-  if (status === 'checkmate') banner = `Checkmate — ${state.turn === 'w' ? 'Black' : 'White'} wins`
-  else if (status === 'stalemate') banner = 'Stalemate — draw'
-  else if (status === 'check') banner = `${turnLabel} to move — check!`
+  if (status === 'checkmate') banner = `Checkmate. ${state.turn === 'w' ? 'Black' : 'White'} wins`
+  else if (status === 'stalemate') banner = 'Stalemate. It’s a draw'
+  else if (status === 'check') banner = `${turnLabel} to move, check!`
   else banner = `${turnLabel} to move`
 
   return (

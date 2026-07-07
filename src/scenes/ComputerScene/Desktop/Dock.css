@@ -63,6 +63,10 @@
   transform-origin: bottom center;
 }
 
+/* SVG badges (Calculator, Glassdoor) sit on the text baseline when inline,
+   which drops them below true centre — block display lets flex centre them. */
+.dock-icon svg { display: block; }
+
 /* Custom developer badge for the Portfolio app */
 .dock-icon.icon-dev {
   background: linear-gradient(155deg, #46402f 0%, #1a1208 100%);
@@ -99,6 +103,12 @@
   color: #e8a55a;
   font-size: 26px;
   border-color: rgba(232, 165, 90, 0.32);
+}
+
+/* Calculator badge — readout + key dots on near-black, like the real tile */
+.dock-icon.icon-calc {
+  background: linear-gradient(155deg, #3a3a3e 0%, #1c1c1e 100%);
+  border-color: rgba(255, 159, 10, 0.35);
 }
 
 /* Glassdoor badge — white door on Glassdoor green */

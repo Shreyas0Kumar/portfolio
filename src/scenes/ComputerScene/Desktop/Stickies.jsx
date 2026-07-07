@@ -12,7 +12,7 @@ const KEY = 'shreyas-sticky-v1'
 
 export default function Stickies() {
   const { profile } = usePortfolio()
-  const fallback = `Currently —\n\n• ${profile.role}\n${profile.openToRelocate ? '• open to roles (will relocate)\n' : ''}• building things that ship\n\n(this note is editable!)`
+  const fallback = `Currently:\n\n• ${profile.role}\n${profile.openToRelocate ? '• open to roles (will relocate)\n' : ''}• building things that ship\n\n(this note is editable!)`
 
   const [text, setText] = useState(() => {
     try { return localStorage.getItem(KEY) ?? fallback } catch { return fallback }

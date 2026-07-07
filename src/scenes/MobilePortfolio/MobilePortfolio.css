@@ -339,7 +339,9 @@
 /* Pinned to the card corner (out of flow) so it never inflates the header row
    and push the title/text down on award cards. */
 .mag-stamp--sm { position: absolute; top: 16px; right: 0; width: 56px; height: 56px; font-size: 8px; line-height: 1.25; letter-spacing: 0.04em; transform: rotate(-8deg); background: transparent; }
-.mag-stamp--aside { width: 84px; height: 84px; margin: 0 auto 18px; font-size: 11px; line-height: 1.25; background: transparent; }
+/* Floated into the top-right corner so the fact rows flow up alongside/under it
+   instead of being pushed down by a centered, full-height stamp row. */
+.mag-stamp--aside { float: right; margin: 2px 0 8px 16px; width: 74px; height: 74px; font-size: 10px; line-height: 1.25; background: transparent; }
 
 /* ── Hackathon cards ── */
 .mag-hack { cursor: pointer; position: relative; padding: 22px 0 20px; border-top: 1px solid var(--line); }
@@ -476,7 +478,9 @@
 .mag-gallery { display: flex; flex-direction: column; gap: 10px; margin: 4px 0 8px; }
 .mag-gallery-img { width: 100%; border-radius: 8px; border: 1px solid var(--line); display: block; }
 
-.mag-aside { margin-top: 26px; background: var(--raised); border: 1px solid rgba(26, 18, 8, 0.16); border-radius: 12px; padding: 22px; }
+/* flow-root contains the floated corner stamp so it can't spill past the card
+   edge when the fact list is shorter than the stamp. */
+.mag-aside { display: flow-root; margin-top: 26px; background: var(--raised); border: 1px solid rgba(26, 18, 8, 0.16); border-radius: 12px; padding: 22px; }
 .mag-aside-row { margin-bottom: 14px; }
 .mag-aside-l { font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
 .mag-aside-v { font-size: 15.5px; color: var(--ink); margin-top: 2px; }

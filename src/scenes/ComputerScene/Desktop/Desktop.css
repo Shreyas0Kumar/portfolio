@@ -34,6 +34,18 @@
   user-select: none;
 }
 
+/* While the tour runs, float the icons above any open window (the tour's
+   spotlight step points at them) on a dark chip so the labels stay readable
+   whatever sits underneath. */
+.macos-desktop.touring .desktop-icons {
+  z-index: 12;
+  background: rgba(26, 18, 8, 0.62);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 14px;
+  padding: 8px;
+}
+
 .desktop-icon {
   display: flex;
   flex-direction: column;
@@ -66,18 +78,6 @@
   color: #f2ede3;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
   text-align: center;
-}
-
-.desktop-hint {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: var(--font-typewriter);
-  font-size: 0.85rem;
-  color: rgba(242, 237, 227, 0.45);
-  letter-spacing: 0.05em;
-  user-select: none;
 }
 
 /* Transparent catcher that closes the Apple menu on outside click */

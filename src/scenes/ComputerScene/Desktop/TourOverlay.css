@@ -1,0 +1,148 @@
+/* TourOverlay.css — first-visit guided tour. Warm paper card + amber accent to
+   match the desktop chrome (apple menu / spotlight), soft spotlight cutout. */
+
+.tour {
+  position: absolute;
+  inset: 0;
+  z-index: 60; /* above every desktop layer (quicklook is 45) */
+}
+
+/* Plain dim for the centered welcome/finish steps */
+.tour-wash {
+  position: absolute;
+  inset: 0;
+  background: rgba(13, 10, 5, 0.6);
+  animation: tour-fade 0.35s ease;
+}
+
+/* Spotlight cutout: the hole itself stays transparent; its enormous box-shadow
+   is what dims the rest of the screen. */
+.tour-hole {
+  position: absolute;
+  border-radius: 18px;
+  box-shadow:
+    0 0 0 2px rgba(242, 237, 227, 0.85),
+    0 0 24px 4px rgba(200, 120, 42, 0.45),
+    0 0 0 9999px rgba(13, 10, 5, 0.6);
+  transition: left 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              top 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              width 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+              height 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+@keyframes tour-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Card ── */
+.tour-card {
+  position: absolute;
+  /* width comes from CARD_W in TourOverlay.jsx so JS clamping stays in sync */
+  padding: 18px 20px 14px;
+  background: rgba(242, 237, 227, 0.97);
+  border: 1px solid rgba(26, 18, 8, 0.15);
+  border-radius: 12px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  color: #1a1208;
+  animation: tour-card-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes tour-card-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Centered steps carry a translate transform inline — keep their entrance to a
+   plain fade so the animation doesn't fight it. */
+.tour-card.centered { animation-name: tour-fade; }
+
+.tour-kicker {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-typewriter);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #c8782a;
+  margin-bottom: 8px;
+}
+
+.tour-count { color: rgba(26, 18, 8, 0.45); letter-spacing: 0.08em; }
+
+.tour-title {
+  font-family: var(--font-heading);
+  font-size: 1.18rem;
+  margin: 0 0 6px;
+}
+
+.tour-body {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: #3d3222;
+  margin: 0 0 14px;
+}
+
+/* ── Footer: skip · dots · nav ── */
+.tour-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px solid rgba(26, 18, 8, 0.12);
+  padding-top: 10px;
+}
+
+.tour-skip {
+  border: none;
+  background: transparent;
+  font-family: var(--font-typewriter);
+  font-size: 0.7rem;
+  color: rgba(26, 18, 8, 0.5);
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.tour-skip:hover { color: #c8782a; }
+
+.tour-dots {
+  display: flex;
+  gap: 5px;
+  margin: 0 auto;
+}
+
+.tour-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: rgba(26, 18, 8, 0.2);
+  transition: background 0.2s ease;
+}
+
+.tour-dot.on { background: #c8782a; }
+
+.tour-nav { display: flex; gap: 6px; }
+
+.tour-btn {
+  border: none;
+  border-radius: 7px;
+  padding: 6px 14px;
+  background: #c8782a;
+  color: #f2ede3;
+  font-family: var(--font-typewriter);
+  font-size: 0.74rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.tour-btn:hover { background: #b06a24; }
+
+.tour-btn.ghost {
+  background: transparent;
+  color: rgba(26, 18, 8, 0.6);
+}
+
+.tour-btn.ghost:hover { color: #1a1208; background: rgba(26, 18, 8, 0.08); }

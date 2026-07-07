@@ -13,7 +13,7 @@ const SEED = [
     id: 'welcome',
     title: 'Welcome 👋',
     date: 'Today',
-    body: `Hey — thanks for clicking around.
+    body: `Hey, thanks for clicking around.
 
 This whole desktop is a little playground. Open the Portfolio app to see what I've built, check Finder for my resume, or hit Safari for links.
 
@@ -23,7 +23,7 @@ Made with too much coffee.`,
     id: 'what',
     title: 'What I do',
     date: 'Pinned',
-    body: `I build AI systems end-to-end — data + retrieval pipelines, backends, and the interfaces people actually use.
+    body: `I build AI systems end-to-end: data + retrieval pipelines, backends, and the interfaces people actually use.
 
 I like problems where the modeling is only half the work and the other half is making it real.`,
   },

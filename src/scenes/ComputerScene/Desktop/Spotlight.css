@@ -2,7 +2,9 @@
 
 .spotlight-layer {
   position: absolute;
-  inset: 0;
+  /* Starts below the menu bar so its buttons stay clickable — in particular
+     the magnifier can actually toggle Spotlight closed. */
+  inset: 28px 0 0 0;
   z-index: 55;
   display: flex;
   align-items: flex-start;

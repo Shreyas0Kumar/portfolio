@@ -26,7 +26,7 @@ function runCommand(raw, api, data) {
         '  whoami        who is this',
         '  ls            list sections',
         '  projects      list projects',
-        '  open <app>    open an app (portfolio, glassdoor, finder, safari, notes, mail)',
+        '  open <app>    open an app (portfolio, glassdoor, finder, safari, notes, mail, …)',
         '  about         open About Me',
         '  resume        open resume',
         '  contact       how to reach me',
@@ -34,7 +34,7 @@ function runCommand(raw, api, data) {
         '  clear         clear the screen',
       ].join('\n')
     case 'whoami':
-      return `${profile.name} — ${profile.role}. ${profile.tagline}`
+      return `${profile.name} · ${profile.role}. ${profile.tagline}`
     case 'ls':
       return 'projects   hackathons   experience   glassdoor   resume   contact'
     case 'projects':
@@ -43,7 +43,8 @@ function runCommand(raw, api, data) {
         .join('\n')
     case 'open': {
       const target = (args[0] || '').toLowerCase()
-      const known = ['portfolio', 'glassdoor', 'finder', 'safari', 'notes', 'mail']
+      // The registry travels in via api so this list can't drift from Desktop.
+      const known = api?.appIds || ['portfolio', 'glassdoor', 'finder', 'safari', 'notes', 'mail']
       if (known.includes(target)) { api?.openApp?.(target); return `Opening ${target}…` }
       return `open: unknown app "${args[0] || ''}". try: ${known.join(', ')}`
     }

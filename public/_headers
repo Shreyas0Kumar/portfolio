@@ -1,0 +1,8 @@
+# Cloudflare Pages security headers (copied into dist/ by the Vite build).
+# Camera is allowed same-origin for the Photo Booth app; everything else that
+# the site never uses is switched off.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(self), microphone=(), geolocation=(), payment=()

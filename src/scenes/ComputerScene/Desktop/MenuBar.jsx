@@ -2,6 +2,14 @@ import React, { useState, useEffect } from 'react'
 import './MenuBar.css'
 import ControlCenter from './ControlCenter.jsx'
 
+// The Spotlight magnifier, drawn to match the Control Center glyph's weight.
+const SPOTLIGHT_ICON = (
+  <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true">
+    <circle cx="10.5" cy="10.5" r="6.2" fill="none" stroke="currentColor" strokeWidth="1.8" />
+    <line x1="15.2" y1="15.2" x2="20.2" y2="20.2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+  </svg>
+)
+
 // Two stacked toggle pills — the macOS Control Center glyph.
 const CONTROL_CENTER_ICON = (
   <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
@@ -43,6 +51,8 @@ export default function MenuBar({
   onToggleApple,
   onAbout,
   onShutDown,
+  spotlightOpen,
+  onToggleSpotlight,
   ccOpen,
   onToggleCC,
   controlCenter,
@@ -84,6 +94,16 @@ export default function MenuBar({
       <div className="menu-right">
         <span className="menu-extra" title="Battery">🔋</span>
         <span className="menu-extra" title="Wi-Fi">{controlCenter.wifi ? '📶' : '🚫'}</span>
+        <button
+          type="button"
+          className={`menu-extra menu-cc${spotlightOpen ? ' active' : ''}`}
+          onClick={onToggleSpotlight}
+          data-tour="spotlight"
+          aria-label="Spotlight (⌘ Space)"
+          title="Spotlight (⌘ Space)"
+        >
+          {SPOTLIGHT_ICON}
+        </button>
         <div className="menu-cc-wrap">
           <button
             type="button"

@@ -173,7 +173,7 @@ function DriveView({ api }) {
         <iframe
           className="finder-drive-frame"
           src={driveEmbedUrl('grid')}
-          title="Documents — Google Drive"
+          title="Documents · Google Drive"
           loading="lazy"
         />
         <a className="finder-drive-open" href={driveFolderUrl()} target="_blank" rel="noreferrer">

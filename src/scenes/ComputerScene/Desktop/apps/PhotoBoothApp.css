@@ -1,0 +1,219 @@
+/* PhotoBoothApp.css — dark "photo studio" chrome around a mirrored live
+   preview, macOS-style red shutter, effect chips, and a bottom photo strip. */
+
+.booth {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: #1c1c1e;
+  color: #f2ede3;
+}
+
+/* ── Stage ── */
+.booth-stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background: #000;
+  overflow: hidden;
+}
+
+.booth-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1); /* mirror, like every real camera preview */
+}
+
+.booth-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  padding: 24px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: rgba(242, 237, 227, 0.75);
+}
+
+.booth-empty-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f2ede3;
+}
+
+.booth-retry {
+  margin-top: 10px;
+  padding: 7px 18px;
+  border: 1px solid rgba(242, 237, 227, 0.35);
+  border-radius: 999px;
+  background: transparent;
+  color: #f2ede3;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.booth-retry:hover { background: rgba(242, 237, 227, 0.12); }
+
+/* Big center countdown numeral, one pop per second */
+.booth-count {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 120px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+  animation: booth-pop 0.8s ease-out;
+  pointer-events: none;
+}
+
+@keyframes booth-pop {
+  from { transform: scale(1.6); opacity: 0; }
+  25%  { transform: scale(1);   opacity: 1; }
+  to   { transform: scale(0.95); opacity: 0.85; }
+}
+
+.booth-flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.booth-flash.on { animation: booth-flash 0.42s ease-out; }
+
+@keyframes booth-flash {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+/* ── Controls row ── */
+.booth-controls {
+  flex: 0 0 auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 16px;
+  background: linear-gradient(180deg, #2c2c2e, #1c1c1e);
+  border-top: 1px solid rgba(242, 237, 227, 0.08);
+}
+
+.booth-effects {
+  position: absolute;
+  left: 14px;
+  right: 110px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.booth-fx {
+  border: 1px solid rgba(242, 237, 227, 0.18);
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(242, 237, 227, 0.8);
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  padding: 4px 10px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.booth-fx:hover { background: rgba(242, 237, 227, 0.1); }
+
+.booth-fx.active {
+  background: #c8782a;
+  border-color: #c8782a;
+  color: #fff;
+}
+
+/* Red shutter — the Photo Booth signature */
+.booth-shutter {
+  width: 58px;
+  height: 58px;
+  margin-left: auto;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.85);
+  background: radial-gradient(circle at 35% 30%, #ff6b5e, #d92a1f 70%);
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+  transition: transform 0.1s ease, filter 0.1s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Block display kills the baseline offset inline SVGs get, so the glyph sits
+   dead-center in the circle. */
+.booth-shutter svg { display: block; }
+
+.booth-shutter:hover:not(:disabled)  { filter: brightness(1.1); }
+.booth-shutter:active:not(:disabled) { transform: scale(0.93); }
+.booth-shutter:disabled { filter: grayscale(0.7) brightness(0.7); cursor: default; }
+
+/* ── Photo strip ── */
+.booth-strip {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 10px;
+  padding: 10px 14px;
+  overflow-x: auto;
+  background: #141414;
+  border-top: 1px solid rgba(242, 237, 227, 0.08);
+}
+
+.booth-shot {
+  position: relative;
+  flex: 0 0 auto;
+  margin: 0;
+}
+
+.booth-shot img {
+  height: 74px;
+  border-radius: 6px;
+  border: 2px solid rgba(242, 237, 227, 0.15);
+  display: block;
+}
+
+.booth-shot-tools {
+  position: absolute;
+  inset: auto 4px 4px auto;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.booth-shot:hover .booth-shot-tools { opacity: 1; }
+
+.booth-shot-tools a,
+.booth-shot-tools button {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  font-size: 11px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.booth-shot-tools a:hover,
+.booth-shot-tools button:hover { background: #c8782a; }

@@ -80,7 +80,7 @@ export async function resolveResume() {
     const match = files.find(f => /r[ée]sum[eé]/i.test(f.name))
     if (!match) return null
     _resume = {
-      name: 'Shreyas Kumar — Résumé',
+      name: 'Shreyas Kumar · Résumé',
       src: drivePreviewUrl(match.id),
       openHref: driveFileViewUrl(match.id),
     }

@@ -259,12 +259,15 @@ export default function SafariApp() {
           </>
         ) : (
           <>
+            {/* No allow-top-navigation in the sandbox: a framed site can't
+                hijack the whole portfolio tab; popups it opens still work. */}
             <iframe
               key={currentUrl}
               className="safari-frame"
               src={currentUrl}
               title="browser"
               referrerPolicy="no-referrer"
+              sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-modals allow-downloads"
             />
             <a
               className="safari-openreal"

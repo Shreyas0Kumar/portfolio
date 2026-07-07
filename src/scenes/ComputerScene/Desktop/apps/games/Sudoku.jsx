@@ -85,7 +85,7 @@ export default function Sudoku() {
     <div className="game-sudoku">
       <div className="sdk-bar">
         <span className={`sdk-status${solved ? ' win' : ''}`}>
-          {solved ? '✓ Solved — nice!' : 'Fill every row, column & box with 1–9'}
+          {solved ? '✓ Solved, nice!' : 'Fill every row, column & box with 1–9'}
         </span>
         <div className="sdk-actions">
           <div className="sdk-diffs">

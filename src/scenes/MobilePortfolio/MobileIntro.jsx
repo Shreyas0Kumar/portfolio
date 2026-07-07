@@ -40,7 +40,7 @@ export default function MobileIntro({ onContinue }) {
         {/* ── Masthead / folio ── */}
         <header className="mintro-masthead">
           <div className="mintro-folio">
-            <span>The Portfolio &nbsp;·&nbsp; No.01 &nbsp;·&nbsp; {new Date().getFullYear()}</span>
+            <span>The Portfolio &nbsp;·&nbsp; {new Date().getFullYear()}</span>
             <span className="mintro-status"><i className="mintro-dot" />Open to work</span>
           </div>
           <div className="mintro-title-block">
@@ -98,7 +98,7 @@ export default function MobileIntro({ onContinue }) {
           </div>
 
           <p className="mintro-note">
-            A scrollable version works fine — you won&apos;t miss the gist.
+            A scrollable version works fine. You won&apos;t miss the gist.
           </p>
         </div>
       </div>

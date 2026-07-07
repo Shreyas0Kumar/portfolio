@@ -321,7 +321,7 @@ function Overview({ data, projects, hacks, onOpen, onWork }) {
 
   return (
     <section className="mag-section">
-      <p className="mag-eyebrow">No.01 — Overview</p>
+      <p className="mag-eyebrow">No.01 · Overview</p>
       <h2 className="mag-display">{intro.heading}</h2>
       <div className="mag-lede">
         {(intro.body || []).map((line, i) => <p key={i} className="mag-lede-line">{line}</p>)}
@@ -383,7 +383,7 @@ function Overview({ data, projects, hacks, onOpen, onWork }) {
 function Work({ projects, onOpen }) {
   return (
     <section className="mag-section">
-      <p className="mag-eyebrow">No.02 — Work</p>
+      <p className="mag-eyebrow">No.02 · Work</p>
       <h2 className="mag-display mag-display--ruled">Designed, built &amp; shipped.</h2>
       {projects.map((p, i) => (
         <article key={p.id} className="mag-work">
@@ -418,7 +418,7 @@ function Work({ projects, onOpen }) {
 function Hacks({ hacks, onOpen }) {
   return (
     <section className="mag-section">
-      <p className="mag-eyebrow">No.03 — Hackathons &amp; Competitions</p>
+      <p className="mag-eyebrow">No.03 · Hackathons &amp; Competitions</p>
       <h2 className="mag-display mag-display--ruled">Built under pressure, shipped on the clock.</h2>
       {hacks.map(p => (
         <article key={p.id} className="mag-hack" onClick={() => onOpen('project', p.id)}>
@@ -444,7 +444,7 @@ function Experience({ data, onOpen }) {
   const education = data.education || []
   return (
     <section className="mag-section">
-      <p className="mag-eyebrow">No.04 — Experience</p>
+      <p className="mag-eyebrow">No.04 · Experience</p>
       <h2 className="mag-display mag-display--ruled">Where I've put the work in.</h2>
       {jobs.map(e => {
         const meta = [
@@ -497,7 +497,7 @@ function Stack({ skills }) {
   ]
   return (
     <section className="mag-section">
-      <p className="mag-eyebrow">No.05 — Stack</p>
+      <p className="mag-eyebrow">No.05 · Stack</p>
       <h2 className="mag-display mag-display--ruled">The tools I reach for.</h2>
       {keys.map(k => (
         <div key={k} className="mag-stackgroup">
@@ -516,7 +516,7 @@ function Stack({ skills }) {
 function Interviews({ interviews, openIv, onToggle }) {
   const items = [...(interviews.items || [])].sort(byOrder)
   const rated = items.filter(i => typeof i.rating === 'number')
-  const avg = rated.length ? (rated.reduce((s, i) => s + i.rating, 0) / rated.length).toFixed(1) : '—'
+  const avg = rated.length ? (rated.reduce((s, i) => s + i.rating, 0) / rated.length).toFixed(1) : '–'
   const stats = [
     { n: String(items.length), l: 'Total interviews' },
     { n: avg + '★', l: 'Avg experience' },
@@ -526,7 +526,7 @@ function Interviews({ interviews, openIv, onToggle }) {
 
   return (
     <section className="mag-section">
-      <p className="mag-eyebrow">No.06 — Interview Reviews</p>
+      <p className="mag-eyebrow">No.06 · Interview Reviews</p>
       <div className="mag-stats mag-stats--tight">
         {stats.map((st, i) => (
           <div key={i} className="mag-stat">
@@ -537,7 +537,7 @@ function Interviews({ interviews, openIv, onToggle }) {
       </div>
       <h2 className="mag-display mag-display--ruled">Every loop, told honestly.</h2>
       <p className="mag-note-block">
-        Honest accounts of every interview I've been through — what they asked, how it went,
+        Honest accounts of every interview I've been through: what they asked, how it went,
         and what I'd do differently. Tap one to read the whole story.
       </p>
       {items.map(iv => (
@@ -560,7 +560,7 @@ function InterviewCard({ iv, open, onToggle }) {
         </div>
         <div className="mag-iv-lock">
           <span className="mag-iv-lockglyph">🔒</span>
-          <span>Still in process — I'll write this one up once it wraps.</span>
+          <span>Still in process. I'll write this one up once it wraps.</span>
         </div>
         {iv.outcome && (
           <span className="mag-pill" style={{ position: 'absolute', top: 14, right: 16, background: outBg, color: outFg }}>
@@ -676,10 +676,8 @@ function Contact({ data }) {
 
   return (
     <footer className="mag-footer">
-      {/* <p className="mag-eyebrow">No.07 — Contact</p> */}
       <h2 className="mag-display mag-display--ruled mag-display--xl">{contact.heading || "Let's build something."}</h2>
       {(contact.body || []).map((line, i) => <p key={i} className="mag-contact-line">{line}</p>)}
-      {/* <a className="mag-sendbtn" href={`mailto:${pr.email}`}>✉ &nbsp;Send a message</a> */}
       <ul className="mag-contacts">
         {links.map(c => (
           <li key={c.label}>

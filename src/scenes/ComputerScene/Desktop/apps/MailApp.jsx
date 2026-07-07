@@ -44,7 +44,7 @@ export default function MailApp() {
           _subject: subject
             ? `Portfolio · ${subject}`
             : 'New message from your portfolio',
-          message: `${body}\n\n— Sent from the portfolio Mail app by ${from}`,
+          message: `${body}\n\nSent from the portfolio Mail app by ${from}`,
           _gotcha: trap, // empty for real people; lets Formspree drop bots server-side too
         }),
       })
@@ -113,10 +113,10 @@ export default function MailApp() {
           aria-hidden="true"
         />
 
-        {status === 'sent'  && <p className="mail-status ok">Thanks — your message is on its way ✓</p>}
+        {status === 'sent'  && <p className="mail-status ok">Thanks, your message is on its way ✓</p>}
         {status === 'error' && (
           <p className="mail-status err">
-            Couldn’t send right now — email me directly at{' '}
+            Couldn’t send right now. Email me directly at{' '}
             <a href={`mailto:${MAIL_TO}`}>{MAIL_TO}</a>.
           </p>
         )}

@@ -42,7 +42,7 @@ export default function InterviewsTab() {
     const rated = items.filter(i => typeof i.rating === 'number')
     const avg = rated.length
       ? (rated.reduce((s, i) => s + i.rating, 0) / rated.length).toFixed(1)
-      : '—'
+      : '–'
     const offers = items.filter(i => i.outcome === 'Offer').length
     const inProcess = items.filter(i => i.ongoing || i.outcome === 'In process').length
     return { total, avg, offers, inProcess }
@@ -82,7 +82,7 @@ export default function InterviewsTab() {
 
       {/* ===== CONTENT ===== */}
       <div className="iv-content">
-        <p className="iv-eyebrow">No.01 — Reviews</p>
+        <p className="iv-eyebrow">No.01 · Reviews</p>
 
         {/* Stats strip */}
         <div className="iv-stats">
@@ -228,7 +228,7 @@ function Card({ iv, open, onToggle }) {
               <div className="iv-fact iv-fact--rating">
                 <div className="iv-aside-label">Experience rating</div>
                 <div className="iv-rating-big">
-                  {typeof iv.rating === 'number' ? `${iv.rating}★` : '—'}
+                  {typeof iv.rating === 'number' ? `${iv.rating}★` : '–'}
                 </div>
               </div>
             </aside>
@@ -263,7 +263,7 @@ function LockedCard({ iv }) {
         </div>
         <div className="iv-lockoverlay">
           <span className="iv-lock">🔒</span>
-          <span className="iv-locktext">Still in process — I'll write this one up once it wraps.</span>
+          <span className="iv-locktext">Still in process. I'll write this one up once it wraps.</span>
         </div>
         {iv.outcome && (
           <span className={`iv-badge outcome ${outcomeClass(iv.outcome)} iv-locked-badge`}>

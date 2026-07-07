@@ -181,7 +181,7 @@ export default function PortfolioApp({ api }) {
 function Overview({ intro, stats, cover, teasers, onOpen, onSeeAll }) {
   return (
     <section className="pf-fade">
-      <p className="pf-eyebrow">No.01 — Overview</p>
+      <p className="pf-eyebrow">No.01 · Overview</p>
 
       <div className="pf-ov-grid">
         <h2 className="pf-ov-head">{intro.heading}</h2>
@@ -258,7 +258,7 @@ function Overview({ intro, stats, cover, teasers, onOpen, onSeeAll }) {
 function Work({ items, onOpen }) {
   return (
     <section className="pf-fade">
-      <p className="pf-eyebrow">No.02 — Work</p>
+      <p className="pf-eyebrow">No.02 · Work</p>
       <h2 className="pf-sectitle">Designed, built, and shipped.</h2>
       {items.map((p, i) => (
         <article key={p.id} className={`pf-article${i % 2 ? ' reverse' : ''}`} style={{ '--accent': accentFor(p.id) }}>
@@ -305,7 +305,7 @@ function Work({ items, onOpen }) {
 function Hackathons({ items, onOpen }) {
   return (
     <section className="pf-fade">
-      <p className="pf-eyebrow">No.03 — Hackathons & Competitions</p>
+      <p className="pf-eyebrow">No.03 · Hackathons & Competitions</p>
       <h2 className="pf-sectitle">Built under pressure, shipped on the clock.</h2>
       <div className="pf-hgrid">
         {items.map(p => (
@@ -347,7 +347,7 @@ function expMeta(e) {
 function Experience({ items, education, onOpen }) {
   return (
     <section className="pf-fade">
-      <p className="pf-eyebrow">No.04 — Experience</p>
+      <p className="pf-eyebrow">No.04 · Experience</p>
       <h2 className="pf-sectitle">Where I've put the work in.</h2>
       {items.map(e => (
         <article key={e.id} className="pf-job" onClick={() => onOpen(e.id)}>
@@ -399,7 +399,7 @@ function Stack({ skills }) {
   ]
   return (
     <section className="pf-fade">
-      <p className="pf-eyebrow">No.05 — Stack</p>
+      <p className="pf-eyebrow">No.05 · Stack</p>
       <h2 className="pf-sectitle">The tools I reach for.</h2>
       <div className="pf-stackgrid">
         {keys.map(k => (
@@ -571,7 +571,7 @@ function ExperienceDetail({ entry: e, onBack }) {
                 {e.team.map(m => (
                   <span key={m.name} className="pf-teammember">
                     <span className="pf-avatar">{initials(m.name)}</span>
-                    {m.name}{m.role ? ` — ${m.role}` : ''}
+                    {m.name}{m.role ? ` · ${m.role}` : ''}
                   </span>
                 ))}
               </div>
@@ -740,7 +740,7 @@ function ImageGallery({ images, name, api }) {
           key={i}
           type="button"
           className="pf-gallery-img"
-          onClick={() => api?.quickLook?.({ name: `${name} — ${i + 1} of ${images.length}`, src, kind: 'image' })}
+          onClick={() => api?.quickLook?.({ name: `${name} · ${i + 1} of ${images.length}`, src, kind: 'image' })}
           title="Click to preview"
         >
           <img src={src} alt={`${name} screenshot ${i + 1}`} loading="lazy" />

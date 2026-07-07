@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useRef, lazy, Suspense } from 'react'
+import ErrorBoundary from './ErrorBoundary.jsx'
 import IntroScreen from './scenes/IntroScreen/IntroScreen.jsx'
 import { primeAudio, warmupAudio } from './scenes/ComputerScene/Desktop/sound.js'
 
@@ -90,9 +91,11 @@ export default function App() {
 
   if (isMobile) {
     return (
-      <Suspense fallback={null}>
-        <MobilePortfolio />
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={null}>
+          <MobilePortfolio />
+        </Suspense>
+      </ErrorBoundary>
     )
   }
 
@@ -100,22 +103,24 @@ export default function App() {
     <>
       {/* Only the heavy, code-split scenes suspend; the intro + fade below stay
           mounted on top so the screen is never blank while a chunk streams in. */}
-      <Suspense fallback={null}>
-        {/* Room is always mounted so the scene doesn't re-render on exit */}
-        <RoomScene
-          visible={scene === 'room'}
-          introDone={!showIntro}
-          onEnterComputer={handleEnterComputer}
-        />
-
-        {(scene === 'loading' || scene === 'desktop') && (
-          <ComputerScene
-            phase={scene}
-            onLoadDone={handleLoadDone}
-            onExit={handleExitComputer}
+      <ErrorBoundary>
+        <Suspense fallback={null}>
+          {/* Room is always mounted so the scene doesn't re-render on exit */}
+          <RoomScene
+            visible={scene === 'room'}
+            introDone={!showIntro}
+            onEnterComputer={handleEnterComputer}
           />
-        )}
-      </Suspense>
+
+          {(scene === 'loading' || scene === 'desktop') && (
+            <ComputerScene
+              phase={scene}
+              onLoadDone={handleLoadDone}
+              onExit={handleExitComputer}
+            />
+          )}
+        </Suspense>
+      </ErrorBoundary>
 
       {/* Fade-to-black bridging the Spline zoom and the XP boot. Always mounted
           so the opacity transition actually plays; inert (transparent, no hit
