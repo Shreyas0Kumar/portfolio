@@ -907,3 +907,12 @@ a.pf-ref-name:hover { color: var(--orange); }
   .pf-fade { animation: none; }
   .pf-status-dot { animation: none; }
 }
+
+/* ── Montserrat display tuning — see MobilePortfolio.css for rationale ── */
+.pf-sectitle, .pf-ov-head, .pf-cover-title, .pf-teaser-title, .pf-art-title,
+.pf-hcard-title, .pf-job-company, .pf-edu-school, .pf-contact-title,
+.pf-detail-title, .pf-dropcap {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.pf-stat-n, .pf-metric-n { font-weight: 800; }

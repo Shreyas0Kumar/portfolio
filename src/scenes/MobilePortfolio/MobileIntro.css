@@ -209,3 +209,9 @@
   .mintro-cover { animation: none; }
   .mintro-dot { animation: none; }
 }
+
+/* ── Montserrat display tuning — see MobilePortfolio.css for rationale ── */
+.mintro-display, .mintro-cover-title, .mintro-cover-num {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}

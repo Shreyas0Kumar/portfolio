@@ -434,3 +434,9 @@
   .iv-content, .iv-detail { animation: none; }
   .iv-status-dot { animation: none; }
 }
+
+/* ── Montserrat display tuning — see MobilePortfolio.css for rationale ── */
+.iv-mast-name, .iv-sectitle, .iv-company, .iv-rating-big, .iv-stat-n {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}

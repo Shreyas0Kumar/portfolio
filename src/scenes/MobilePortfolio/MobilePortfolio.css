@@ -500,3 +500,16 @@
 .mag-aside-actions { display: flex; flex-direction: column; gap: 8px; }
 .mag-aside-btn { text-decoration: none; font-family: var(--font-typewriter); font-size: 12px; text-align: center; color: var(--ink); border: 1.5px solid var(--ink); border-radius: 8px; padding: 10px 14px; }
 .mag-aside-btn--ghost { color: var(--muted); border: 1.5px dashed var(--line2); }
+
+/* ── Montserrat display tuning ──
+   Geometric grotesques set wide and a little soft at 700; pull the big
+   display type to 800 with a touch of negative tracking so headlines keep
+   the poster authority the slab had. Delete this block if the display
+   family ever reverts to a slab serif. */
+.mag-display, .mag-cover-title, .mag-teaser-title, .mag-work-title,
+.mag-hack-title, .mag-job-company, .mag-edu-school, .mag-detail-title,
+.mag-iv-company, .mag-dropcap {
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.mag-stat-n, .mag-metric-n { font-weight: 800; }
