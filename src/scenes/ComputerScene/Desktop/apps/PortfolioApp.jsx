@@ -6,7 +6,7 @@ import { usePortfolio, accentFor, SKILL_GROUP_LABELS } from '../../../../data/po
  * PortfolioApp
  * A full-bleed editorial "magazine" rendition of the portfolio, fully driven by
  * public/portfolio.json. Keeps the warm paper system (Caveat signature name,
- * Arvo slab-serif headlines, Inter labels + body, espresso ink on cream with
+ * Montserrat headlines + labels + body, espresso ink on cream with
  * a #c8782a orange) but trades the narrow column for a masthead + numbered
  * contents, a cover story, big-type project "articles", award stamps, a dated
  * experience timeline, and drop-capped case-study reads.

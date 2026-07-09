@@ -23,16 +23,19 @@
   --xp-chrome:    #d4cfc8;
   --xp-border:    #8a8070;
 
-  /* Typography — three-font system:
+  /* Typography — one signature face + one workhorse family:
        --font-name     Caveat, the handwritten signature. Reserved for the
                        name "Shreyas / Shreyas Kumar" — nothing else.
-       --font-heading  Arvo, a slab serif. Every display headline & title.
-       --font-body     Inter. Everything you actually read + all UI labels.
+       --font-heading  Montserrat (geometric sans, the free Gotham relative).
+                       Display headlines & titles, always bold (700+).
+       --font-body     Montserrat. Body copy at 400; the uppercase
+                       letter-spaced labels/kickers ride the same family —
+                       weight and case carry the hierarchy, not the face.
      --font-hand / --font-typewriter are kept as back-compat aliases so the
      existing rules across the app resolve without touching every call site. */
   --font-name:       'Caveat', cursive;
-  --font-heading:    'Arvo', Georgia, serif;
-  --font-body:       'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading:    'Montserrat', 'Avenir Next', 'Segoe UI', sans-serif;
+  --font-body:       'Montserrat', system-ui, -apple-system, sans-serif;
   --font-hand:       var(--font-heading);
   --font-typewriter: var(--font-body);
 

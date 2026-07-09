@@ -1,6 +1,6 @@
 /* MobilePortfolio.css — "printed magazine" edition for phones / touch screens.
    Ported from the Claude Design "Mobile portfolio redesign". Warm paper palette,
-   Caveat for the signature name, Arvo slab-serif display, Inter body/labels. */
+   Caveat for the signature name, Montserrat display + body/labels. */
 
 .mag-viewport {
   position: fixed;

@@ -6,8 +6,8 @@ import './InterviewsTab.css'
  * InterviewsTab
  * Editorial "newspaper" rendition of interview reviews, driven by
  * public/portfolio.json (interviews.items). Matches PortfolioApp's warm
- * paper system (Caveat signature name, Arvo slab-serif headlines, Inter
- * labels + body, espresso ink on cream with a #c8782a orange): a sticky
+ * paper system (Caveat signature name, Montserrat headlines + labels +
+ * body, espresso ink on cream with a #c8782a orange): a sticky
  * masthead, a four-up stats strip, and expandable company "articles" that open
  * into a two-column read (story + a sticky facts sidebar).
  *
