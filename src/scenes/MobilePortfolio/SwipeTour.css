@@ -1,0 +1,118 @@
+/* SwipeTour.css — one-time swipe-navigation demo for the mobile edition.
+   Pairs with SwipeTour.jsx; delete both (plus the block in MobilePortfolio.jsx)
+   to remove the feature. */
+
+/* ── The live page, scaled down into the frame ──
+   .stour-anim only carries the transition (added for the whole tour) so the
+   zoom-back still animates when .stour-shrink is removed. The scale itself
+   comes from --stour-scale, set inline by SwipeTour.jsx (single source).
+   If the 0.68s duration changes, bump LEAVE_MS in SwipeTour.jsx to match. */
+.mag.stour-anim {
+  transition:
+    transform 0.68s cubic-bezier(0.33, 0, 0.15, 1),
+    border-radius 0.68s cubic-bezier(0.33, 0, 0.15, 1);
+}
+.mag.stour-shrink {
+  transform: scale(var(--stour-scale, 0.62));
+  border-radius: 34px; /* ~21px visually after the scale — hugs the frame */
+  pointer-events: none;
+}
+
+/* ── Overlay ── */
+.stour {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  touch-action: none; /* our overlay owns the gesture; a touch = skip */
+}
+.stour--leave { pointer-events: none; } /* page is interactive again during the exit */
+
+/* ── Minimal iPhone-style outline ──
+   Sized inline from the measured page; the giant box-shadow dims everything
+   outside the frame while keeping the live page visible inside it. */
+.stour-frame {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  border: 3px solid #241a0e;
+  border-radius: 42px;
+  box-shadow:
+    0 0 0 200vmax rgba(26, 18, 8, 0.45),
+    0 24px 60px -18px rgba(26, 18, 8, 0.55);
+  animation: stour-frame-in 0.68s cubic-bezier(0.33, 0, 0.15, 1) both;
+}
+/* side (power) button */
+.stour-frame::after {
+  content: '';
+  position: absolute;
+  right: -7px;
+  top: 18%;
+  width: 4px;
+  height: 54px;
+  border-radius: 2px;
+  background: #241a0e;
+}
+@keyframes stour-frame-in {
+  from { opacity: 0; scale: 1.05; }
+  to   { opacity: 1; scale: 1; }
+}
+/* the frame "falls away" while the page zooms back to full size */
+.stour--leave .stour-frame {
+  animation: stour-frame-drop 0.5s cubic-bezier(0.4, 0, 0.8, 0.4) both;
+}
+@keyframes stour-frame-drop {
+  from { opacity: 1; translate: 0 0; rotate: 0deg; scale: 1; }
+  to   { opacity: 0; translate: 0 46px; rotate: 1.5deg; scale: 0.98; }
+}
+
+/* ── Fingertip dot — position + fades driven inline from the JS timeline ── */
+.stour-dot {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  width: 42px;
+  height: 42px;
+  margin: -21px 0 0 -21px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.95), rgba(242, 237, 227, 0.72));
+  box-shadow:
+    0 3px 12px rgba(26, 18, 8, 0.4),
+    0 0 0 6px rgba(251, 248, 241, 0.16);
+  will-change: transform, opacity;
+}
+
+/* ── Caption under the frame ── */
+.stour-caption {
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  text-align: center;
+  white-space: nowrap;
+  animation: stour-caption-in 0.5s ease 0.55s both;
+}
+.stour-caption-main {
+  font-family: var(--font-typewriter);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #f2ede3;
+}
+.stour-caption-sub {
+  font-family: var(--font-typewriter);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(242, 237, 227, 0.55);
+}
+@keyframes stour-caption-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.stour--leave .stour-caption {
+  animation: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}

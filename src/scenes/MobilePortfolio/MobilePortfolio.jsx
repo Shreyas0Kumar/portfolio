@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { usePortfolio, accentFor } from '../../data/portfolio.jsx'
 import MobileIntro from './MobileIntro.jsx'
+import SwipeTour, { shouldRunSwipeTour } from './SwipeTour.jsx'
 import './MobilePortfolio.css'
 
 /**
@@ -120,7 +121,11 @@ export default function MobilePortfolio() {
   const [detail, setDetail] = useState(null)    // { kind: 'project' | 'experience', id }
   const [closing, setClosing] = useState(false) // case study is sliding back out
   const [openIv, setOpenIv] = useState(null)
+  // One-time swipe demo (SwipeTour.jsx) — starts once the pager is on screen,
+  // first visit only. Gating (localStorage + reduced motion) lives in the tour.
+  const [tour, setTour] = useState(false)
 
+  const magRef = useRef(null)
   const pagerRef = useRef(null)
   const rafRef = useRef(0)
   // Briefly mute scroll-sync during a programmatic (tab / arrow) scroll so the
@@ -136,6 +141,13 @@ export default function MobilePortfolio() {
     setShowIntro(false)
   }
 
+  // Kick off the swipe tour when the pager first appears (right after
+  // "continue on mobile", or on a refresh where the intro was already seen).
+  // Its timeline demos pages 0→1→2→0, so it needs at least 3 sections.
+  useEffect(() => {
+    if (!showIntro && PAGE_IDS.length >= 3 && shouldRunSwipeTour()) setTour(true)
+  }, [showIntro])
+
   const pageIdx = id => PAGE_IDS.indexOf(id)
 
   // The swipe itself is pure CSS scroll-snap; we only nudge the scroller when a
@@ -143,7 +155,10 @@ export default function MobilePortfolio() {
   const scrollToIndex = i => {
     const pager = pagerRef.current
     if (!pager) return
-    lockRef.current = Date.now() + 450
+    // Mute longer for multi-page jumps (distant tab taps, the swipe tour's
+    // trip home) — a fixed lock expires mid-scroll and flickers the tabs.
+    const pages = Math.abs(i - Math.round(pager.scrollLeft / Math.max(pager.clientWidth, 1)))
+    lockRef.current = Date.now() + 450 + Math.max(0, pages - 1) * 300
     pager.scrollTo({ left: i * pager.clientWidth, behavior: prefersReduced ? 'auto' : 'smooth' })
   }
   const go = id => {
@@ -230,7 +245,7 @@ export default function MobilePortfolio() {
 
   return (
     <div className="mag-viewport">
-      <div className="mag">
+      <div className="mag" ref={magRef}>
         <header className="mag-masthead">
           <div className="mag-folio">
             <span>The Portfolio &nbsp;·&nbsp; No.01 &nbsp;·&nbsp; {new Date().getFullYear()}</span>
@@ -299,6 +314,17 @@ export default function MobilePortfolio() {
           )}
         </div>
       </div>
+
+      {/* One-time swipe-navigation demo. Sits outside .mag (a transformed
+          ancestor would break its fixed positioning); swipes drive the real
+          pager through go(), so the tabs stay in sync too. */}
+      {tour && (
+        <SwipeTour
+          magRef={magRef}
+          onSwipe={i => go(PAGE_IDS[i])}
+          onDone={() => setTour(false)}
+        />
+      )}
     </div>
   )
 }
