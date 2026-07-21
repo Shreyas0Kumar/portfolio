@@ -292,7 +292,7 @@
 .mag-teaser-hook { font-size: 14.5px; line-height: 1.4; color: var(--ink3); margin: 0; }
 
 /* ── Work cards ── */
-.mag-work { padding: 28px 0; border-bottom: 1px solid var(--line); }
+.mag-work { cursor: pointer; padding: 28px 0; border-bottom: 1px solid var(--line); }
 .mag-meta {
   display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
   font-family: var(--font-typewriter); font-size: 11px; letter-spacing: 0.06em;

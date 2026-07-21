@@ -412,8 +412,8 @@ function Work({ projects, onOpen }) {
       <p className="mag-eyebrow">No.02 · Work</p>
       <h2 className="mag-display mag-display--ruled">Designed, built &amp; shipped.</h2>
       {projects.map((p, i) => (
-        <article key={p.id} className="mag-work">
-          <div className="mag-frame mag-frame--work" onClick={() => onOpen('project', p.id)}>
+        <article key={p.id} className="mag-work" onClick={() => onOpen('project', p.id)}>
+          <div className="mag-frame mag-frame--work">
             {p.images?.[0]
               ? <img className="mag-img-fill" src={p.images[0]} alt={p.name} loading="lazy" />
               : <span className="mag-frame-cap">[ {(p.assetPlaceholders || [])[0] || 'project image'} ]</span>}

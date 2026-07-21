@@ -381,7 +381,7 @@
       "collaborators": [],
       "tags": ["iOS", "SwiftUI", "ML", "Music"],
       "linkedinPosts": [],
-      "images": [],
+      "images": ["/images/su-music/su-music-player.webp", "/images/su-music/su-music.webp"],
       "featured": false,
       "order": 3,
       "event": null
