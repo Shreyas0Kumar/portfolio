@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect, useRef, lazy, Suspense } from 'react'
 import ErrorBoundary from './ErrorBoundary.jsx'
 import IntroScreen from './scenes/IntroScreen/IntroScreen.jsx'
+import SkipIntro from './SkipIntro.jsx'
 import { primeAudio, warmupAudio } from './scenes/ComputerScene/Desktop/sound.js'
 
 // Code-split the scenes so each device only downloads its own path: the heavy
@@ -40,6 +41,7 @@ export default function App() {
   const [scene, setScene]         = useState('room')
   const [fadeBlack, setFadeBlack] = useState(false)
   const [showIntro, setShowIntro] = useState(true)
+  const [skipped, setSkipped]     = useState(false)
   const isMobile = useIsMobile()
 
   const timers = useRef([])
@@ -68,9 +70,23 @@ export default function App() {
     setScene('desktop')
   }, [])
 
+  // Skip the whole entry sequence (intro / room / boot / lock screen / tour) and
+  // land a returning visitor straight on the logged-in desktop. It's a user
+  // gesture, so warm up audio here too (the desktop's login path, which normally
+  // does it, is bypassed).
+  const handleSkip = useCallback(() => {
+    warmupAudio()
+    clearTimers()
+    setShowIntro(false)
+    setFadeBlack(false)
+    setSkipped(true)
+    setScene('desktop')
+  }, [])
+
   const handleExitComputer = useCallback(() => {
     clearTimers()
     setFadeBlack(false)
+    setSkipped(false)
     setScene('room')
   }, [])
 
@@ -115,6 +131,7 @@ export default function App() {
           {(scene === 'loading' || scene === 'desktop') && (
             <ComputerScene
               phase={scene}
+              startLoggedIn={skipped}
               onLoadDone={handleLoadDone}
               onExit={handleExitComputer}
             />
@@ -140,6 +157,10 @@ export default function App() {
 
       {/* First-load nudge to go full screen; fades out and reveals the room. */}
       {showIntro && <IntroScreen onDone={() => setShowIntro(false)} />}
+
+      {/* Returning-visitor shortcut, live across intro / room / boot. Hidden once
+          the desktop is up — there's nothing left to skip by then. */}
+      {scene !== 'desktop' && <SkipIntro onSkip={handleSkip} />}
     </>
   )
 }

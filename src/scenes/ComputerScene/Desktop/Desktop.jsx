@@ -33,6 +33,8 @@ import { setMuted, chime, sOpen, sClose, sMinimize, sShutdown } from './sound.js
  *
  * Props:
  *   onExit {function} — fired on Shut Down (back to the room)
+ *   startLoggedIn {boolean} — skip the lock screen (and the first-visit tour):
+ *     set when the visitor used "Skip intro" to jump straight in
  */
 
 // Glassdoor mark: a white door (with a handle) on the green tile.
@@ -110,9 +112,9 @@ const clampSize = ({ w, h }) => ({
   h: Math.min(h, window.innerHeight - 46),
 })
 
-export default function Desktop({ onExit }) {
+export default function Desktop({ onExit, startLoggedIn = false }) {
   const { projects, hackathons } = usePortfolio()
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(startLoggedIn)
   const [windows, setWindows] = useState(() => {
     const { w, h } = defaultSize()
     return [{ id: 'portfolio', ...placeWindow(w, h), w, h, z: 1, minimized: false, maximized: false, prev: null }]

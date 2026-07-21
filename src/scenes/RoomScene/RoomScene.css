@@ -63,11 +63,19 @@
   bottom: 28px;
   left: 32px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
   line-height: 1.2;
   pointer-events: none;
   user-select: none;
   color: rgba(242, 237, 227, 0.85);
+}
+
+/* Left column: name over tagline */
+.room-text {
+  display: flex;
+  flex-direction: column;
 }
 
 .room-name {
@@ -79,6 +87,44 @@
   font-family: var(--font-typewriter);
   font-size: 0.85rem;
   letter-spacing: 0.03em;
+}
+
+/* Right column: bare logos (no chip). The nameplate is pointer-events: none,
+   so re-enable clicks here. Cream over the dark scene; hover brightens. */
+.room-social {
+  display: flex;
+  gap: 14px;
+  pointer-events: auto;
+}
+
+.room-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(242, 237, 227, 0.8);
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.room-social-btn svg {
+  width: 26px;
+  height: 26px;
+  display: block;
+}
+
+.room-social-btn:hover {
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+.room-social-btn:active {
+  transform: translateY(0);
+}
+
+.room-social-btn:focus-visible {
+  outline: 2px solid rgba(242, 237, 227, 0.7);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 /* Idle nudge — bottom-center pill prompting the visitor to click the monitor.
